@@ -1,0 +1,18 @@
+import React from 'react'
+
+export function IconFavorites () {
+  return (
+    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M24.3715 8.08498C25.5028 5.97167 28.4972 5.97167 29.6285 8.08498L34.5088 17.2015L44.5606 19.1192C46.8814 19.5619 47.8033 22.4271 46.1858 24.17L39.1495 31.752L40.4648 42.0784C40.7679 44.4581 38.3488 46.2329 36.2111 45.1991L27 40.7447L17.7889 45.1991C15.6512 46.2329 13.2321 44.4581 13.5352 42.0784L14.8505 31.752L7.81419 24.17C6.19669 22.427 7.11859 19.5619 9.43936 19.1192L19.4912 17.2015L24.3715 8.08498Z"
+        fill="url(#paint0_linear_1098_3120)"
+      />
+      <defs>
+        <linearGradient id="paint0_linear_1098_3120" x1="27" y1="6.5" x2="27" y2="45.5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#038175" />
+          <stop offset="1" stopColor="#13CEBC" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}

@@ -1,0 +1,32 @@
+.title {
+  margin-bottom: 60px;
+  color: var(--greenDark);
+  font-weight: 700;
+  text-align: center;
+}
+
+.content {
+  height: 565px;
+  padding: 72px 60px;
+}
+
+.form {
+  padding: 0 6px;
+  text-align: center;
+}
+
+.containerInput {
+  position: relative;
+}
+
+.containerInput:not(:last-of-type) {
+  margin-bottom: 20px;
+}
+
+.containerInput:last-of-type {
+  margin-bottom: 42px;
+}
+
+.inputInvalid input {
+  border-color: rgba(180, 75, 75, 1);
+}

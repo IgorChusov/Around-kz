@@ -1,0 +1,47 @@
+.title {
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.link svg:last-child {
+  margin-left: auto;
+}
+
+.list {
+  margin-bottom: 120px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.link span {
+  margin-left: 16px;
+}
+
+.btn {
+  display: block;
+}
+
+.btn:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.btnText {
+  margin-right: 16px;
+  border-bottom: 1px solid var(--greenLight);
+  font-weight: 500;
+}

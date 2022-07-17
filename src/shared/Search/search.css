@@ -1,0 +1,13 @@
+.content {
+  position: relative;
+  z-index: 10;
+  background-color: var(--white);
+  box-shadow: 0 4px 10px 0 #00000026;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.formContainer {
+  padding: 10px 30px;
+  display: flex;
+}

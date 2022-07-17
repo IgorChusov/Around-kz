@@ -1,0 +1,39 @@
+.buttonList {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 43px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -6px 20px 0 #0000000D;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 5px);
+  background-color: var(--white);
+  z-index: 1000;
+  align-self: center;
+}
+
+.buttonInfo,
+.buttonChat,
+.buttonCalendar {
+  width: 54px;
+  height: 54px;
+  border-radius: 53px;
+  background-color: transparent;
+  transition: 0.4s;
+  transform: background-color;
+}
+
+.buttonCalendar:disabled {
+  opacity: 0.6;
+}
+
+.buttonActive {
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+@media all and (min-width: 500px) {
+  .buttonList {
+    width: 495px;
+  }
+}

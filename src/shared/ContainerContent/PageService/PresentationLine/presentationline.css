@@ -1,0 +1,26 @@
+.presentationContainer {
+  position: relative;
+  left: -24px;
+  margin-bottom: 18px;
+  height: 4px;
+  width: 100vw;
+  background-color: var(--grayF0);
+}
+
+.presentation {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: var(--greenLight);
+  width: 50%;
+  max-width: 250px;
+  height: 100%;
+  border-radius: 9px;
+  z-index: 10;
+}
+
+@media all and (min-width: 1024px) {
+  .presentation {
+    width: 250px;
+  }
+}

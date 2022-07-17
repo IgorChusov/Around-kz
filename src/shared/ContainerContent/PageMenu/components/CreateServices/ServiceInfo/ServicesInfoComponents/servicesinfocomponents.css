@@ -1,0 +1,75 @@
+.pageServices {
+  position: relative;
+  min-height: 380px;
+}
+
+.btnServicesNextPage {
+  padding: 12px 32px;
+  background-color: var(--greenLight);
+  color: var(--white);
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  width: 319px;
+  position: absolute;
+  bottom: -50px;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+.btnAdd {
+  margin-bottom: 48px;
+  padding: 12px 24px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  align-self: start;
+  text-align: start;
+  width: 100%;
+  position: relative;
+}
+
+.btnAdd span {
+  font-weight: 500;
+}
+
+.listResult {
+  margin-bottom: 16px;
+}
+
+.pageServicesContent {
+  padding: 0 18px;
+}
+
+.horizontalPlus {
+  width: 25px;
+  height: 4px;
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.verticalPlus {
+  width: 25px;
+  height: 4px;
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.textInfo {
+  margin-bottom: 27px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.basikInfo {
+  margin-bottom: 40px;
+  display: inline-block;
+}
+
+.basikInfo span {
+  margin-right: 16px;
+}

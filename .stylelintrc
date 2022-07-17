@@ -1,0 +1,23 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "custom-property-pattern": ".+", 
+    "indentation": 2,
+    "color-hex-case": null,
+    "color-hex-length":  null,
+    "no-descending-specificity": null,
+    "value-keyword-case": null,
+    "selector-class-pattern": null,
+    "no-empty-source": null,
+    "color-function-notation": "legacy",
+    "font-family-name-quotes": "always-unless-keyword",
+    "string-quotes": "single",
+    "alpha-value-notation": "number",
+    "property-no-unknown": [true, {
+      "ignoreProperties": ["font-smoothing", "composes"]
+    }],
+    "selector-pseudo-class-no-unknown": [true, {
+      "ignorePseudoClasses": ["input-placeholder", "global", "local"]
+    }]
+  }
+}

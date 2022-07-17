@@ -1,0 +1,65 @@
+.container {
+  padding: 32px 25px 92px;
+  min-height: 740px;
+  text-align: center;
+  position: relative;
+}
+
+.title {
+  font-weight: 700;
+  margin-bottom: 26px;
+}
+
+.description {
+  margin-bottom: 24px;
+}
+
+.imgContainer {
+  margin-bottom: 16px;
+  height: 209px;
+  width: 100%;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.containerInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerInfo:last-of-type {
+  margin-bottom: 50px;
+}
+
+.button {
+  padding: 12px 32px;
+  font-weight: 700;
+  background-color: var(--greenLight);
+  border-radius: 20px;
+}
+
+.cardTitle {
+  margin-bottom: 10px;
+  text-align: start;
+  font-weight: 500;
+}
+
+.cardDescription {
+  margin-bottom: 32px;
+  text-align: start;
+}
+
+.cardInfo {
+  margin-bottom: 12px;
+  text-align: start;
+}
+
+.carouselContainer {
+  display: flex;
+  align-items: center;
+}

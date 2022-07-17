@@ -1,0 +1,86 @@
+.container {
+  padding: 32px 40px 92px;
+  text-align: center;
+  position: relative;
+  min-height: 740px;
+}
+
+.title {
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 241px;
+}
+
+.subtitle {
+  margin-bottom: 44px;
+}
+
+.textFinal {
+  margin-bottom: 45px;
+}
+
+.button {
+  padding: 12px 32px;
+  font-weight: 700;
+  background-color: var(--greenLight);
+  border-radius: 20px;
+}
+
+.buttonAdd {
+  padding: 12px 32px;
+  background-color: transparent;
+  border: 3px solid var(--greenLight);
+  border-radius: 20px;
+}
+
+.buttonAdd span {
+  font-weight: 900;
+}
+
+.list {
+  margin-bottom: 50px;
+  list-style: circle;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.linkAdd {
+  margin-top: 40px;
+}
+
+.nameGroup {
+  display: flex;
+}
+
+.buttonContainer {
+  display: flex;
+}
+
+.itemButton {
+  margin-right: 8px;
+}
+
+.buttonContent {
+  display: flex;
+  justify-content: center;
+}
+
+.containerText {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media all and (min-width: 500px) {
+  .title {
+    max-width: 340px;
+  }
+}

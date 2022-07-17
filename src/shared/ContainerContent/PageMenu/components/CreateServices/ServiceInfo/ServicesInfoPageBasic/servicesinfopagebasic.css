@@ -1,0 +1,175 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer {
+  margin-bottom: 26px;
+  position: relative;
+  padding: 0 29px;
+}
+
+.input {
+  padding: 12px;
+  background-color: transparent;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 22px;
+  width: 100%;
+  color: var(--greenMiddle);
+}
+
+.label {
+  position: absolute;
+  padding: 3px;
+  top: -10px;
+  left: 56px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 600;
+  background-color: var(--white);
+  z-index: 10;
+}
+
+.inputTagContainer {
+  margin-bottom: 24px;
+  padding: 0 19px;
+}
+
+.inputTag {
+  padding: 2px 12px;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 400;
+  color: var(--greenMiddle);
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--greenLight);
+}
+
+.labelTag {
+  padding-left: 8px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+.textarea {
+  width: 100%;
+  padding: 16px 28px;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+  resize: none;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 400;
+  height: 115px;
+  color: var(--greenMiddle);
+}
+
+.textareaContainer {
+  margin-bottom: 24px;
+  padding: 0 9px;
+}
+
+.inputFileContainer {
+  position: relative;
+  padding: 0 9px;
+  margin-bottom: 48px;
+}
+
+.inputFile {
+  width: 100%;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputFileBtn {
+  margin-bottom: 16px;
+  padding: 16px;
+  width: 100%;
+  height: 117px;
+  position: relative;
+  display: block;
+  background-color: transparent;
+  box-shadow: 0 4px 10px 0 #00000026;
+  border-radius: 20px;
+}
+
+.btnNextPage {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 12px 32px;
+  background-color: var(--greenLight);
+  color: var(--white);
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.textInfo {
+  margin-bottom: 18px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.minus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 54px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+}
+
+.plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 54px;
+  height: 8px;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.inputFileGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputFileBtnSmall {
+  padding: 16px;
+  width: 100%;
+  height: 66px;
+  position: relative;
+  display: flex;
+  background-color: transparent;
+  box-shadow: 0 4px 10px 0 #00000026;
+  border-radius: 20px;
+}
+
+.inputSmallContent {
+  width: calc((100% - 30px) / 4);
+}
+
+.minusSmall {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 4px;
+  transform: translate(-50%, -50%);
+}
+
+.plusSmall {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 4px;
+  transform: translate(-50%, -50%) rotate(90deg);
+}

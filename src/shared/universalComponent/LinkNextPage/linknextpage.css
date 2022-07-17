@@ -1,0 +1,10 @@
+.button {
+  padding: 12px 32px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 23px;
+  color: var(--white);
+  background-color: var(--greenLight);
+  border-radius: 20px;
+  align-self: center;
+}

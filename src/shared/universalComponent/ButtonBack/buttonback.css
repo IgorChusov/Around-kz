@@ -1,0 +1,17 @@
+.btn {
+  display: flex;
+}
+
+.btn svg {
+  margin-right: 5px;
+}
+
+.text {
+  font-weight: 400;
+}
+
+.position {
+  position: absolute;
+  top: 38px;
+  left: 10px;
+}

@@ -1,0 +1,57 @@
+.container {
+  padding: 32px 11px;
+}
+
+.title {
+  margin-bottom: 32px;
+  text-align: center;
+  max-width: 238px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subtitle {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.containerDays {
+  margin-bottom: 16px;
+}
+
+.selectGroup {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.selectContainer {
+  display: flex;
+  align-items: center;
+}
+
+.selectContainer:not(:last-child) {
+  margin-right: 48px;
+}
+
+.selectContainerText {
+  margin-right: 8px;
+}
+
+.form {
+  padding: 0 16px;
+  margin-bottom: 50px;
+}
+
+.button {
+  text-align: center;
+  min-width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media all and (min-width: 1024px) {
+  .container {
+    min-height: calc(100vh - 60px);
+  }
+}

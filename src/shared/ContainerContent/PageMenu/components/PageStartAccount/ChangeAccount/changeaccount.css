@@ -1,0 +1,53 @@
+.container {
+  padding: 0 28px;
+}
+
+.buttonGroup {
+  display: flex;
+  margin-bottom: 8px;
+  position: relative;
+  border-radius: 8px;
+  background-color: var(--grayF0);
+  border: 2px solid  var(--grayF0);
+}
+
+.buttonContainer {
+  width: 50%;
+}
+
+.button {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--greenMiddle);
+  border-radius: 8px;
+  background-color: transparent;
+  z-index: 10;
+}
+
+.presentation {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--white);
+  border-radius: 8px;
+  transform-origin: 0 0;
+  transition: transform 0.35s;
+}
+
+.info {
+  color: var(--greenMiddle);
+}
+
+.button:first-child.buttonActive ~ .presentation {
+  transform: translateX(0);
+}
+
+.button:nth-child(2).buttonActive ~ .presentation {
+  transform: translateX(100%);
+}

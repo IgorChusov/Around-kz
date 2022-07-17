@@ -1,0 +1,13 @@
+*.json
+*.png
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.jpg
+*.jpeg
+*.zip
+*.pdf
+*.svg
+dist
+*.js

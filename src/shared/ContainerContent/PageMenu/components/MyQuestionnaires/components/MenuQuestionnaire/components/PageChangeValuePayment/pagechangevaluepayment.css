@@ -1,0 +1,73 @@
+.container {
+  padding: 33px 13px;
+  min-height: 477px;
+}
+
+.container form {
+  margin-bottom: 30px;
+}
+
+.container form div:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.containerRegulator {
+  margin-bottom: 110px;
+  padding: 0 21px;
+}
+
+.title {
+  margin-bottom: 38px;
+  max-width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.markerInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.markerTextIndicator {
+  position: absolute;
+  font-weight: 500;
+  width: 60px;
+}
+
+.markerText {
+  font-weight: 500;
+}
+
+.regulatorContainer {
+  position: absolute;
+  z-index: 1000;
+  top: -10px;
+}
+
+.regulator {
+  width: 25px;
+  height: 24px;
+  border-radius: 100%;
+  background-color: var(--grayС4);
+}
+
+.line {
+  z-index: 1;
+  position: relative;
+  height: 3px;
+  width: 100%;
+  background-color: var(--black);
+  margin-bottom: 25px;
+}
+
+.disableRegulator {
+  opacity: 0.3;
+}
+
+.button {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 200px;
+  text-align: center;
+}

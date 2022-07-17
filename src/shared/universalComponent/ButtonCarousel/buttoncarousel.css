@@ -1,0 +1,27 @@
+.button {
+  background-color: var(--greenLight);
+  padding: 1.5px;
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  position: relative;
+}
+
+.button svg {
+  position: absolute;
+  top: 50%;
+  transform: translate(-47%, -46%);
+  left: 50%;
+}
+
+.buttonGroup {
+  display: flex;
+  padding: 8px;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+}
+
+.buttonGroup span {
+  padding: 0 17px;
+}

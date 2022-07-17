@@ -1,0 +1,35 @@
+.container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  display: flex;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.centerBtn {
+  position: absolute;
+  right: 40px;
+  bottom: 7%;
+  transform: translate(50%, 50%);
+  text-align: center;
+  z-index: 100;
+}
+
+.centerBtn img {
+  width: 62px;
+  height: 62px;
+}
+
+@media all and (min-width: 768px) {
+  .centerBtn img {
+    width: 70px;
+    height: 70px;
+  }
+}

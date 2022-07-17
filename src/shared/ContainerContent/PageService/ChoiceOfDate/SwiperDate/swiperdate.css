@@ -1,0 +1,38 @@
+.container {
+  margin-bottom: 25px;
+  width: 100%;
+  padding: 0 35px;
+  position: relative;
+}
+
+.swiper {
+  width: 100%;
+}
+
+.buttonMove,
+.buttonMove svg {
+  width: 26px;
+  height: 26px;
+}
+
+.buttonNext {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: rotate(180deg);
+}
+
+.buttonPrev {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.text {
+  color: #8D8D8D;
+}
+
+.active {
+  font-weight: 600;
+  color: var(--greenDark);
+}

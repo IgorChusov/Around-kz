@@ -1,0 +1,18 @@
+.ratingContainer {
+  align-items: center;
+  display: flex;
+}
+
+.text {
+  padding-left: 4px;
+  font-weight: 700;
+  margin-right: 16px;
+}
+
+.buttonText {
+  font-weight: 500;
+}
+
+.link {
+  border-bottom: 1px solid var(--greenLight);
+}

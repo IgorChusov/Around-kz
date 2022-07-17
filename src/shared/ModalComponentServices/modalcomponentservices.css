@@ -1,0 +1,117 @@
+.container {
+  position: absolute;
+  top: -20px;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 24px 30px 57px;
+  background-color: var(--white);
+  border-radius: 40px;
+  box-shadow: 0 -4px 40px 0 #00000026;
+  z-index: 100;
+}
+
+.title {
+  margin-bottom: 37px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.form {
+  max-width: 100%;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.inputContainer:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+
+.inputContainer:last-of-type {
+  margin-bottom: 36px;
+}
+
+.label {
+  position: absolute;
+  padding: 3px;
+  top: -10px;
+  left: 30px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 600;
+  background-color: var(--white);
+  z-index: 10;
+}
+
+.input {
+  position: relative;
+  padding: 12px 25px;
+  width: 100%;
+  font-size: 17px;
+  line-height: 22px;
+  border-radius: 20px;
+  border: 2px solid var(--greenLight);
+  z-index: 1;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.button {
+  padding: 12px;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+}
+
+.button span {
+  font-weight: 900;
+}
+
+.buttonFirst {
+  background-color: transparent;
+}
+
+.buttonFirst span {
+  color: var(--greenLight);
+}
+
+.buttonSecond {
+  background-color: var(--greenLight);
+}
+
+.buttonSecond span {
+  color: var(--white);
+}
+
+.unvalidation {
+  border-color: red;
+}
+
+.containerTextError {
+  padding-top: 20px;
+  align-items: center;
+}
+
+.containerTextError p {
+  color: red;
+}
+
+@media all and (min-width: 428px) {
+  .container {
+    max-width: 380px;
+    width: 100%;
+  }
+
+  .button {
+    padding: 12px 32px;
+  }
+
+  .buttonGroup {
+    padding: 0;
+  }
+}

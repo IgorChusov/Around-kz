@@ -1,0 +1,55 @@
+.container {
+  padding: 32px 24px;
+}
+
+.title {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 32px;
+  text-align: center;
+  max-width: 238px;
+}
+
+.subtitle {
+  margin: 0 auto 25px;
+  text-align: center;
+  max-width: 300px;
+}
+
+.form {
+  margin-bottom: 26px;
+}
+
+.containerSelect {
+  display: flex;
+  align-items: center;
+  margin-bottom: 48px;
+  max-width: 255px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.select {
+  display: flex;
+  align-items: center;
+}
+
+.select span {
+  margin-right: 8px;
+}
+
+.select:not(:last-child) {
+  margin-right: 33px;
+}
+
+.button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media all and (min-width: 1024px) {
+  .container {
+    min-height: calc(100vh - 60px);
+  }
+}

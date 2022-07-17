@@ -1,0 +1,87 @@
+.subtitle {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.infoContainer {
+  display: flex;
+  margin-bottom: 49px;
+}
+
+.textGroup {
+  display: flex;
+  align-items: center;
+}
+
+.textGroup:not(:last-child) {
+  margin-right: 32px;
+}
+
+.container {
+  width: 100%;
+  padding: 0 14px;
+  padding: 32px 38px 114px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.textWeight {
+  margin-right: 8px;
+  font-weight: 700;
+}
+
+.textInfo {
+  margin-bottom: 24px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  font-weight: 700;
+  max-width: 300px;
+}
+
+.btn {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 12px 32px;
+  background-color: var(--greenLight);
+  border-radius: 20px;
+  text-align: center;
+}
+
+.btn span {
+  font-weight: 700;
+}
+
+.nameItemGroup {
+  display: flex;
+}
+
+.itemButton {
+  margin-right: 12px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.list {
+  margin-bottom: 38px;
+}
+
+.textName {
+  margin-right: 10px;
+}
+
+.title {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 24px;
+  font-weight: 900;
+  max-width: 258px;
+}

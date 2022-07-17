@@ -1,0 +1,9 @@
+.button {
+  background-image: url('../../../assets/images/notification.png');
+  width: 54px;
+  height: 54px;
+  border-radius: 53px;
+  box-shadow: 0 4px 10px 0 #00000026;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

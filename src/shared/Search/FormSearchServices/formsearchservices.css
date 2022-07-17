@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  padding: 0 10px;
+  background-color: rgba(118, 118, 128, 0.12);
+  border-radius: 10px;
+  width: 100%;
+}
+
+.input {
+  padding: 6px 0;
+  font-size: 17px;
+  line-height: 22px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  margin-right: 7px;
+}

@@ -1,0 +1,114 @@
+.container {
+  padding: 32px 17px 40px;
+}
+
+.title {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.calendarContainer {
+  margin-bottom: 24px;
+  padding: 24px 32px;
+  border-radius: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid var(--greenLight);
+  min-height: 312px;
+  width: 91%;
+}
+
+.selectContainer {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.calendar {
+  height: 100%;
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin: auto;
+}
+
+.tableTd {
+  text-align: center;
+}
+
+.day {
+  vertical-align: middle;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.holyday {
+  color: var(--redVar);
+}
+
+.week {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.containerSchedules {
+  overflow-y: auto;
+  max-height: calc(100vh - 530px);
+  min-height: 110px;
+}
+
+.listDate {
+  padding: 16px 42px 16px 21px;
+}
+
+.textDate {
+  display: block;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.itemTimeContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.line {
+  height: 1px;
+  width: 100%;
+  background-color: var(--grayA9);
+}
+
+.textTime {
+  margin-right: 16px;
+  font-weight: 400;
+}
+
+.textName {
+  margin-bottom: 4px;
+  display: block;
+  padding-left: 48px;
+  font-weight: 400;
+}
+
+.itemButton {
+  display: flex;
+  margin-left: auto;
+}
+
+.textInfo {
+  display: block;
+  font-weight: 700;
+}
+
+.item {
+  margin-bottom: 6px;
+}
+
+.itemDate {
+  margin-bottom: 15px;
+}

@@ -1,0 +1,164 @@
+.container {
+  padding: 32px 28px 92px;
+  text-align: center;
+  position: relative;
+  min-height: 740px;
+}
+
+.title {
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 241px;
+}
+
+.subtitle {
+  margin-bottom: 16px;
+}
+
+.timer {
+  margin-bottom: 33px;
+}
+
+.timer span {
+  padding-left: 16px;
+}
+
+.markerInfo {
+  display: flex;
+  margin-bottom: 8px;
+  position: absolute;
+  top: 30px;
+}
+
+.marker {
+  margin-right: 8px;
+  width: 15px;
+  height: 15px;
+  background-color: var(--greenLight);
+  border-radius: 4px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  max-width: calc((100% - 30px)/4);
+  width: 100%;
+  height: 42px;
+  margin-bottom: 10px;
+}
+
+.item:not(:nth-child(4n)) {
+  margin-right: 10px;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  background-color: var(--greenLight);
+  border-radius: 4px;
+}
+
+.subInfo {
+  margin-bottom: 15px;
+  max-width: 279px;
+  text-align: start;
+}
+
+.listChoice {
+  margin-bottom: 24px;
+}
+
+.itemChoice {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: start;
+}
+
+.itemChoice:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.text,
+.text span {
+  font-weight: 500;
+}
+
+.textFinal {
+  margin-bottom: 32px;
+  text-align: end;
+}
+
+.button {
+  padding: 12px 32px;
+  font-weight: 700;
+  background-color: var(--greenLight);
+  border-radius: 20px;
+}
+
+.containerInfo {
+  position: relative;
+}
+
+.containerPagination {
+  position: relative;
+  margin-bottom: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 134px;
+  height: 139px;
+  background-color: white;
+  overflow: hidden;
+  border: 2px solid rgba(3, 129, 117, 1);
+  border-radius: 20px;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--greenLight);
+  z-index: 10;
+}
+
+.paginationViewChange {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9;
+  background-color: rgba(180, 75, 75, 1);
+}
+
+.textAmount {
+  width: 100px;
+}
+
+.containerAmount {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  z-index: 1000;
+  background-color: var(--greenLight);
+}
+
+.containerChange {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(180, 75, 75, 1);
+  z-index: 1;
+}
+
+@media all and (min-width: 500px) {
+  .textAmount {
+    width: 200px;
+  }
+}

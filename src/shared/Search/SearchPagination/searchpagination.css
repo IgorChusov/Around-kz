@@ -1,0 +1,9 @@
+.container svg:not(:last-child) {
+  margin-right: 17px;
+}
+
+.container {
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+}

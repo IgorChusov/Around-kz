@@ -1,0 +1,17 @@
+.content {
+  padding: 50px 30px 192px;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 48px;
+  font-weight: 700;
+}
+
+.text {
+  margin-bottom: 13px;
+}
+
+.info {
+  margin-bottom: 16px;
+}

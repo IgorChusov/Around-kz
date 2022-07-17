@@ -1,0 +1,30 @@
+.container {
+  padding: 32px 24px 120px;
+  position: relative;
+  min-height: 500px;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 13px;
+}
+
+.img {
+  margin-bottom: 18px;
+  width: 180px;
+  height: 180px;
+}
+
+.text {
+  text-align: start;
+  margin-bottom: 32px;
+}
+
+.button {
+  padding: 12px 32px;
+  color: var(--white);
+  background-color: var(--greenLight);
+  font-weight: 700;
+  border-radius: 20px;
+  font-size: 20px;
+}

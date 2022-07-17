@@ -1,0 +1,9 @@
+import React from 'react'
+
+export function IconSelect () {
+  return (
+    <svg width="18" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17 0.999999L9 9L1 1" stroke="#038175" strokeWidth="2" />
+    </svg>
+  )
+}

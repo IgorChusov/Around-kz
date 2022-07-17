@@ -1,0 +1,10 @@
+.button {
+  display: inline-block;
+  padding: 12px 32px;
+  font-size: 20px;
+  line-height: 23px;
+  font-weight: 900;
+  background-color: var(--greenLight);
+  color: var(--white);
+  border-radius: 20px;
+}

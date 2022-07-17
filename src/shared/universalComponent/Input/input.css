@@ -1,0 +1,26 @@
+.containerInput {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  padding: 3px;
+  top: -10px;
+  left: 30px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 600;
+  background-color: var(--white);
+  z-index: 10;
+}
+
+.input {
+  position: relative;
+  padding: 12px 25px;
+  width: 100%;
+  font-size: 17px;
+  line-height: 22px;
+  border-radius: 20px;
+  border: 2px solid var(--greenLight);
+  z-index: 1;
+}
