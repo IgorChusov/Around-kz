@@ -9,12 +9,10 @@ import { productsReducer, ProductsState } from './products/reduces'
 import { SERVICES_REQUEST, SERVICES_REQUEST_ERROR, SERVICES_REQUEST_SUCCESS } from './services/action'
 import { servicesReducer, ServicesState, TDataServices } from './services/reducer'
 import {
-  TokenRequestAction,
-  TokenRequestErrorAction,
-  TokenRequestSuccessAction,
-  TOKEN_REQUEST,
-  TOKEN_REQUEST_ERROR,
+  REGISTER_REQUEST,
+  SMS_REQUEST_SUCCESS,
   TOKEN_REQUEST_SUCCESS,
+  TOKEN_REQUEST_ERROR
 } from './token/action'
 import { tokenReducer, TokenState } from './token/reduser'
 
@@ -84,7 +82,8 @@ export const rootReducer: Reducer = (state = initialState, action) => {
         ...state,
         item: action.item,
       }
-    case TOKEN_REQUEST:
+    case REGISTER_REQUEST:
+    case SMS_REQUEST_SUCCESS:
     case TOKEN_REQUEST_SUCCESS:
     case TOKEN_REQUEST_ERROR:
       return {

@@ -24,3 +24,16 @@
   border: 2px solid var(--greenLight);
   z-index: 1;
 }
+
+.error {
+  font-size: 12px;
+  line-height: 13px;
+  color: var(--redVar);
+  position: absolute;
+  bottom: -15px;
+  right: 10px;
+}
+
+.inputInvalid {
+  border-color: rgba(180, 75, 75, 1);
+}

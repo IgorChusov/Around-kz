@@ -15,3 +15,26 @@
 .info {
   margin-bottom: 16px;
 }
+
+.buttonRegistration {
+  display: inline-block;
+  margin-bottom: 48px;
+  padding: 12px 32px;
+  font-size: 20px;
+  line-height: 23px;
+  font-weight: 900;
+  background-color: var(--greenLight);
+  color: var(--white);
+  border-radius: 20px;
+}
+
+.buttonEntry {
+  display: inline-block;
+  padding: 12px 32px;
+  font-size: 20px;
+  line-height: 23px;
+  font-weight: 900;
+  background-color: var(--greenLight);
+  color: var(--white);
+  border-radius: 20px;
+}

@@ -1,32 +1,40 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, CSSProperties, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 
-import MoonLoader from 'react-spinners/MoonLoader'
 
-import { RootState } from '../../../../../store/reducer'
-import { RegisterUserAsync } from '../../../../../store/token/action'
-import { ButtonNextPage } from '../../../../universalComponent/ButtonNextPage'
-import { ErrorPanel, IErrorPanel } from '../../../../universalComponent/ErrorPanel'
-import { Input } from '../../../../universalComponent/Input'
-import { Text } from '../../../../universalComponent/Text'
+import { RootState } from '../../../../../../store/reducer'
+import { RegisterSmsActivateAsync, RegisterUserAsync } from '../../../../../../store/token/action'
+import { TokenState } from '../../../../../../store/token/reduser'
+import { ButtonNextPage } from '../../../../../universalComponent/ButtonNextPage'
+import { ErrorPanel, IErrorPanel } from '../../../../../universalComponent/ErrorPanel'
+import { Input } from '../../../../../universalComponent/Input'
+import { Text } from '../../../../../universalComponent/Text'
+import { SmsActivate } from '../SmsActivate/SmsActivate'
 
-import { TokenState } from '../../../../../store/token/reduser'
 
-import { SmsActivate } from './components/SmsActivate'
+import styles from '../pageregistration.css'
 
-import styles from './pageregistration.css'
+import ClipLoader from 'react-spinners/ClipLoader'
+import { Loading } from '../../../../../universalComponent/Loading'
 
-export function PageRegistration ({ addressNextPage }: { addressNextPage: string }) {
+export function SignUp () {
   const location = useLocation()
   const history = useHistory()
   const dispatch = useDispatch()
   const token = useSelector<RootState, TokenState>((state) => state.token)
+
+  const [valueFirst, setValueFirst] = useState('')
+  const [valueSecond, setValueSecond] = useState('')
+  const [valueThird, setValueThird] = useState('')
+  const [valueFourth, setValueFourth] = useState('')
+
   const dateErrorBasic = [
     { name: 'name', text: '', valid: true },
     { name: 'phone', text: '', valid: true },
     { name: 'activate', text: '', valid: true },
   ]
+
   // сотояния импутов
   const [valueName, setValueName] = useState('')
   const [valuePhone, setValuePhone] = useState('')
@@ -34,12 +42,6 @@ export function PageRegistration ({ addressNextPage }: { addressNextPage: string
 
   // activate, inputInfo
   const [page, setPage] = useState('inputInfo')
-
-  const override: React.CSSProperties = {
-    display: 'block',
-    margin: '0 auto',
-    borderColor: 'red',
-  }
 
   const changeError = (text: string, index: number, valid: boolean) => {
     arrError[index].text = text
@@ -73,20 +75,30 @@ export function PageRegistration ({ addressNextPage }: { addressNextPage: string
     return true
   }
 
-  const handleClick = (e: FormEvent) => {
+  const handleClick = async (e: FormEvent) => {
     e.preventDefault()
     const validName = functionValidateName()
     const validPhone = functionValidatePhone()
-    dispatch(RegisterUserAsync(valuePhone, valueName))
-    if (validName && validPhone && !token.error) {
+    await dispatch(RegisterUserAsync(valuePhone, valueName))
+
+    if (validName && validPhone && token.error.length > 1) {
       setPage('activate')
     }
   }
+
+  useEffect(()=>{
+    if (token.error === 'This number is already registered') {
+      changeError('Аккаунт с таким номером уже существует', 1, false)
+    } else (
+      changeError('', 1, true)
+    )
+  }, [token.error])
 
   const changeValueName = (e: ChangeEvent<HTMLInputElement>) => {
     setValueName(e.target.value.trim())
     changeError('', 0, true)
   }
+
   const changeValuePhone = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     if (!value.match(/[a-z]/) || !value) {
@@ -97,7 +109,7 @@ export function PageRegistration ({ addressNextPage }: { addressNextPage: string
 
   const handleClickActivate = async (e: FormEvent) => {
     e.preventDefault()
-    dispatch(RegisterUserAsync(valuePhone, valueName))
+    dispatch(RegisterSmsActivateAsync(valuePhone, valueName,`${valueFirst}${valueSecond}${valueThird}${valueFourth}`))
   }
 
   useEffect(() => {
@@ -106,28 +118,27 @@ export function PageRegistration ({ addressNextPage }: { addressNextPage: string
     }
   }, [token.tokenText])
 
+
   return (
     <div>
       {page === 'inputInfo' && (
         <div className={styles.content}>
           <Text As="h2" className={styles.title} size={24}>
-            {location.pathname === '/menu/registration' ? 'Зарегистрироваться' : 'Войти'}
+            Зарегистрироваться
           </Text>
           <form className={styles.form}>
-            {location.pathname === '/menu/registration' && (
-              <Input
-                classNameContainer={`${styles.containerInput} ${!arrError[0].valid ? styles.inputInvalid : null}`}
-                value={valueName}
-                placeholder="Имя"
-                onChange={(e) => {
-                  changeValueName(e)
-                }}
-                idInput="registration-input-name"
-                labelText="Как вас зовут"
-              />
-            )}
             <Input
               classNameContainer={`${styles.containerInput} ${!arrError[0].valid ? styles.inputInvalid : null}`}
+              value={valueName}
+              placeholder="Имя"
+              onChange={(e) => {
+                changeValueName(e)
+              }}
+              idInput="registration-input-name"
+              labelText="Как вас зовут"
+            />
+            <Input
+              classNameContainer={`${styles.containerInput} ${!arrError[1].valid ? styles.inputInvalid : null}`}
               value={valuePhone}
               placeholder="+7"
               onChange={(e) => {
@@ -137,12 +148,27 @@ export function PageRegistration ({ addressNextPage }: { addressNextPage: string
               labelText="Номер телефона"
             />
             <ButtonNextPage classNameButton={styles.button} onClick={handleClick} text="Получить смс-код" />
+            <Link className={styles.changeMethods} to={'/menu/sign-in'}>
+              Sign in
+            </Link>
           </form>
           {arrError.find((elem) => !elem.valid) && <ErrorPanel list={arrError} />}
         </div>
       )}
-      {page === 'activate' && <SmsActivate listError={arrError} onClick={handleClickActivate} />}
-      <MoonLoader color={'red'} loading={true} size={150} />
+      {page === 'activate' && 
+        <SmsActivate 
+          listError={arrError}
+          onClick={handleClickActivate} 
+          valueFirst={valueFirst}
+          valueSecond={valueSecond}
+          valueFourth={valueFourth}
+          valueThird={valueThird}
+          setValueFirst={(e) => setValueFirst(e)}
+          setValueSecond={(e) => setValueSecond(e)}
+          setValueFourth={(e) => setValueFourth(e)}
+          setValueThird={(e) => setValueThird(e)}
+        />}
+        <Loading loading={token.loading} />
     </div>
   )
 }

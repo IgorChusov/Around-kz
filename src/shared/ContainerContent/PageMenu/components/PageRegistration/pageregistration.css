@@ -30,3 +30,11 @@
 .inputInvalid input {
   border-color: rgba(180, 75, 75, 1);
 }
+
+.button {
+  margin-bottom: 20px;
+}
+
+.changeMethods:hover {
+  color: var(--greenLight);
+}

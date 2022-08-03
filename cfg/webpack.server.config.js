@@ -1,5 +1,5 @@
 const path = require('path')
-
+const  Dotenv  =  require ( 'dotenv-webpack' ) ;
 const NODE_ENV = process.env.NODE_ENV
 const nodeExternals = require('webpack-node-externals')
 const GLOBAL_CSS_REGEXP = /\.global\.css$/
@@ -63,4 +63,5 @@ module.exports = {
   optimization: {
     minimize: false,
   },
+  plugins: [new Dotenv()],
 }

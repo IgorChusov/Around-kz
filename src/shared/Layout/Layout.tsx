@@ -1,7 +1,6 @@
-import axios from 'axios'
 import React, { useEffect } from 'react'
-
-import EnvConfig from '../../config/env'
+import { useDispatch } from 'react-redux'
+import { LoginUserAsync } from '../../store/token/action'
 
 import styles from './layout.css'
 
@@ -10,16 +9,9 @@ interface ILayoutProps {
 }
 
 export function Layout ({ children }: ILayoutProps) {
-  useEffect(() => {
-    axios
-      .get('http://localhost:8000/users/businessmen/')
-      .then((resp) => {
-        console.log('ответ сервера', resp)
-      })
-      .catch((error) => {
-        console.log('ошибка', error)
-      })
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(LoginUserAsync('+79315432195'))
   }, [])
-  console.log(EnvConfig.apiUrl)
   return <div className={styles.container}>{children}</div>
 }

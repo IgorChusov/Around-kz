@@ -1,5 +1,6 @@
 const path = require('path')
 const NODE_ENV = process.env.NODE_ENV
+const  Dotenv  =  require ( 'dotenv-webpack' ) ;
 const IS_DEV = NODE_ENV === 'development'
 const IS_PROD = NODE_ENV === 'production'
 const GLOBAL_CSS_REGEXP = /\.global\.css$/
@@ -76,5 +77,5 @@ module.exports = {
     ],
   },
   devtool: setupDevtool(),
-  plugins: IS_DEV ? [new CleanWebpackPlugin(), new HotModuleReplacementPlugin()] : [],
+  plugins: IS_DEV ? [new CleanWebpackPlugin(), new HotModuleReplacementPlugin(), new Dotenv()] : [new Dotenv()],
 }

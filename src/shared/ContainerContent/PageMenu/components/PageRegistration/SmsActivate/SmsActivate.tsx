@@ -1,14 +1,22 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 
-import { ButtonNextPage } from '../../../../../../universalComponent/ButtonNextPage'
-import { ErrorPanel, IErrorPanel } from '../../../../../../universalComponent/ErrorPanel'
-import { Text } from '../../../../../../universalComponent/Text'
+import { ButtonNextPage } from '../../../../../universalComponent/ButtonNextPage'
+import { ErrorPanel, IErrorPanel } from '../../../../../universalComponent/ErrorPanel'
+import { Text } from '../../../../../universalComponent/Text'
 
 import styles from './smsactivate.css'
 
 interface ISmsActivate {
   onClick: (e: FormEvent) => void
   listError: IErrorPanel[]
+  valueFirst: string
+  valueSecond: string
+  valueThird: string
+  valueFourth: string
+  setValueFirst: (e: string) => void
+  setValueSecond: (e: string) => void
+  setValueThird: (e: string) => void
+  setValueFourth: (e: string) => void
 }
 
 export function SmsActivate (props: ISmsActivate) {
@@ -20,10 +28,10 @@ export function SmsActivate (props: ISmsActivate) {
   const ref4 = useRef<HTMLInputElement>(null)
   // разобрать таймер
   const [timer, setTimer] = useState(30)
-  const [valueFirst, setValueFirst] = useState('')
-  const [valueSecond, setValueSecond] = useState('')
-  const [valueThird, setValueThird] = useState('')
-  const [valueFourth, setValueFourth] = useState('')
+  // const [valueFirst, setValueFirst] = useState('')
+  // const [valueSecond, setValueSecond] = useState('')
+  // const [valueThird, setValueThird] = useState('')
+  // const [valueFourth, setValueFourth] = useState('')
 
   useEffect(() => {
     timerCurrent.current = setInterval(() => {
@@ -59,15 +67,15 @@ export function SmsActivate (props: ISmsActivate) {
     const len = value.length
     if (value.match(/[0-9]/) || value.match(/^\s*$/)) {
       if (len === 1) {
-        setValueFirst(e.target.value.substr(0, 1))
+        props.setValueFirst(e.target.value.substr(0, 1))
         ref2.current?.focus()
       } else if (len === 0) {
-        setValueFirst('')
+        props.setValueFirst('')
       } else if (len > 1) {
-        setValueFirst(e.target.value.substr(0, 1))
-        setValueSecond(e.target.value.substr(1, 1))
-        setValueThird(e.target.value.substr(2, 1))
-        setValueFourth(e.target.value.substr(3, 1))
+        props.setValueFirst(e.target.value.substr(0, 1))
+        props.setValueSecond(e.target.value.substr(1, 1))
+        props.setValueThird(e.target.value.substr(2, 1))
+        props.setValueFourth(e.target.value.substr(3, 1))
       }
     }
   }
@@ -76,10 +84,10 @@ export function SmsActivate (props: ISmsActivate) {
     const value = e.target.value
     const len = value.length
     if (len === 1) {
-      setValueSecond(e.target.value.substr(0, 1))
+      props.setValueSecond(e.target.value.substr(0, 1))
       ref3.current?.focus()
     } else if (len === 0) {
-      setValueSecond('')
+      props.setValueSecond('')
       ref1.current?.focus()
     }
   }
@@ -88,10 +96,10 @@ export function SmsActivate (props: ISmsActivate) {
     const value = e.target.value
     const len = value.length
     if (len === 1) {
-      setValueThird(e.target.value.substr(0, 1))
+      props.setValueThird(e.target.value.substr(0, 1))
       ref4.current?.focus()
     } else if (len === 0) {
-      setValueThird('')
+      props.setValueThird('')
       ref2.current?.focus()
     }
   }
@@ -100,9 +108,9 @@ export function SmsActivate (props: ISmsActivate) {
     const value = e.target.value
     const len = value.length
     if (len === 1) {
-      setValueFourth(e.target.value.substr(0, 1))
+      props.setValueFourth(e.target.value.substr(0, 1))
     } else if (len === 0) {
-      setValueFourth('')
+      props.setValueFourth('')
       ref3.current?.focus()
     }
   }
@@ -117,7 +125,7 @@ export function SmsActivate (props: ISmsActivate) {
           <input
             ref={ref1}
             onChange={changeValueFirst}
-            value={valueFirst}
+            value={props.valueFirst}
             tabIndex={1}
             autoComplete="one-time-code"
             className={styles.input}
@@ -127,7 +135,7 @@ export function SmsActivate (props: ISmsActivate) {
             ref={ref2}
             maxLength={1}
             onChange={changeValueSecond}
-            value={valueSecond}
+            value={props.valueSecond}
             tabIndex={2}
             className={styles.input}
             type="text"
@@ -136,7 +144,7 @@ export function SmsActivate (props: ISmsActivate) {
             ref={ref3}
             maxLength={1}
             onChange={changeValueThird}
-            value={valueThird}
+            value={props.valueThird}
             tabIndex={3}
             className={styles.input}
             type="text"
@@ -145,7 +153,7 @@ export function SmsActivate (props: ISmsActivate) {
             ref={ref4}
             maxLength={1}
             onChange={changeValueFourth}
-            value={valueFourth}
+            value={props.valueFourth}
             tabIndex={4}
             className={styles.input}
             type="text"

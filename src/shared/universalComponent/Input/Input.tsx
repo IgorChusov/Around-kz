@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react'
+import cn from 'classnames'
 
 import styles from './input.css'
 
@@ -11,6 +12,7 @@ interface IInputProps {
   classNameContainer?: string
   classNameInput?: string
   classNameLabel?: string
+  error?: string
 }
 
 export function Input (props: IInputProps) {
@@ -20,10 +22,15 @@ export function Input (props: IInputProps) {
         onChange={props.onChange}
         value={props.value}
         placeholder={props.placeholder}
-        className={`${styles.input} ${props.classNameInput ? props.classNameInput : ''}`}
+        className={cn(styles.input, props.classNameInput, {
+          [styles.inputInvalid] : props.error?.length && props.error?.length > 0
+        })}
         id={props.idInput}
         type="text"
       />
+      {props.error && (
+        <span className={styles.error}>{props.error}</span>
+      ) }
       <label className={`${styles.label} ${props.classNameLabel ? props.classNameLabel : ''}`} htmlFor={props.idInput}>
         {props.labelText}
       </label>

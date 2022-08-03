@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import { useToken } from '../../../../../hooks/useToken'
 import { EColor, Text } from '../../../../universalComponent/Text'
 
-import { ButtonEntry } from './ButtonEntry'
-import { ButtonRegistration } from './ButtonRegistration'
 import styles from './startpage.css'
 
 export function StartPage () {
@@ -25,11 +24,15 @@ export function StartPage () {
       <Text className={styles.text} As={'p'} size={16} color={EColor.greenDark}>
         Впервые у нас? Зарегистрируйтесь и получите все преимущества нашего сервиса
       </Text>
-      <ButtonRegistration />
+      <Link to={'/menu/sign-up'} className={styles.buttonRegistration}>
+        Зарегистрироваться
+      </Link>
       <Text className={styles.info} size={16} color={EColor.greenDark} As={'p'}>
         Уже есть аккаунт?
       </Text>
-      <ButtonEntry />
+      <Link to={'/menu/sign-in'} className={styles.buttonEntry}>
+        Войти
+      </Link>
     </div>
   )
 }

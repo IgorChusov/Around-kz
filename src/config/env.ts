@@ -1,14 +1,14 @@
 class EnvConfig {
   public static get apiUrl (): string {
-    return 'http://127.0.0.1:8000'
+    return String(process.env.REACT_APP_API_URL).trim()
   }
 
   public static get apiKey (): string {
-    return ''
+    return String(process.env.REACT_APP_API_KEY).trim()
   }
 
   public static get keyYand (): string {
-    return '69159305-1068-4127-bd19-89738297a5e1'
+    return String(process.env.REACT_APP_YND_KEY).trim()
   }
 }
 
