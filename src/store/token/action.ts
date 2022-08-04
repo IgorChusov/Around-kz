@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponseHeaders } from 'axios'
 // import Cookies from "js-cookie";
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import { api } from '../../config/api'
+import  api  from '../../config/api'
 
 import EnvConfig from '../../config/env'
 import { RootState } from '../reducer'
@@ -126,8 +126,8 @@ export const LoginSmsActivateAsync =
         user_code: code,
       })
       .then((resp) => {
-        dispatch(tokenRequestSuccess(resp.data.token))
-        localStorage.setItem('token', resp.data.token)
+        dispatch(tokenRequestSuccess(resp.data.access))
+        localStorage.setItem('token', resp.data.access)
       })
       .catch((error: AxiosError) => {
         dispatch(registerRequestError(error.message))

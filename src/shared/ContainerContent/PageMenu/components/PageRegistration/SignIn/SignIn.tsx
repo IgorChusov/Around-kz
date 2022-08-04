@@ -91,12 +91,6 @@ export function SignIn () {
     }
   }, [token.error])
 
-  useEffect(() => {
-    if (location.pathname === '/menu/registration' && token.tokenText.length > 12 && arrError[2].valid) {
-      history.push('/menu/account')
-    }
-  }, [token.tokenText])
-
   return (
     <div>
       {page === 'inputInfo' && (

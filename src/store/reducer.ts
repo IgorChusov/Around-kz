@@ -3,6 +3,7 @@ import { Reducer } from 'redux'
 import { ITEM } from './actionCreator/item'
 import { PRODUCT_LIST_SHOPPING, TProductListShopping } from './actionCreator/productShopingList'
 import { SERVICES_LIST_SHOPPING, TServicesListShopping } from './actionCreator/servicesShoppingList'
+import { ME_REQUEST, ME_REQUEST_ERROR, ME_REQUEST_SUCCESS } from './me/get/action'
 import { ShoppingCArdListAction, SHOPPING_CARD_LIST } from './payList/action'
 import { PRODUCT_REQUEST, PRODUCT_REQUEST_ERROR, PRODUCT_REQUEST_SUCCESS } from './products/action'
 import { productsReducer, ProductsState } from './products/reduces'
@@ -17,15 +18,19 @@ import {
 import { tokenReducer, TokenState } from './token/reduser'
 
 export type RootState = {
+  token: TokenState
+  me: any
+
+
   dateReserve: string
   cardsPay: IListCard
-  token: TokenState
   shoppingCart: []
   servicesData: ServicesState
   productsData: ProductsState
   servicesListShopping: TServicesListShopping
   productListShopping: TProductListShopping
   item: string
+ 
 }
 
 export type IListCard = {
@@ -36,12 +41,17 @@ export type IListCard = {
 }[]
 
 const initialState: RootState = {
-  item: '',
   token: {
     loading: false,
     error: '',
     tokenText: '',
   },
+  me: [],
+
+
+
+  item: '',
+ 
   dateReserve: '21.01',
   cardsPay: [],
   shoppingCart: [],
@@ -81,6 +91,13 @@ export const rootReducer: Reducer = (state = initialState, action) => {
       return {
         ...state,
         item: action.item,
+      }
+    case ME_REQUEST:
+    case ME_REQUEST_SUCCESS:
+    case ME_REQUEST_ERROR:
+      return {
+        ...state,
+        token: tokenReducer(state.token, action),
       }
     case REGISTER_REQUEST:
     case SMS_REQUEST_SUCCESS:

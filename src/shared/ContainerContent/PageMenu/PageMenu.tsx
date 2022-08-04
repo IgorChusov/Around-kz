@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 
 import { PageProduct } from '../PageProduct'
 
@@ -22,18 +22,13 @@ import { useToken } from '../../../hooks/useToken'
 
 export function PageMenu () {
   const [isOuth, setIsOuth] = useState(false)
-  const location = useLocation().pathname
-  const history = useHistory()
   const tokenHook = useToken()
 
   useEffect(()=>{
-    if(location.includes('/account')){
-      if(!tokenHook.tokenLocalStorage && !tokenHook.token) {
-        setIsOuth(false)
-        history.push('/menu')
-      } else {
-        setIsOuth(true)
-      }
+    if(tokenHook.token.length === 0 && tokenHook.tokenLocalStorage?.length === 0) {
+      setIsOuth(false)
+    } else {
+      setIsOuth(true)
     }
   },[ tokenHook.token, tokenHook.tokenLocalStorage])
 
@@ -41,13 +36,12 @@ export function PageMenu () {
     <>
       {!isOuth && (
         <Switch>
+          <Redirect from="/menu/account" to="/menu" />
           <Route path={'/menu/sign-up'}>
             <SignUp />
            </Route>
           <Route path={'/menu/sign-in'}>
             <SignIn />
-          </Route>
-          <Route path={'/menu/entry'}>
           </Route>
           <Route path={'/menu'}>
             <StartPage />
@@ -56,6 +50,7 @@ export function PageMenu () {
       )}
       {isOuth && (
         <Switch>
+         
           <Route path={'/menu/account/mySchedule'}>
             <MySchedulesPage />
           </Route>
@@ -89,11 +84,17 @@ export function PageMenu () {
           <Route path={'/menu/account/settings'}>
             <Settings />
           </Route>
+          <Route exact path="/menu/sign-up">
+            <Redirect to="/menu/account" />
+          </Route>
+          <Route exact path="/menu/sign-in">
+            <Redirect to="/menu/account" />
+          </Route>
+          <Route exact path="/menu">
+            <Redirect to="/menu/account" />
+          </Route>
           <Route path={'/menu/account'}>
             <PageStartAccount />
-          </Route>
-          <Route path={'/menu'}>
-            <StartPage />
           </Route>
         </Switch>
       )}

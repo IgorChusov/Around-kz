@@ -110,14 +110,8 @@ export function SignUp () {
   const handleClickActivate = async (e: FormEvent) => {
     e.preventDefault()
     dispatch(RegisterSmsActivateAsync(valuePhone, valueName,`${valueFirst}${valueSecond}${valueThird}${valueFourth}`))
+   
   }
-
-  useEffect(() => {
-    if (location.pathname === '/menu/registration' && token.tokenText.length > 12 && arrError[2].valid) {
-      history.push('/menu/account')
-    }
-  }, [token.tokenText])
-
 
   return (
     <div>

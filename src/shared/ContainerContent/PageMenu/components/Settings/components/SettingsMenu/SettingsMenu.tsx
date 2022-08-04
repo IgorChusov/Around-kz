@@ -20,16 +20,19 @@ import styles from './settingsmenu.css'
 export function SettingsMenu () {
   const dispatch = useDispatch()
   const history = useHistory()
+
   const handleClickOut = () => {
-    localStorage.setItem('TOKEN', '')
+    localStorage.setItem('token', '')
     dispatch(tokenRequestSuccess(''))
     history.push('/menu')
   }
+
   const handleClickChange = () => {
-    localStorage.setItem('TOKEN', '')
+    localStorage.setItem('token', '')
     dispatch(tokenRequestSuccess(''))
-    history.push('/menu/entry')
+    history.push('/menu')
   }
+
   return (
     <div>
       <ButtonBack addressLink="/menu/account" />
