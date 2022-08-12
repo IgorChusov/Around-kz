@@ -11,6 +11,10 @@
   overflow-x: hidden;
 }
 
+.loading {
+  min-height: 442px;
+}
+
 @media all and (min-width: 1024px) {
   .content {
     max-width: 500px;

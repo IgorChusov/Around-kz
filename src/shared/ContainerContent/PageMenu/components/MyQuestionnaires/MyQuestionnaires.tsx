@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { AllBusinessmenUserAsync } from '../../../../../store/businessman/all/action'
 
 import { Menu } from '../../../../Menu'
 import { ButtonBack } from '../../../../universalComponent/ButtonBack'
@@ -8,6 +10,10 @@ import { EColor, Text } from '../../../../universalComponent/Text'
 import styles from './myquestionnaires.css'
 
 export function MyQuestionnaires () {
+  const dispatch = useDispatch()
+  useEffect(()=> {
+    dispatch(AllBusinessmenUserAsync())
+  }, [])
   return (
     <div className={styles.container}>
       <ButtonBack addressLink="/menu/account/business/" />

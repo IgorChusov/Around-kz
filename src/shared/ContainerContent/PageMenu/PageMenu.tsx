@@ -25,12 +25,12 @@ export function PageMenu () {
   const tokenHook = useToken()
 
   useEffect(()=>{
-    if(tokenHook.token.length === 0 && tokenHook.tokenLocalStorage?.length === 0) {
+    if(tokenHook.token.length === 0) {
       setIsOuth(false)
     } else {
       setIsOuth(true)
     }
-  },[ tokenHook.token, tokenHook.tokenLocalStorage])
+  },[ tokenHook.token])
 
   return (
     <>

@@ -22,13 +22,13 @@ export function SettingsMenu () {
   const history = useHistory()
 
   const handleClickOut = () => {
-    localStorage.setItem('token', '')
+    localStorage.removeItem('token')
     dispatch(tokenRequestSuccess(''))
     history.push('/menu')
   }
 
   const handleClickChange = () => {
-    localStorage.setItem('token', '')
+    localStorage.removeItem('token')
     dispatch(tokenRequestSuccess(''))
     history.push('/menu')
   }

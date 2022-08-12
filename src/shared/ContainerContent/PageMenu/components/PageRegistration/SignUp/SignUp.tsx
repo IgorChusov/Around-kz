@@ -79,9 +79,9 @@ export function SignUp () {
     e.preventDefault()
     const validName = functionValidateName()
     const validPhone = functionValidatePhone()
-    await dispatch(RegisterUserAsync(valuePhone, valueName))
+    const respToken = await dispatch(RegisterUserAsync(valuePhone, valueName))
 
-    if (validName && validPhone && token.error.length > 1) {
+    if (validName && validPhone && !!respToken) {
       setPage('activate')
     }
   }

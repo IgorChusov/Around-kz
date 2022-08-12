@@ -43,7 +43,14 @@ export const CreateBusinessmenUserAsync = (): ThunkAction<void, RootState, unkno
       dispatch(createBusinessmenRequest())
 
       try {
-        const resp = await api.post(`/users/businessmen/`)
+        const resp = await api.post(`/users/businessmen/`, {
+          // address*
+          // description*
+          // tags*
+          // questionnaire_type*
+          // images_service*
+          // title*
+        })
 
         dispatch(createBusinessmenSuccess(resp))
 

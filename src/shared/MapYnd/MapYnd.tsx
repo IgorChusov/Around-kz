@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { Map, Placemark, YMaps, YMapsApi } from 'react-yandex-maps'
 
@@ -44,6 +44,10 @@ export function MapYnd () {
   const onLoad = (ymaps: YMapsApi) => {
     setMaps(ymaps)
   }
+
+  // const polygonLayout = useMemo(()=>{
+  //   return maps.templateLayoutFactory.createClass('<div class="placemark_layout_container"><div class="polygon_layout">!</div></div>');
+  // }, [maps])
 
   function handleCenterMyPosition () {
     mapRef.setCenter(coords, 17)

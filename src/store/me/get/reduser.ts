@@ -5,13 +5,23 @@ import { MeRequestAction, MeRequestErrorAction, MeRequestSuccessAction, ME_REQUE
 type MeActions = 
   MeRequestAction 
   | MeRequestErrorAction 
-  | MeRequestSuccessAction ;
+  | MeRequestSuccessAction;
 
+export type IMe = {
+  id: number
+  username: string
+  phone: string
+  businessman: any
+  address: string | null
+  avatar: string | null
+  status: string
+  bank_card: string | null
+}
 
 export type MeGetState = {
   loading: boolean
   error: string
-  data: any
+  data: IMe
 }
 
 export const meGetReducer: Reducer<MeGetState, MeActions> = (state, action) => {

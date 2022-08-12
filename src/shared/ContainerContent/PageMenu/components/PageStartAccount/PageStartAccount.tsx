@@ -9,20 +9,16 @@ import { Menu } from '../../../../Menu'
 
 import styles from './pagestartaccount.css'
 import { ChangeAccount } from './ChangeAccount'
+import { MeGetState } from '../../../../../store/me/get/reduser'
 
 export function PageStartAccount () {
-  const token = useSelector<RootState, string>((state) => state.token.tokenText)
+  const me = useSelector<RootState, MeGetState>((state) => state.me)
   const history = useHistory()
-  // useEffect(()=>{
-  //   const localStorageToken = localStorage.getItem('TOKEN')
-  //   if(!token && !localStorageToken) {
-  //     history.push('/')
-  //   }
-  // }, [])
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Добро пожаловать, Алькей</h2>
+        <h2 className={styles.title}>{`Добро пожаловать, ${me.data.username}`}</h2>
         <div className={styles.containerChange}>
           <ChangeAccount />
         </div>

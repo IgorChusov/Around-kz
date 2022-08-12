@@ -9,6 +9,7 @@ import { IconCancel } from '../../../Icons/IconCancel'
 import { EColor, Text } from '../../../universalComponent/Text'
 
 import styles from './pageshoppingcardservices.css'
+import { useToken } from '../../../../hooks/useToken'
 
 interface IPageShoppingCardServices {
   list?: []
@@ -16,10 +17,12 @@ interface IPageShoppingCardServices {
 }
 
 export function PageShoppingCardServices (props: IPageShoppingCardServices) {
-  const token =
-    useSelector<RootState, string>((state) => state.token.tokenText) || typeof window !== 'undefined'
-      ? localStorage.getItem('TOKEN')
-      : null
+  const {tokenLocalStorage, token} = useToken()
+  // const token =
+  //   useSelector<RootState, string>((state) => state.token.tokenText) || typeof window !== 'undefined'
+  //     ? localStorage.getItem('TOKEN')
+  //     : null
+
   const servicesData = useSelector<RootState, TServicesListShopping>((state) => state.servicesListShopping)
   const dispatch = useDispatch()
   const clickDelete = (id: number, ls: { id: string; nameService: string; price: number }[]) => {
@@ -81,14 +84,14 @@ export function PageShoppingCardServices (props: IPageShoppingCardServices) {
           <Text size={16}>{servicesData.time}</Text>
         </div>
       </div>
-      {!token && (
+      {(!token && !tokenLocalStorage)  && (
         <Text color={EColor.greenDark} As="p" className={styles.textInfo} size={20}>
           Зарегистрируйтесь, чтобы забронировать время
         </Text>
       )}
-      <Link to={!token ? '/menu' : 'buyCart/payment'} className={styles.btn}>
+      <Link to={!token && !tokenLocalStorage ? '/menu' : 'buyCart/payment'} className={styles.btn}>
         <Text color={EColor.white} size={20}>
-          {!token ? 'Регистрация' : 'Забронировать'}
+          {(!token && !tokenLocalStorage) ? 'Регистрация' : 'Забронировать'}
         </Text>
       </Link>
     </div>

@@ -4,11 +4,12 @@ import { ITEM } from './actionCreator/item'
 import { PRODUCT_LIST_SHOPPING, TProductListShopping } from './actionCreator/productShopingList'
 import { SERVICES_LIST_SHOPPING, TServicesListShopping } from './actionCreator/servicesShoppingList'
 import { ME_REQUEST, ME_REQUEST_ERROR, ME_REQUEST_SUCCESS } from './me/get/action'
-import { ShoppingCArdListAction, SHOPPING_CARD_LIST } from './payList/action'
+import { IMe, meGetReducer, MeGetState } from './me/get/reduser'
+import { SHOPPING_CARD_LIST } from './payList/action'
 import { PRODUCT_REQUEST, PRODUCT_REQUEST_ERROR, PRODUCT_REQUEST_SUCCESS } from './products/action'
 import { productsReducer, ProductsState } from './products/reduces'
 import { SERVICES_REQUEST, SERVICES_REQUEST_ERROR, SERVICES_REQUEST_SUCCESS } from './services/action'
-import { servicesReducer, ServicesState, TDataServices } from './services/reducer'
+import { servicesReducer, ServicesState } from './services/reducer'
 import {
   REGISTER_REQUEST,
   SMS_REQUEST_SUCCESS,
@@ -19,7 +20,7 @@ import { tokenReducer, TokenState } from './token/reduser'
 
 export type RootState = {
   token: TokenState
-  me: any
+  me: MeGetState
 
 
   dateReserve: string
@@ -46,12 +47,24 @@ const initialState: RootState = {
     error: '',
     tokenText: '',
   },
-  me: [],
+  me: {
+    loading: false,
+    error: '',
+    data: {
+      id: -1,
+      username: '',
+      phone: '',
+      businessman: null,
+      address: null,
+      avatar:  null,
+      status: '',
+      bank_card: null,
+    },
+  },
 
 
 
   item: '',
- 
   dateReserve: '21.01',
   cardsPay: [],
   shoppingCart: [],
@@ -97,7 +110,7 @@ export const rootReducer: Reducer = (state = initialState, action) => {
     case ME_REQUEST_ERROR:
       return {
         ...state,
-        token: tokenReducer(state.token, action),
+        me: meGetReducer(state.me, action),
       }
     case REGISTER_REQUEST:
     case SMS_REQUEST_SUCCESS:

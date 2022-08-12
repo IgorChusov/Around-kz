@@ -1,10 +1,8 @@
-import axios, { AxiosError, AxiosResponseHeaders } from 'axios'
-// import Cookies from "js-cookie";
+import  { AxiosError } from 'axios'
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import  api  from '../../config/api'
 
-import EnvConfig from '../../config/env'
 import { RootState } from '../reducer'
 
 // запрос отправлен
@@ -60,7 +58,6 @@ export const RegisterUserAsync =
         const resp = await api.post(`/users/register`, {
           phone: phone,
           username: username,
-          'api_key': EnvConfig.apiKey
         })
 
         dispatch(smsRequestSuccess())
@@ -93,27 +90,36 @@ export const LoginUserAsync = (phone: string): ThunkAction<void, RootState, unkn
 
       return resp
     } catch (error: any) { 
-      dispatch(registerRequestError(error.message))
+      if(error.response?.data?.phone[0]) {
+        dispatch(registerRequestError(error.response?.data?.phone[0]))
+      } else {
+        dispatch(registerRequestError(error.message))
+      }  
     }
   }
 
 export const RegisterSmsActivateAsync =
 (phone: string, username: string, code: string, ): ThunkAction<void, RootState, unknown, Action<string>> =>
-  (dispatch) => {
+ async (dispatch) => {
     dispatch(registerRequest())
-    api.post(`/users/register/sms`, {
+    try {
+      const respRegister = await api.post(`/users/register/sms`, {
         phone: phone,
         username: username,
-        password: '123456',
         user_code: code,
       })
-      .then((resp) => {
-        dispatch(tokenRequestSuccess(resp.data.token))
-        localStorage.setItem('token', resp.data.token)
+
+      const respToken = await api.post(`/users/token`, {
+        phone: phone,
+        username: username,
+        user_code: code,
+        password: respRegister.data.password
       })
-      .catch((error: AxiosError) => {
-        dispatch(registerRequestError(error.message))
-      })
+        dispatch(tokenRequestSuccess(respToken.data))
+        localStorage.setItem('token', 'true')
+    } catch (error: any) {
+      dispatch(registerRequestError(error.message))
+    }
 }
 
 export const LoginSmsActivateAsync =
@@ -126,10 +132,26 @@ export const LoginSmsActivateAsync =
         user_code: code,
       })
       .then((resp) => {
-        dispatch(tokenRequestSuccess(resp.data.access))
-        localStorage.setItem('token', resp.data.access)
+        dispatch(tokenRequestSuccess(resp.data))
+        localStorage.setItem('token', 'true')
       })
       .catch((error: AxiosError) => {
         dispatch(registerRequestError(error.message))
       })
+}
+
+export const RefreshTokenAsync =
+(): ThunkAction<void, RootState, unknown, Action<string>> =>
+ async (dispatch) => {
+    try {
+      dispatch(registerRequest())
+
+      const resp = await api.post(`/users/token/refresh`)
+
+      dispatch(tokenRequestSuccess(resp.data.access))
+      localStorage.setItem('token', 'true')
+    } catch (error: any) {
+      localStorage.removeItem('token')
+      dispatch(registerRequestError(error?.message))
+    }
 }

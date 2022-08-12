@@ -35,7 +35,7 @@ export const meDeleteError: ActionCreator<MeDeleteErrorAction> = (error: string)
 })
 
 export const MeDeleteUserAsync = ({}): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch) => { 
+  async (dispatch, getState) => { 
     dispatch(meDeleteRequest())
     try {
       const resp = await api.put(`/users/me`, {

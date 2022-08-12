@@ -2,7 +2,6 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 
-import MoonLoader from 'react-spinners/MoonLoader'
 import { RootState } from '../../../../../../store/reducer'
 import { TokenState } from '../../../../../../store/token/reduser'
 import { ButtonNextPage } from '../../../../../universalComponent/ButtonNextPage'
@@ -35,7 +34,7 @@ export function SignIn () {
   // сотояния импутов
   const [valuePhone, setValuePhone] = useState('')
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
-
+  const [errorBottomInput, setErrorBottomInput] = useState('')
   // activate, inputInfo
   const [page, setPage] = useState('inputInfo')
 
@@ -63,9 +62,9 @@ export function SignIn () {
   
     const validPhone = functionValidatePhone()
     
-    const a = await dispatch(LoginUserAsync(valuePhone))
+    const respToken = await dispatch(LoginUserAsync(valuePhone))
     
-    if (validPhone && token.error.length === 0  && !!a) {
+    if (validPhone && token.error.length === 0  && !!respToken) {
       setPage('activate')
     }
   }
@@ -85,7 +84,9 @@ export function SignIn () {
 
   useEffect(()=> {
     if(token.error.length > 1) {
-      changeError(token.error, 2, false)
+      token.error === 'This number is not registered' ? 
+        setErrorBottomInput(token.error) :
+        changeError(token.error, 2, false)
     } else {
       changeError('', 2, true)
     }
@@ -108,6 +109,7 @@ export function SignIn () {
               }}
               idInput="registration-input-phone"
               labelText="Номер телефона"
+              error={errorBottomInput}
             />
             <ButtonNextPage classNameButton={styles.button} onClick={handleClick} text="Получить смс-код" />
             <Link className={styles.changeMethods} to={'/menu/sign-up'}>

@@ -1,8 +1,8 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
-import  api  from '../../config/api'
+import  api  from '../../../config/api'
 
-import { RootState } from '../reducer'
+import { RootState } from '../../reducer'
 
 // запрос отправлен
 export const ALL_BUSINESSMEN_REQUEST = 'ALL_BUSINESSMEN_REQUEST'
@@ -39,13 +39,17 @@ export const allBusinessmenRequestError: ActionCreator<AllBusinessmenRequestErro
 })
 
 export const AllBusinessmenUserAsync = (): ThunkAction<void, RootState, unknown, Action<string>> =>
-   async (dispatch) => {
+   async (dispatch, getState) => {
       dispatch(allBusinessmenRequest())
 
       try {
-        const resp = await api.post(`/users/businessmen/`)
+        const resp = await api.get(`/users/businessmen/`, {
+          headers: {
+          'Authorization': `JWT ${getState().token.tokenText}`
+        }
+        })
 
-        dispatch(allBusinessmenRequestSuccess(resp))
+        dispatch(allBusinessmenRequestSuccess(resp.data))
 
         return resp
       } catch (error: any) {

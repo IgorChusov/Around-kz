@@ -1,7 +1,6 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
-import { TListServices } from '../../shared/ContainerContent/PageService'
 import { RootState } from '../reducer'
 
 import img1 from '../../assets/images/product1.jpg'
