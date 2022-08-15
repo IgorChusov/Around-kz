@@ -8,6 +8,7 @@ import styles from './smsactivate.css'
 
 interface ISmsActivate {
   onClick: (e: FormEvent) => void
+  onRepeat: (e: FormEvent) => void
   listError: IErrorPanel[]
   valueFirst: string
   valueSecond: string
@@ -60,6 +61,7 @@ export function SmsActivate (props: ISmsActivate) {
         }),
       1000,
     )
+    props.onRepeat(e)
   }
 
   const changeValueFirst = (e: ChangeEvent<HTMLInputElement>) => {

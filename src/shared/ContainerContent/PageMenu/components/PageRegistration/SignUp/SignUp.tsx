@@ -153,6 +153,7 @@ export function SignUp () {
         <SmsActivate 
           listError={arrError}
           onClick={handleClickActivate} 
+          onRepeat={handleClick}
           valueFirst={valueFirst}
           valueSecond={valueSecond}
           valueFourth={valueFourth}
