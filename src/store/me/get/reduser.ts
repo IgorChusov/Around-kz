@@ -11,7 +11,7 @@ export type IMe = {
   id: number
   username: string
   phone: string
-  businessman: any
+  businessman: {id: number, title: string, questionnaire_type: string}[]
   address: string | null
   avatar: string | null
   status: string

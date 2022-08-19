@@ -38,22 +38,57 @@ export const createBusinessmenError: ActionCreator<CreateBusinessmenRequestError
   error,
 })
 
-export const CreateBusinessmenUserAsync = (): ThunkAction<void, RootState, unknown, Action<string>> =>
-   async (dispatch) => {
+export const CreateBusinessmenUserAsync = (
+  formData: FormData
+): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch, getState) => {
+    dispatch(createBusinessmenRequest())
+
+    try {
+      const resp = await api.post(`/users/businessmen/create`,
+        // title,
+        // address,
+        // tags,
+        // description,
+        // images_service: images,
+        // questionnaire_type: questionnaireType,
+        formData
+     , { 
+        headers: {
+        'Authorization': `JWT ${getState().token.tokenText}`
+      }})
+
+      dispatch(createBusinessmenSuccess(resp))
+
+      return resp
+    } catch (error: any) {
+      dispatch(createBusinessmenError(error.message))
+    }
+  }
+
+  export const ChangeBusinessmenUserAsync = (
+    formData: FormData
+
+  ): ThunkAction<void, RootState, unknown, Action<string>> =>
+    async (dispatch, getState) => {
       dispatch(createBusinessmenRequest())
-
+  
       try {
-        const resp = await api.post(`/users/businessmen/`, {
-          // address*
-          // description*
-          // tags*
-          // questionnaire_type*
-          // images_service*
-          // title*
-        })
-
+        const resp = await api.patch(`/users/businessmen/${getState().businessmen.data?.id}`,
+          // title,
+          // address,
+          // tags,
+          // description,
+          // images_service: images,
+          // questionnaire_type: questionnaireType,
+          formData
+       , { 
+          headers: {
+          'Authorization': `JWT ${getState().token.tokenText}`
+        }})
+  
         dispatch(createBusinessmenSuccess(resp))
-
+  
         return resp
       } catch (error: any) {
         dispatch(createBusinessmenError(error.message))

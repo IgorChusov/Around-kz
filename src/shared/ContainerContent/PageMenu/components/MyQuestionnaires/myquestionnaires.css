@@ -24,6 +24,9 @@
   width: calc((100% - 44px) / 2);
   height: auto;
   margin-bottom: 20px;
+  min-height: 80px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .item:not(:nth-child(2n)) {

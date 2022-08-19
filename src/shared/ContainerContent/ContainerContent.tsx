@@ -17,7 +17,6 @@ import { TokenState } from '../../store/token/reduser'
 
 export function ContainerContent () {
   const me = useSelector<RootState, MeGetState>((state) => state.me)
-  const tokenLocal = useSelector<RootState, TokenState>((state) => state.token)
   const token = useToken()
   const dispatch = useDispatch()
   

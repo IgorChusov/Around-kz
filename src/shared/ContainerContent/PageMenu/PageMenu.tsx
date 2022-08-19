@@ -36,21 +36,19 @@ export function PageMenu () {
     <>
       {!isOuth && (
         <Switch>
-          <Redirect from="/menu/account" to="/menu" />
           <Route path={'/menu/sign-up'}>
             <SignUp />
            </Route>
           <Route path={'/menu/sign-in'}>
             <SignIn />
           </Route>
-          <Route path={'/menu'}>
+          <Route exact path={'/menu/account'}>
             <StartPage />
           </Route>
         </Switch>
       )}
       {isOuth && (
         <Switch>
-         
           <Route path={'/menu/account/mySchedule'}>
             <MySchedulesPage />
           </Route>
@@ -84,18 +82,11 @@ export function PageMenu () {
           <Route path={'/menu/account/settings'}>
             <Settings />
           </Route>
-          <Route exact path="/menu/sign-up">
-            <Redirect to="/menu/account" />
-          </Route>
-          <Route exact path="/menu/sign-in">
-            <Redirect to="/menu/account" />
-          </Route>
-          <Route exact path="/menu">
-            <Redirect to="/menu/account" />
-          </Route>
           <Route path={'/menu/account'}>
             <PageStartAccount />
           </Route>
+          <Redirect exact from='/menu/sign-up' to='/menu/account' />
+          <Redirect exact from='/menu/sign-in' to='/menu/account' />
         </Switch>
       )}
     </>

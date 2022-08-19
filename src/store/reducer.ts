@@ -3,8 +3,12 @@ import { Reducer } from 'redux'
 import { ITEM } from './actionCreator/item'
 import { PRODUCT_LIST_SHOPPING, TProductListShopping } from './actionCreator/productShopingList'
 import { SERVICES_LIST_SHOPPING, TServicesListShopping } from './actionCreator/servicesShoppingList'
+import { CREATE_BUSINESSMEN_ERROR, CREATE_BUSINESSMEN_REQUEST, CREATE_BUSINESSMEN_SUCCESS } from './businessman/create/action'
+import { createBusinessmenReducer, CreateBusinessmenState } from './businessman/create/reduser'
+import { GET_BUSINESSMEN_ERROR, GET_BUSINESSMEN_REQUEST, GET_BUSINESSMEN_SUCCESS } from './businessman/get/action'
+import { getBusinessmenReducer, IDataBusinessmen, TGetBusinessmenState } from './businessman/get/reduser'
 import { ME_REQUEST, ME_REQUEST_ERROR, ME_REQUEST_SUCCESS } from './me/get/action'
-import { IMe, meGetReducer, MeGetState } from './me/get/reduser'
+import { meGetReducer, MeGetState } from './me/get/reduser'
 import { SHOPPING_CARD_LIST } from './payList/action'
 import { PRODUCT_REQUEST, PRODUCT_REQUEST_ERROR, PRODUCT_REQUEST_SUCCESS } from './products/action'
 import { productsReducer, ProductsState } from './products/reduces'
@@ -21,8 +25,8 @@ import { tokenReducer, TokenState } from './token/reduser'
 export type RootState = {
   token: TokenState
   me: MeGetState
-
-
+  businessman: CreateBusinessmenState
+  businessmen: TGetBusinessmenState 
   dateReserve: string
   cardsPay: IListCard
   shoppingCart: []
@@ -54,15 +58,24 @@ const initialState: RootState = {
       id: -1,
       username: '',
       phone: '',
-      businessman: null,
+      businessman: [],
       address: null,
       avatar:  null,
       status: '',
       bank_card: null,
     },
   },
-
-
+  businessman: {
+    loading: false,
+    error: '',
+    data: null,
+  },
+  businessmen: {
+    loading: false,
+    hasLoading: false,
+    error: '',
+    data: null,
+  },
 
   item: '',
   dateReserve: '21.01',
@@ -119,6 +132,20 @@ export const rootReducer: Reducer = (state = initialState, action) => {
       return {
         ...state,
         token: tokenReducer(state.token, action),
+      }
+    case CREATE_BUSINESSMEN_REQUEST:
+    case CREATE_BUSINESSMEN_SUCCESS:
+    case CREATE_BUSINESSMEN_ERROR:
+      return {
+        ...state,
+        businessman: createBusinessmenReducer(state.businessman, action),
+      }
+    case GET_BUSINESSMEN_REQUEST:
+    case GET_BUSINESSMEN_SUCCESS:
+    case GET_BUSINESSMEN_ERROR:
+      return {
+        ...state,
+        businessmen: getBusinessmenReducer(state.businessmen, action),
       }
     case SERVICES_REQUEST:
     case SERVICES_REQUEST_SUCCESS:

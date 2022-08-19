@@ -6,6 +6,9 @@
 .inputContainer {
   margin-bottom: 26px;
   position: relative;
+}
+
+.inputGroup {
   padding: 0 29px;
 }
 
@@ -70,7 +73,7 @@
 }
 
 .textareaContainer {
-  margin-bottom: 24px;
+  margin-bottom: 6px;
   padding: 0 9px;
 }
 
@@ -90,7 +93,6 @@
 
 .inputFileBtn {
   margin-bottom: 16px;
-  padding: 16px;
   width: 100%;
   height: 117px;
   position: relative;
@@ -98,6 +100,7 @@
   background-color: transparent;
   box-shadow: 0 4px 10px 0 #00000026;
   border-radius: 20px;
+  overflow: hidden;
 }
 
 .btnNextPage {
@@ -142,7 +145,6 @@
 }
 
 .inputFileBtnSmall {
-  padding: 16px;
   width: 100%;
   height: 66px;
   position: relative;
@@ -150,6 +152,7 @@
   background-color: transparent;
   box-shadow: 0 4px 10px 0 #00000026;
   border-radius: 20px;
+  overflow: hidden;
 }
 
 .inputSmallContent {
@@ -172,4 +175,36 @@
   width: 25px;
   height: 4px;
   transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.textPhoto {
+  margin-bottom: 24px;
+  list-style: 19px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.error {
+  color: var(--redVar);
+  position: absolute;
+  font-size: 12px;
+  line-height: 13px;
+  right: 57px;
+}
+
+.errorTags {
+  border-bottom: 1px solid var(--redVar);
+}
+
+.img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border: 1px solid white;
+  background-color: transparent;
+  opacity: 0;
+}
+
+.view {
+  opacity: 1;
 }

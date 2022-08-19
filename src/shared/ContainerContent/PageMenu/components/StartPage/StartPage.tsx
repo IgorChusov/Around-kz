@@ -1,21 +1,10 @@
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router'
+import React from 'react'
 import { Link } from 'react-router-dom'
-
-import { useToken } from '../../../../../hooks/useToken'
 import { EColor, Text } from '../../../../universalComponent/Text'
 
 import styles from './startpage.css'
 
 export function StartPage () {
-  // const token = useSelector<RootState, string>(state => state.token.tokenText);
-  const { token, tokenLocalStorage } = useToken()
-  const history = useHistory()
-  useEffect(() => {
-    if (!token) return
-    history.push('/menu/account')
-  }, [token])
-
   return (
     <div className={styles.content}>
       <Text className={styles.title} As={'h2'} size={24} color={EColor.greenDark}>
