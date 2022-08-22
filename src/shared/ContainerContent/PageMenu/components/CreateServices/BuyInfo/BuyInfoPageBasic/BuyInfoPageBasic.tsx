@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React, { ChangeEvent, FormEvent } from 'react'
 
 import { EColor, Text } from '../../../../../../universalComponent/Text'
 
@@ -6,24 +6,46 @@ import styles from './buyinfopagebasic.css'
 
 interface IServicesInfoPageBasic {
   handleSubmit: (e: FormEvent) => void
+  valueName: string
+  changeValueName: (e: ChangeEvent<HTMLInputElement>) => void
+  valueAddress: string
+  changeValueAddress: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export function BuyInfoPageBasic ({ handleSubmit }: IServicesInfoPageBasic) {
+export function BuyInfoPageBasic ({ 
+  handleSubmit,
+  valueName, 
+  changeValueName,
+  valueAddress, 
+  changeValueAddress,
+}: IServicesInfoPageBasic) {
   return (
     <div className={styles.container}>
       <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
-        {'Заполните информацию о себе'}
+        Заполните информацию о себе
       </Text>
-      <form className={styles.form} action="">
+      <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <div className={styles.inputContainer}>
-            <input className={styles.input} id={'inputActivity'} type="text" />
+            <input 
+              value={valueName}
+              onChange={(e) => changeValueName(e)}
+              className={styles.input} 
+              id={'inputActivity'} 
+              type="text" 
+            />
             <label className={styles.label} htmlFor="inputActivity">
               Вид деятельности
             </label>
           </div>
           <div className={styles.inputContainer}>
-            <input className={styles.input} id={'inputAddress'} type="text" />
+            <input 
+              value={valueAddress}
+              onChange={(e) => changeValueAddress(e)}
+              className={styles.input} 
+              id={'inputAddress'} 
+              type="text" 
+            />
             <label className={styles.label} htmlFor="inputAddress">
               Адрес
             </label>
@@ -33,7 +55,14 @@ export function BuyInfoPageBasic ({ handleSubmit }: IServicesInfoPageBasic) {
           По каким словам вас смогут найти в поиске?
         </Text>
         <div className={styles.inputTagContainer}>
-          <input placeholder="#тег" id={'inputTag'} className={styles.inputTag} type="text" />
+          <input 
+            // value={valueTags}
+            // onChange={(e) => changeValueTags(e)}
+            placeholder="#тег" 
+            id={'inputTag'} 
+            className={styles.inputTag} 
+            type="text" 
+          />
           <label className={styles.labelTag} htmlFor="inputTag">
             Теги разделяйте запятой
           </label>
@@ -51,7 +80,7 @@ export function BuyInfoPageBasic ({ handleSubmit }: IServicesInfoPageBasic) {
             Не более 500 знаков
           </label>
         </div>
-        <button className={styles.btnNextPage} onClick={handleSubmit}>
+        <button className={styles.btnNextPage}>
           Далее
         </button>
       </form>

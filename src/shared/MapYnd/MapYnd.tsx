@@ -22,7 +22,7 @@ interface Is {
 
 export function MapYnd () {
   const history = useHistory()
-  const item = useSelector<RootState>((state) => state.item)
+  // const item = useSelector<RootState>((state) => state.item)
   const { latitude, longitude, error }: Is = usePosition()
   const [maps, setMaps] = useState<any>({})
   const [coords, setCoords] = useState<number[]>([])

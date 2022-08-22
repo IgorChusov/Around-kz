@@ -18,16 +18,21 @@ type TGetBusinessmenActions =
 export interface IDataBusinessmen {
   id: number,
   tags: string [],
-  images_service: {file: string}[],
-  service:[],
+  images_service: string[],
+  service: {
+    id: number
+    description: string
+    price: string
+    title: string
+  }[],
   product:[],
   rule_payment: string,
   title: string,
   description: string,
   questionnaire_type: string,
   address: string,
-  date_create: Date,
-  date_update: Date,
+  date_create: Date | null,
+  date_update: Date | null,
   icon: null,
   type_booking: string,
   time_bring:null,
@@ -41,7 +46,7 @@ export type TGetBusinessmenState = {
   loading: boolean
   hasLoading: boolean
   error: string
-  data: IDataBusinessmen | null
+  data: IDataBusinessmen
 }
 
 export const getBusinessmenReducer: Reducer<TGetBusinessmenState, TGetBusinessmenActions> = (state, action) => {

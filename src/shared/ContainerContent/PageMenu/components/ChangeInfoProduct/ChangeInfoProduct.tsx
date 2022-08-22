@@ -109,7 +109,7 @@ export function ChangeInfoProduct () {
             className={styles.btn}
             handleClick={() => {}}
           />
-          <BuyInfoPageBasic handleSubmit={() => {}} />
+          {/* <BuyInfoPageBasic handleSubmit={() => {}} /> */}
         </Route>
       </Switch>
     </div>

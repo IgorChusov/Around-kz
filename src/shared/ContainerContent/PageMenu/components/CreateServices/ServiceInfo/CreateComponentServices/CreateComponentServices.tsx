@@ -8,16 +8,17 @@ import styles from './createcomponentservices.css'
 interface ICreateComponentServices {
   nameServices: string
   componentId: string
-  handleClickOnChange: (componentId: string) => void
+  id: number | undefined
+  handleClickOnChange: (componentId: string, id: number | undefined) => void
 }
 
-export function CreateComponentServices ({ componentId, nameServices, handleClickOnChange }: ICreateComponentServices) {
+export function CreateComponentServices ({ componentId, nameServices, handleClickOnChange, id}: ICreateComponentServices) {
   return (
     <li className={styles.item}>
       <button
         className={styles.button}
         onClick={() => {
-          handleClickOnChange(componentId)
+          handleClickOnChange(componentId, id)
         }}
       >
         <Text As="p" size={16}>

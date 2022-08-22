@@ -1,36 +1,27 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation, useParams } from 'react-router'
+import { ChangeAdsUserAsync, CreateAdsUserAsync, DeleteAdsUserAsync } from '../../../../../store/ads/action'
 import { ChangeBusinessmenUserAsync } from '../../../../../store/businessman/create/action'
 import { CreateBusinessmenState } from '../../../../../store/businessman/create/reduser'
-import { GetBusinessmenUserAsync } from '../../../../../store/businessman/get/action'
 import { TGetBusinessmenState } from '../../../../../store/businessman/get/reduser'
 import { RootState } from '../../../../../store/reducer'
-
-import { generateRandomString } from '../../../../../utils/js/generateRandomIndex'
+import { generateIdFront, generateRandomString } from '../../../../../utils/js/generateRandomIndex'
 import { ModalComponentServices } from '../../../../ModalComponentServices'
 import { ButtonBack } from '../../../../universalComponent/ButtonBack'
-import { IErrorPanel } from '../../../../universalComponent/ErrorPanel'
+import { ErrorPanel, IErrorPanel } from '../../../../universalComponent/ErrorPanel'
+import { Loading } from '../../../../universalComponent/Loading'
 import { EColor, Text } from '../../../../universalComponent/Text'
 import { ServicesInfoComponents } from '../CreateServices/ServiceInfo/ServicesInfoComponents'
-import { ServicesInfoPageBasic } from '../CreateServices/ServiceInfo/ServicesInfoPageBasic'
-
+import { InfoPageBasic } from '../InfoPageBasic'
 import styles from './changeinfoservice.css'
 
-export type TListComponentsServices = {
-  id: string
-  name: string
-  price: number
-  quantity: boolean
-  comment: string
-}[]
-
-interface IList {
-  id: string
-  name: string
-  price: number
-  quantity: boolean
-  comment: string
+export interface IListComponentsServices {
+  id?: number
+  title: string
+  price: string
+  description: string
+  idFront: string
 }
 
 const dateErrorBasic = [
@@ -50,7 +41,8 @@ export function ChangeInfoService () {
 
   const { id, type, typeService } = useParams<{ id?: string; type?: string; typeService?: string }>()
   const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
- 
+  const businessman = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
+
   const [page, setPage] = useState(true)
   const [title, setTitle] = useState('Заполните информацию о себе')
   const [isOpenModal, setOpenModal] = useState(false)
@@ -58,7 +50,7 @@ export function ChangeInfoService () {
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
   
   // массив с списком услуг и цен
-  const [services, setServices] = useState<TListComponentsServices>([])
+  const [services, setServices] = useState<IListComponentsServices []>([])
   
   // управляемые компоненты интутов
   const [valueName, setValueName] = useState('')
@@ -91,6 +83,7 @@ export function ChangeInfoService () {
     e.preventDefault()
     setValueName(`${e.target.value}`)
   }
+
   function handleChangeInputPrice (e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault()
     if (/^[0-9]+$/.test(e.target.value) || /^\s*$/.test(e.target.value)) {
@@ -102,22 +95,15 @@ export function ChangeInfoService () {
     setValueComment(`${e.target.value}`)
   }
   // // функция добавления новой услуги
-  function changeElementService (element: IList, idElement: string) {
+  function changeElementService (element: IListComponentsServices, idElement: string) {
     setOpenModal(true)
-    setValueName(element.name)
+    setValueName(element.title)
     setValuePrice(`${element.price}`)
-    setValueComment(element.comment)
+    setValueComment(element.description)
     setIdChangeElement(idElement)
   }
 
-  // function removeElementService (element:IList) {
-  //  const newList = services.filter(function( obj ) {
-  //     return obj.name !== element.name;
-  // });
-  //   setServices(newList)
-  // }
-console.log(businessmen.data)
-  function handleAddService (e: FormEvent<HTMLFormElement>) {
+  async function handleAddService  (e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (valueName.length < 3) {
       setValidationName(true)
@@ -138,24 +124,28 @@ console.log(businessmen.data)
     }
     // функции изменения элемента списков услуг
 
-    if (idChangeElement.length > 1) {
-      services.map((elem) => {
-        if (elem.id === idChangeElement) {
-          elem.name = valueName
-          elem.price = Number(valuePrice)
-          elem.comment = valueComment
+    if (idChangeElement.length > 0) {
+      services.map(async (elem) => {
+        if (elem.idFront === idChangeElement) {
+          elem.title = valueName
+          elem.price = valuePrice
+          elem.description= valueComment
+        }
+        if(elem.idFront === idChangeElement && elem.id) {
+          await dispatch(ChangeAdsUserAsync(valueName, valueComment, valuePrice, String(elem.id)))
         }
       })
       setServices(services)
+     
     } else {
+      await dispatch(CreateAdsUserAsync(valueName, valueComment, valuePrice, String(businessmen.data.id) ))
       setServices([
         ...services,
         {
-          id: generateRandomString(),
-          name: valueName,
-          price: Number(valuePrice),
-          quantity: false,
-          comment: valueComment,
+          idFront: generateRandomString(),
+          title: valueName,
+          price: valuePrice,
+          description: valueComment,
         },
       ])
     }
@@ -226,18 +216,21 @@ console.log(businessmen.data)
       formData.append('tags', arrTags[i]);
     }
 
-    
     formData.append('title', valueActivity.trim())
     formData.append('address', valueAddress)
     formData.append('description', valueDescription)
     for (let i = 0; i < arr.length; i++) {
+      if(arr.length === 0) return
       formData.append('images_service', arr[i]);
     }
 
     formData.append('questionnaire_type', 'Service')
+
+    
     const resp = await dispatch(ChangeBusinessmenUserAsync(formData))
+
     if(!!resp) {
-      history.push('/menu/account/business/createServices/selection/service/components')
+      history.push(`/menu/account/business/myQuestionnaires/service/${id}`)
     }
   }
 
@@ -274,6 +267,47 @@ console.log(businessmen.data)
     setValueDescription(e.target.value)
   }
 
+  useEffect(() => {
+    setServices(businessmen.data.service.map(generateIdFront))
+  },[])
+
+
+  const handleSubmitComponents = async  () => {
+    const formData = new FormData()
+
+    for (let i = 0; i < businessmen.data.tags.length; i++) {
+      formData.append('tags', businessmen.data.tags[i]);
+    }
+
+    for (let i = 0; i < services.length; i++) {
+      formData.append('service', JSON.stringify(services[i]));
+    }
+
+    dispatch(ChangeBusinessmenUserAsync(formData))
+
+    history.push('/menu/account/business/myQuestionnaires')
+  }
+
+  const handleDeleteComponent = () => {
+    const el = services.find((elem) => elem.idFront === idChangeElement)
+
+    if(!el || !el.id) return
+
+    dispatch(DeleteAdsUserAsync(String(el.id)))
+    setServices(services.filter((elem)=> elem.idFront !== el.idFront))
+    setOpenModal(false)
+    setIdChangeElement('')
+    setValueName('')
+    setValuePrice('')
+    setValueComment('')
+  }
+
+  useEffect(()=> {
+    if(businessmen.data.id === 0) {
+      history.push('/menu/account/business/myQuestionnaires/')
+    }
+  }, [])
+
   return (
     <div className={styles.container}>
       <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
@@ -283,17 +317,13 @@ console.log(businessmen.data)
         <div ref={refPresentation} className={styles.presentationChecked}></div>
       </div>
       <ButtonBack
-        addressLink={
-          location === `/menu/account/business/myQuestionnaires/${typeService}/${id}/changeInfo`
-            ? `/menu/account/business/myQuestionnaires/service/${id}`
-            : `/menu/account/business/myQuestionnaires/${typeService}/${id}/changeInfo`
-        }
+        addressLink={`/menu/account/business/myQuestionnaires/service/${id}`}
         className={styles.btn}
       />
       <Switch>
         <Route path={'/menu/account/business/myQuestionnaires/service/:id/changeInfo/components'}>
           <ServicesInfoComponents
-            handleClickSubmith={() => {}}
+            handleClickSubmith={handleSubmitComponents}
             handleOpenModal={() => {
               setOpenModal(true)
             }}
@@ -302,7 +332,8 @@ console.log(businessmen.data)
           />
         </Route>
         <Route path={'/menu/account/business/myQuestionnaires/service/:id/changeInfo'}>
-          <ServicesInfoPageBasic 
+          <InfoPageBasic 
+            type='Service'
             handleSubmit={handleSubmit}
             valueActivity={valueActivity}
             setValueActivity={(e) => changeValueActivity(e)}
@@ -318,11 +349,11 @@ console.log(businessmen.data)
             refFile3={refFile3}
             refFile4={refFile4}
             refFile5={refFile5}
-            defaultPhoto1={businessmen.data?.images_service[0]?.file}
-            defaultPhoto2={businessmen.data?.images_service[1]?.file}
-            defaultPhoto3={businessmen.data?.images_service[2]?.file}
-            defaultPhoto4={businessmen.data?.images_service[3]?.file}
-            defaultPhoto5={businessmen.data?.images_service[4]?.file}
+            defaultPhoto1={businessmen.data?.images_service[0]}
+            defaultPhoto2={businessmen.data?.images_service[1]}
+            defaultPhoto3={businessmen.data?.images_service[2]}
+            defaultPhoto4={businessmen.data?.images_service[3]}
+            defaultPhoto5={businessmen.data?.images_service[4]}
           />
         </Route>
       </Switch>
@@ -342,8 +373,13 @@ console.log(businessmen.data)
           validationText={valueValidation}
           unvalidationName={isValidationName}
           unvalidationPrice={isValidationPrice}
+          onDelete={handleDeleteComponent}
         />
       )}
+      <Loading loading={businessman.loading} />
+      {businessman.error && 
+        <ErrorPanel list={[{name: '', text: businessman.error, valid: false}]} />
+      }
     </div>
   )
 }

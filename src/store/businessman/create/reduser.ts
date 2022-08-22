@@ -1,4 +1,5 @@
 import { Reducer } from 'react'
+import { IDataBusinessmen } from '../get/reduser';
 
 import {
   CreateBusinessmenRequestAction, 
@@ -18,7 +19,7 @@ type CreateBusinessmenActions =
 export type CreateBusinessmenState = {
   loading: boolean
   error: string
-  data: any
+  data: IDataBusinessmen | null
 }
 
 export const createBusinessmenReducer: Reducer<CreateBusinessmenState, CreateBusinessmenActions> = (state, action) => {

@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FormEvent } from 'react'
+import React, { ChangeEvent, FormEvent, MouseEventHandler } from 'react'
 import ReactDOM from 'react-dom'
 
-import { Text } from '../universalComponent/Text'
+import { EColor, Text } from '../universalComponent/Text'
 
 import styles from './modalcomponentservices.css'
 
@@ -16,6 +16,7 @@ interface IModalComponentServices {
   handleClickCancel: () => void
   handleClickSave: (e: FormEvent<HTMLFormElement>) => void
   handleChangeForm?: (e: ChangeEvent<HTMLFormElement>) => void
+  onDelete:() => void
   validationText: string
   unvalidationName: boolean
   unvalidationPrice: boolean
@@ -35,9 +36,12 @@ export function ModalComponentServices ({
   validationText,
   unvalidationName,
   unvalidationPrice,
+  onDelete,
 }: IModalComponentServices) {
   const node = document.getElementById(idContainer)
+
   if (!node) return null
+
   return ReactDOM.createPortal(
     <div className={styles.container}>
       <Text className={styles.title} As="h2" mobileSize={16} size={24}>
@@ -93,6 +97,11 @@ export function ModalComponentServices ({
           </button>
         </div>
       </form>
+      <button onClick={onDelete} className={styles.buttonDel}> 
+        <Text color={EColor.greenLight} mobileSize={16} size={20}>
+          Удалить
+        </Text>
+      </button>
       {validationText.length > 1 && (
         <div className={styles.containerTextError}>
           <Text As="p" size={16}>

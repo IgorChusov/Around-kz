@@ -5,29 +5,22 @@ import { ModalComponentServices } from '../../../../../ModalComponentServices'
 import { EColor, Text } from '../../../../../universalComponent/Text'
 import { ButtonBack } from '../../../../../universalComponent/ButtonBack'
 import styles from './serviceinfo.css'
-import { ServicesInfoPageBasic } from './ServicesInfoPageBasic'
+import { InfoPageBasic } from '../../InfoPageBasic'
 import { ServicesInfoComponents } from './ServicesInfoComponents'
 import { useDispatch, useSelector } from 'react-redux'
-import { CreateBusinessmenUserAsync } from '../../../../../../store/businessman/create/action'
+import { CreateAddInfoBusinessmenUserAsync, CreateBusinessmenUserAsync } from '../../../../../../store/businessman/create/action'
 import { Loading } from '../../../../../universalComponent/Loading'
 import { ErrorPanel, IErrorPanel } from '../../../../../universalComponent/ErrorPanel'
 import { RootState } from '../../../../../../store/reducer'
 import { CreateBusinessmenState } from '../../../../../../store/businessman/create/reduser'
+import { CreateAdsUserAsync } from '../../../../../../store/ads/action'
 
-export type TListComponentsServices = {
-  id: string
-  name: string
-  price: number
-  quantity: boolean
-  comment: string
-}[]
-
-interface IList {
-  id: string
-  name: string
-  price: number
-  quantity: boolean
-  comment: string
+export interface IListComponentsService {
+  idFront: string
+  id?: number
+  title: string
+  price: string
+  description: string
 }
 
 const dateErrorBasic = [
@@ -35,8 +28,9 @@ const dateErrorBasic = [
   { name: 'address', text: '', valid: true },
   { name: 'description', text: '', valid: true},
   { name: 'tags', text: '', valid: true},
-  { name: 'photo', text: '', valid: true}
+  { name: 'photo', text: '', valid: true},
 ]
+
 
 export function ServiceInfo () {
   const businessmen = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
@@ -50,9 +44,10 @@ export function ServiceInfo () {
   const [idChangeElement, setIdChangeElement] = useState('')
 
   // массив с списком услуг и цен
-  const [services, setServices] = useState<TListComponentsServices>([])
+  const [services, setServices] = useState<IListComponentsService []>([])
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
-  
+  const [serverErrors, setServerErrors] = useState<IErrorPanel []>([])
+
   // управляемые компоненты интутов
   const [valueName, setValueName] = useState('')
   const [valuePrice, setValuePrice] = useState('')
@@ -72,6 +67,7 @@ export function ServiceInfo () {
   const refFile3 = useRef<HTMLInputElement>(null)
   const refFile4 = useRef<HTMLInputElement>(null)
   const refFile5 = useRef<HTMLInputElement>(null)
+  const[arrImg, setArrImg] = useState<File[]>([])
 
   // функции изменения состояний интутов
   function handleChangeInputName (e: ChangeEvent<HTMLInputElement>) {
@@ -92,16 +88,17 @@ export function ServiceInfo () {
   }
 
   // // функция добавления новой услуги
-  function changeElementService (element: IList, idElement: string) {
+  function changeElementService (element: IListComponentsService, idElement: string) {
     setOpenModal(true)
-    setValueName(element.name)
+    setValueName(element.title)
     setValuePrice(`${element.price}`)
-    setValueComment(element.comment)
+    setValueComment(element.description)
     setIdChangeElement(idElement)
   }
 
   function handleAddService (e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
     if (valueName.length < 3) {
       setValidationName(true)
       setValueValidation('Название должно состоять не менее чем из трех букв')
@@ -123,10 +120,10 @@ export function ServiceInfo () {
 
     if (idChangeElement.length > 1) {
       services.map((elem) => {
-        if (elem.id === idChangeElement) {
-          elem.name = valueName
-          elem.price = Number(valuePrice)
-          elem.comment = valueComment
+        if (elem.idFront === idChangeElement) {
+          elem.title = valueName
+          elem.price = valuePrice
+          elem.description = valueComment
         }
       })
       setServices(services)
@@ -134,11 +131,10 @@ export function ServiceInfo () {
       setServices([
         ...services,
         {
-          id: generateRandomString(),
-          name: valueName,
-          price: Number(valuePrice),
-          quantity: false,
-          comment: valueComment,
+          idFront: generateRandomString(),
+          title: valueName,
+          price: valuePrice,
+          description: valueComment,
         },
       ])
     }
@@ -162,75 +158,69 @@ export function ServiceInfo () {
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
 
+    const newArr = arrError.concat().map((elem) => {
+      elem.valid = true
+      return elem
+    })
+    setArrError(newArr)
+
     if(valueActivity.length === 0) {
       arrError[0].text='Заполните поле'
       arrError[0].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
     }
 
-    if(valueAddress.length === 0) {
-      arrError[1].text='Заполните поле'
+    if(valueAddress.length < 12) {
+      arrError[1].text='Минимум 12 символов'
       arrError[1].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
     }
 
     if(valueTags.length === 0) {
       arrError[2].text='Заполните поле'
       arrError[2].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
     }
 
     if(valueDescription.length === 0) {
       arrError[3].text='Заполните поле'
       arrError[3].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
     }
 
-    const find = arrError.find((elem) => !elem.valid)
-    if (find) return
-    const arr = []
+    if(
+      refFile1?.current?.files?.length === 0 &&
+      refFile2?.current?.files?.length === 0 &&
+      refFile3?.current?.files?.length === 0 &&
+      refFile4?.current?.files?.length === 0 &&
+      refFile5?.current?.files?.length === 0
+      ) {
+      arrError[4].text='Пожалуйста, добавьте минимум одно фото'
+      arrError[4].valid= false
+    }
+
+    const newArrError = arrError.concat()
+    setArrError(newArrError)
+
+    if (arrError.find((elem) => !elem.valid)) return
+
+    const arrImgFunc: File [] = []
+
     if(refFile1?.current?.files?.[0]) {
-      arr.push(refFile1.current?.files[0])
+      arrImgFunc.push(refFile1.current?.files[0])
     }
     if(refFile2?.current?.files?.[0]) {
-      arr.push(refFile2.current?.files[0])
+      arrImgFunc.push(refFile2.current?.files[0])
     }
     if(refFile3?.current?.files?.[0]) {
-      arr.push(refFile3.current?.files[0])
+      arrImgFunc.push(refFile3.current?.files[0])
     }
     if(refFile4?.current?.files?.[0]) {
-      arr.push(refFile4.current?.files[0])
+      arrImgFunc.push(refFile4.current?.files[0])
     }
     if(refFile5?.current?.files?.[0]) {
-      arr.push(refFile5.current?.files[0])
-    }
-    const formData = new FormData();
-
-    const arrTags = valueTags.split(',').map((elem) => {
-      return elem.trim()
-    })
-  
-    for (let i = 0; i < arrTags.length; i++) {
-      formData.append('tags', arrTags[i]);
+      arrImgFunc.push(refFile5.current?.files[0])
     }
 
-    
-    formData.append('title', valueActivity.trim())
-    formData.append('address', valueAddress)
-    formData.append('description', valueDescription)
-    for (let i = 0; i < arr.length; i++) {
-      formData.append('images_service', arr[i]);
-    }
+    setArrImg(arrImgFunc)
 
-    formData.append('questionnaire_type', 'Service')
-    const resp = await dispatch(CreateBusinessmenUserAsync(formData))
-    if(!!resp) {
-      history.push('/menu/account/business/createServices/selection/service/components')
-    }
+    history.push('/menu/account/business/createServices/selection/service/components')
   }
 
   const changeValueActivity = (e: ChangeEvent<HTMLInputElement>) => {
@@ -257,6 +247,70 @@ export function ServiceInfo () {
     setValueDescription(e.target.value)
   }
 
+  useEffect(() => {
+    const errs = []
+    if(businessmen.error.length > 0) {
+      errs.push({ name: 'server', text: businessmen.error, valid: false})
+    }
+    if(!arrError[4].valid) {
+      errs.push({ name: 'phone', text: arrError[4].text, valid: false})
+    }
+    setServerErrors(errs)
+  }, 
+  [businessmen.error, arrError[4].valid])
+
+  const handleSave = async () => {
+    const formData = new FormData();
+
+    const arrTags = valueTags.split(',').map((elem) => {
+      return elem.trim()
+    })
+  
+    for (let i = 0; i < arrTags.length; i++) {
+      formData.append('tags', arrTags[i]);
+    }
+
+    formData.append('title', valueActivity.trim())
+    formData.append('address', valueAddress)
+    formData.append('description', valueDescription)
+
+    for (let i = 0; i <= 4; i++) {
+      if(arrImg[i]) {
+        formData.append('images_service', arrImg[i]);
+      } else if (businessmen.data?.images_service[i]) {
+        formData.append('images_service', businessmen.data?.images_service[i]);
+      }
+    }
+    
+    formData.append('questionnaire_type', 'Service')
+    formData.append('rule_payment', 'Prepayment 10%')
+    for (let i = 0; i < services.length; i++) {
+        formData.append('service', JSON.stringify(services[i]));
+    
+    }
+
+    const resp = await dispatch(CreateBusinessmenUserAsync(formData))
+
+    if(!!!resp) { 
+      history.push('/menu/account/business/createServices/selection/service')
+      return
+    }
+
+      // formData.append('service', JSON.stringify(services))
+
+      // await Promise.all(services.map((elem) => {
+      //   return dispatch(CreateAdsUserAsync(
+      //     elem.title,
+      //     elem.description,
+      //     String(elem.price),
+      //     // @ts-ignore
+      //     resp.id
+      //   ))
+      // }))
+      
+      history.push('/menu/account/business/myQuestionnaires')
+  } 
+
   return (
     <div className={styles.container}>
       <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
@@ -276,7 +330,7 @@ export function ServiceInfo () {
       <Switch>
         <Route path={'/menu/account/business/createServices/selection/service/components'}>
           <ServicesInfoComponents
-            handleClickSubmith={() => {}}
+            handleClickSubmith={handleSave}
             handleOpenModal={() => {
               setOpenModal(true)
             }}
@@ -285,7 +339,8 @@ export function ServiceInfo () {
           />
         </Route>
         <Route path={'/menu/account/business/createServices/selection/service'}>
-          <ServicesInfoPageBasic 
+          <InfoPageBasic 
+            type='Service'
             handleSubmit={handleSubmit}
             valueActivity={valueActivity}
             setValueActivity={(e) => changeValueActivity(e)}
@@ -320,11 +375,12 @@ export function ServiceInfo () {
           validationText={valueValidation}
           unvalidationName={isValidationName}
           unvalidationPrice={isValidationPrice}
+          onDelete={() => {}}
         />
       )}
       <Loading loading={businessmen.loading} />
-      {businessmen.error && 
-        <ErrorPanel list={[{name: '', text: businessmen.error, valid: false}]} />
+      {serverErrors.length > 0 && 
+        <ErrorPanel list={serverErrors} />
       }
     </div>
   )

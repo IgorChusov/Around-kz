@@ -56,11 +56,7 @@ export const GetBusinessmenUserAsync = (id: string): ThunkAction<void, RootState
     dispatch(getBusinessmenRequest())
 
     try {
-      const resp = await api.get(`/users/businessmen/${id}`, {
-        headers: {
-          'Authorization': `JWT ${getState().token.tokenText}`
-        }
-      })
+      const resp = await api.get(`/users/businessmen/${id}`)
 
       dispatch(getBusinessmenSuccess(resp.data))
 

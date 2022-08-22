@@ -1,7 +1,12 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router'
+import { CreateBusinessmenUserAsync } from '../../../../../../store/businessman/create/action'
 
 import { ButtonBack } from '../../../../../universalComponent/ButtonBack'
+import { IErrorPanel } from '../../../../../universalComponent/ErrorPanel'
+import { EColor, Text} from '../../../../../universalComponent/Text'
+import { InfoPageBasic } from '../../InfoPageBasic'
 
 import styles from './buyinfo.css'
 import { BuyInfoPageBasic } from './BuyInfoPageBasic'
@@ -24,7 +29,16 @@ const listValueLocationDefault = [
   },
 ]
 
+const dateErrorBasic = [
+  { name: 'activity', text: '', valid: true },
+  { name: 'address', text: '', valid: true },
+  { name: 'description', text: '', valid: true},
+  { name: 'tags', text: '', valid: true},
+  { name: 'photo', text: '', valid: true},
+]
+
 export function BuyInfo () {
+  const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation().pathname
   const refPresentation = useRef<HTMLDivElement>(null)
@@ -32,13 +46,13 @@ export function BuyInfo () {
   const [listValueLocation, setListValueLocation] = useState(listValueLocationDefault)
   // const [valueLocation, setValueLocation] = useState('me');
   function changeValueLocation (position: number) {
-    console.log(position)
     const newListValue = listValueLocation.map((elem, index) =>
       position === index ? { value: elem.value, textLabel: elem.textLabel, checked: !elem.checked } : elem,
     )
     setListValueLocation(newListValue)
   }
-  console.log(listValueLocation)
+
+  const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
   // состояния импутов на второй странице
   const [valueInputName, setValueInputName] = useState('')
   const [valueInputPrice, setValueInputPrice] = useState('')
@@ -46,6 +60,36 @@ export function BuyInfo () {
   const [valueAvailableQuantity, setValueAvailableQuantity] = useState('')
   const [valueInputMin, setValueInputMin] = useState('')
   const [valueSelect, setValueSelect] = useState('')
+
+  const [valueActivity, setValueActivity] = useState('')
+  const [valueAddress, setValueAddress] = useState('')
+  const [valueDescription, setValueDescription] = useState('')
+  const [valueTags, setValueTags] = useState('')
+
+  const changeValueActivity = (e: ChangeEvent<HTMLInputElement>) => {
+    arrError[0].text=''
+    arrError[0].valid=true
+    setValueActivity(e.target.value)
+  }
+
+  const changeValueAddress = (e: ChangeEvent<HTMLInputElement>) => {
+    arrError[1].text=''
+    arrError[1].valid=true
+    setValueAddress(e.target.value)
+  }
+
+  const changeValueTags = (e: ChangeEvent<HTMLInputElement>) => {
+    arrError[2].text=''
+    arrError[2].valid=true
+    setValueTags(e.target.value)
+  }
+
+  const changeValueDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    arrError[3].text=''
+    arrError[3].valid=true
+    setValueDescription(e.target.value)
+  }
+
   // функции измененй состояний полей на второй странице
   function handleSubmitForm (e: FormEvent) {
     e.preventDefault()
@@ -87,14 +131,73 @@ export function BuyInfo () {
       }
     }
   }, [location])
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+  
+    const newArr = arrError.concat().map((elem) => {
+      elem.valid = true
+      return elem
+    })
+    setArrError(newArr)
+
+    if(valueActivity.length === 0) {
+      arrError[0].text='Заполните поле'
+      arrError[0].valid= false
+    }
+
+    if(valueAddress.length < 12) {
+      arrError[1].text='Минимум 12 символов'
+      arrError[1].valid= false
+    }
+
+    if(valueTags.length === 0) {
+      arrError[2].text='Заполните поле'
+      arrError[2].valid= false
+    }
+
+    if(valueDescription.length === 0) {
+      arrError[3].text='Заполните поле'
+      arrError[3].valid= false
+    }
+
+    const newArrError = arrError.concat()
+
+    setArrError(newArrError)
+
+    if (arrError.find((elem) => !elem.valid)) return
+
+    const formData = new FormData()
+
+    const arrTags = valueTags.split(',').map((elem) => {
+      return elem.trim()
+    })
+  
+    for (let i = 0; i < arrTags.length; i++) {
+      formData.append('tags', arrTags[i]);
+    }
+
+    formData.append('title', valueActivity.trim())
+    formData.append('address', valueAddress)
+    formData.append('description', valueDescription)
+    formData.append('questionnaire_type', 'Product')
+    formData.append('rule_payment', 'Prepayment 10%')
+    
+    const resp = await dispatch(CreateBusinessmenUserAsync(formData))
+
+    if(!!resp) {
+      history.push('/menu/account/business/createServices/selection/buy/listProduct')
+    }
+   
+  }
+
   return (
     <div className={styles.container}>
-      {location === '/menu/account/business/createServices/selection/buy' ||
-        (location === '/menu/account/business/createServices/selection/buy/add' && (
-          <div className={styles.presentation}>
-            <div ref={refPresentation} className={styles.presentationChecked}></div>
-          </div>
-        ))}
+      {location === '/menu/account/business/createServices/selection/buy' && (
+        <div className={styles.presentation}>
+          <div ref={refPresentation} className={styles.presentationChecked}></div>
+        </div>
+      )}
       <Switch>
         <Route path={'/menu/account/business/createServices/selection/buy/store'}>
           <PageSettingScheduleStore
@@ -147,16 +250,33 @@ export function BuyInfo () {
           <ListProducts linkAddNewProduct="/menu/account/business/createServices/selection/buy/add" />
         </Route>
         <Route path={'/menu/account/business/createServices/selection/buy'}>
+          <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
+             Заполните информацию о себе
+          </Text>
           <ButtonBack
             addressLink="/menu/account/business/createServices/selection"
             className={styles.btn}
             handleClick={() => {}}
           />
-          <BuyInfoPageBasic
+          <InfoPageBasic 
+            type='Product'
+            handleSubmit={handleSubmit}
+            valueActivity={valueActivity}
+            setValueActivity={(e) => changeValueActivity(e)}
+            valueAddress={valueAddress}
+            setValueAddress={(e) => changeValueAddress(e)}
+            valueTags={valueTags}
+            setValueTags={(e) => changeValueTags(e)}
+            valueDescription={valueDescription}
+            setValueDescription={(e) => changeValueDescription(e)}
+            arrError={arrError}
+          />
+
+          {/* <BuyInfoPageBasic
             handleSubmit={() => {
               history.push('/menu/account/business/createServices/selection/buy/listProduct')
             }}
-          />
+          /> */}
         </Route>
       </Switch>
     </div>

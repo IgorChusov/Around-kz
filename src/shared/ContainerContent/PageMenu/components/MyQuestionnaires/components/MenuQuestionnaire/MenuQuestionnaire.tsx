@@ -164,7 +164,7 @@ export function MenuQuestionnaire () {
               </div>
               <Link
                 className={styles.link}
-                to={`/menu/account/business/myQuestionnaires/${typeService}/${type}/${id}/changePay`}
+                to={`/menu/account/business/myQuestionnaires/${typeService}/${id}/changePay`}
               ></Link>
             </li>
             <li className={styles.item}>

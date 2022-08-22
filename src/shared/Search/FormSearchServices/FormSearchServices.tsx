@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { AllBusinessmenUserAsync } from '../../../store/businessman/all/action'
 
-import { itemRequestSuccess } from '../../../store/actionCreator/item'
 import { SearchIcon } from '../../Icons'
 
 import styles from './formsearchservices.css'
@@ -10,26 +10,22 @@ export function FormSearchServices () {
   const dispatch = useDispatch()
   const [value, setValue] = useState('')
   const handleClick = () => {}
+
   const handleSubmith = (e: FormEvent) => {
     e.preventDefault()
-    dispatch(itemRequestSuccess(value))
+    if(value.length > 0) {
+      const str = value.trim().split(' ').filter(entry => /\S/.test(entry)).join('&')
+      console.log(str)
+      dispatch(AllBusinessmenUserAsync(str))
+    }
+
   }
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    if (e.target.value.toLowerCase() === 'маникюр') {
-      setValue('маникюр')
-      dispatch(itemRequestSuccess('маникюр'))
-    } else if (e.target.value.toLowerCase() === 'мебель') {
-      setValue('мебель')
-      dispatch(itemRequestSuccess('мебель'))
-    } else if (e.target.value.toLowerCase() === 'продукты') {
-      setValue('продукты')
-      dispatch(itemRequestSuccess('продукты'))
-    } else {
-      setValue('')
-      dispatch(itemRequestSuccess(''))
-    }
+    setValue(e.target.value)
   }
+
   return (
     <form
       onSubmit={(event: FormEvent) => {
@@ -39,7 +35,7 @@ export function FormSearchServices () {
       action=""
     >
       <input onChange={handleChange} placeholder="Search" className={styles.input} type="text" />
-      <button onClick={handleClick} className={styles.button}>
+      <button className={styles.button}>
         <SearchIcon />
       </button>
     </form>

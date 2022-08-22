@@ -1,12 +1,13 @@
 import React, { ChangeEvent, FormEvent, RefObject, useEffect, useRef } from 'react'
-import { IconElementPlus } from '../../../../../../Icons'
-import { IErrorPanel } from '../../../../../../universalComponent/ErrorPanel'
-import { Input } from '../../../../../../universalComponent/Input'
-import { EColor, Text } from '../../../../../../universalComponent/Text'
-import styles from './servicesinfopagebasic.css'
+import { IconElementPlus } from '../../../../Icons'
+import { IErrorPanel } from '../../../../universalComponent/ErrorPanel'
+import { Input } from '../../../../universalComponent/Input'
+import { EColor, Text } from '../../../../universalComponent/Text'
+import styles from './infopagebasic.css'
 import cn from 'classnames'
 
-interface IServicesInfoPageBasic {
+interface IInfoPageBasic {
+  type: 'Service' | 'Product'
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
   valueActivity: string
   setValueActivity: (e: ChangeEvent<HTMLInputElement>) => void
@@ -17,11 +18,11 @@ interface IServicesInfoPageBasic {
   valueTags: string
   setValueTags: (e: ChangeEvent<HTMLInputElement>) => void
   arrError: IErrorPanel[]
-  refFile1: RefObject<HTMLInputElement>
-  refFile2: RefObject<HTMLInputElement>
-  refFile3: RefObject<HTMLInputElement>
-  refFile4: RefObject<HTMLInputElement>
-  refFile5: RefObject<HTMLInputElement>
+  refFile1?: RefObject<HTMLInputElement>
+  refFile2?: RefObject<HTMLInputElement>
+  refFile3?: RefObject<HTMLInputElement>
+  refFile4?: RefObject<HTMLInputElement>
+  refFile5?: RefObject<HTMLInputElement>
   defaultPhoto1?: string
   defaultPhoto2?: string
   defaultPhoto3?: string
@@ -29,8 +30,9 @@ interface IServicesInfoPageBasic {
   defaultPhoto5?: string
 }
 
-export function ServicesInfoPageBasic (
+export function InfoPageBasic (
   { 
+    type,
     handleSubmit,
     valueActivity,
     setValueActivity,
@@ -51,7 +53,7 @@ export function ServicesInfoPageBasic (
     defaultPhoto3,
     defaultPhoto4,
     defaultPhoto5,
-  }: IServicesInfoPageBasic) {
+  }: IInfoPageBasic) {
     const refImg1 = useRef<HTMLImageElement>(null)
     const refImg2 = useRef<HTMLImageElement>(null)
     const refImg3 = useRef<HTMLImageElement>(null)
@@ -67,13 +69,12 @@ export function ServicesInfoPageBasic (
         // @ts-ignore:next-line
         refImg?.current?.setAttribute('src', e.target.result)
       };
-console.log(refFile1)
+
       if(refFile.current.files[0] && refImg.current) {
         reader.readAsDataURL(refFile.current.files[0]);
 
         refImg.current.style.opacity = '1'
       }
-   
     }
   }
 
@@ -155,86 +156,91 @@ console.log(refFile1)
           Не более 500 знаков
         </label>
       </div>
-      <Text color={EColor.greenDark} className={styles.textPhoto} size={16} As='p'>Загрузить фото</Text>
-      <div className={styles.inputFileContainer}>
-        <input 
-          ref={refFile1} 
-          className={styles.inputFile} 
-          name="file" id={'inputFile'} 
-          accept="image/*" 
-          type="file" 
-          onChange={() => viewImg(refFile1, refImg1)}
-        />
-        <label className={styles.inputFileBtn} htmlFor="inputFile">
-          <img className={styles.img} src={defaultPhoto1} ref={refImg1} />
-          <IconElementPlus classNameSvg={styles.minus} />
-          <IconElementPlus classNameSvg={styles.plus} />
-        </label>
-        <div className={styles.inputFileGroup}>
-          <div className={styles.inputSmallContent}>
+     
+      {(type === 'Service' && refFile1 && refFile2 && refFile3 && refFile4 && refFile5) && (
+        <>
+          <Text color={EColor.greenDark} className={styles.textPhoto} size={16} As='p'>Загрузить фото</Text>
+          <div className={styles.inputFileContainer}>
             <input 
-              ref={refFile2} 
+              ref={refFile1} 
               className={styles.inputFile} 
-              name="file" id={'inputFile2'} 
+              name="file" id={'inputFile'} 
               accept="image/*" 
               type="file" 
-              onChange={() => viewImg(refFile2, refImg2)}
+              onChange={() => viewImg(refFile1, refImg1)}
             />
-            <label className={styles.inputFileBtnSmall} htmlFor="inputFile2">
-              <img className={styles.img} src={ defaultPhoto2}  ref={refImg2} />
-              <IconElementPlus classNameSvg={styles.minusSmall} />
-              <IconElementPlus classNameSvg={styles.plusSmall} />
+            <label className={styles.inputFileBtn} htmlFor="inputFile">
+              <img className={styles.img} src={defaultPhoto1} ref={refImg1} />
+              <IconElementPlus classNameSvg={styles.minus} />
+              <IconElementPlus classNameSvg={styles.plus} />
             </label>
+            <div className={styles.inputFileGroup}>
+              <div className={styles.inputSmallContent}>
+                <input 
+                  ref={refFile2} 
+                  className={styles.inputFile} 
+                  name="file" id={'inputFile2'} 
+                  accept="image/*" 
+                  type="file" 
+                  onChange={() => viewImg(refFile2, refImg2)}
+                />
+                <label className={styles.inputFileBtnSmall} htmlFor="inputFile2">
+                  <img className={styles.img} src={ defaultPhoto2}  ref={refImg2} />
+                  <IconElementPlus classNameSvg={styles.minusSmall} />
+                  <IconElementPlus classNameSvg={styles.plusSmall} />
+                </label>
+              </div>
+              <div className={styles.inputSmallContent}>
+                <input 
+                  ref={refFile3}
+                  className={styles.inputFile} 
+                  name="file" id={'inputFile3'} 
+                  accept="image/*"
+                  type="file" 
+                  onChange={() => viewImg(refFile3, refImg3)}
+                />
+                <label className={styles.inputFileBtnSmall} htmlFor="inputFile3">
+                  <img className={styles.img} src={defaultPhoto3}  ref={refImg3} />
+                  <IconElementPlus classNameSvg={styles.minusSmall} />
+                  <IconElementPlus classNameSvg={styles.plusSmall} />
+                </label>
+              </div>
+              <div className={styles.inputSmallContent}>
+                <input 
+                  ref={refFile4}
+                  className={styles.inputFile} 
+                  name="file" 
+                  id={'inputFile4'} 
+                  accept="image/*" 
+                  type="file" 
+                  onChange={() => viewImg(refFile4, refImg4)}
+                />
+                <label className={styles.inputFileBtnSmall} htmlFor="inputFile4">
+                  <img className={styles.img} src={defaultPhoto4}  ref={refImg4} />
+                  <IconElementPlus classNameSvg={styles.minusSmall} />
+                  <IconElementPlus classNameSvg={styles.plusSmall} />
+                </label>
+              </div>
+              <div className={styles.inputSmallContent}>
+                <input 
+                  ref={refFile5} 
+                  className={styles.inputFile} 
+                  name="file" 
+                  id={'inputFile5'} 
+                  accept="image/*" 
+                  type="file" 
+                  onChange={() => viewImg(refFile5, refImg5)}
+                />
+                <label className={styles.inputFileBtnSmall} htmlFor="inputFile5">
+                  <img className={styles.img} src={defaultPhoto5} ref={refImg5} />
+                  <IconElementPlus classNameSvg={styles.minusSmall} />
+                  <IconElementPlus classNameSvg={styles.plusSmall} />
+                </label>
+              </div>
+            </div>
           </div>
-          <div className={styles.inputSmallContent}>
-            <input 
-              ref={refFile3}
-              className={styles.inputFile} 
-              name="file" id={'inputFile3'} 
-              accept="image/*"
-              type="file" 
-              onChange={() => viewImg(refFile3, refImg3)}
-            />
-            <label className={styles.inputFileBtnSmall} htmlFor="inputFile3">
-              <img className={styles.img} src={defaultPhoto3}  ref={refImg3} />
-              <IconElementPlus classNameSvg={styles.minusSmall} />
-              <IconElementPlus classNameSvg={styles.plusSmall} />
-            </label>
-          </div>
-          <div className={styles.inputSmallContent}>
-            <input 
-              ref={refFile4}
-              className={styles.inputFile} 
-              name="file" 
-              id={'inputFile4'} 
-              accept="image/*" 
-              type="file" 
-              onChange={() => viewImg(refFile4, refImg4)}
-            />
-            <label className={styles.inputFileBtnSmall} htmlFor="inputFile4">
-              <img className={styles.img} src={defaultPhoto4}  ref={refImg4} />
-              <IconElementPlus classNameSvg={styles.minusSmall} />
-              <IconElementPlus classNameSvg={styles.plusSmall} />
-            </label>
-          </div>
-          <div className={styles.inputSmallContent}>
-            <input 
-              ref={refFile5} 
-              className={styles.inputFile} 
-              name="file" 
-              id={'inputFile5'} 
-              accept="image/*" 
-              type="file" 
-              onChange={() => viewImg(refFile5, refImg5)}
-            />
-            <label className={styles.inputFileBtnSmall} htmlFor="inputFile5">
-              <img className={styles.img} src={defaultPhoto5} ref={refImg5} />
-              <IconElementPlus classNameSvg={styles.minusSmall} />
-              <IconElementPlus classNameSvg={styles.plusSmall} />
-            </label>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
       <button className={styles.btnNextPage}>
         Далее
       </button>

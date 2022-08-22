@@ -1,23 +1,34 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router'
+import { ChangeBusinessmenUserAsync } from '../../../../../../../../../store/businessman/create/action'
+import { TGetBusinessmenState } from '../../../../../../../../../store/businessman/get/reduser'
+import { RootState } from '../../../../../../../../../store/reducer'
 import { ButtonBack } from '../../../../../../../../universalComponent/ButtonBack'
 import { ButtonNextPage } from '../../../../../../../../universalComponent/ButtonNextPage'
+import { Loading } from '../../../../../../../../universalComponent/Loading'
 import { EColor, Text } from '../../../../../../../../universalComponent/Text'
-
 import { RadioInput } from './components/RadioInput'
 import styles from './pagechangevaluepayment.css'
 
 export function PageChangeValuePayment () {
-  const { id, type, typeService } = useParams<{ id?: string; type?: string; typeService?: string }>()
-  // выбранное радио 'full'/'end'/'percent'
-  const [radioValue, setRadioValue] = useState('percent')
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const { id, typeService } = useParams<{ id?: string; typeService?: string }>()
+  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+
   const refRegulator = useRef<HTMLDivElement>(null)
   const refTrack = useRef<HTMLDivElement>(null)
+
+  // выбранное радио 'full'/'end'/'percent'
+  const [radioValue, setRadioValue] = useState('percent')
   const [valueRegulator, setValueRegulator] = useState(10)
+  const [changeValueRegulator, setChangeValueRegulator] = useState(10)
 
   const handleDownOnRegulator = (event: globalThis.MouseEvent) => {
     event.preventDefault()
+
     if (!refRegulator.current || !refTrack.current || radioValue !== 'percent') return
     const shiftX = event.clientX - refRegulator.current.getBoundingClientRect().left
     document.addEventListener('mousemove', onMouseMove)
@@ -32,11 +43,15 @@ export function PageChangeValuePayment () {
         newLeft = 0
       }
       const rightEdge = refTrack.current.offsetWidth - refRegulator.current.offsetWidth
+
       if (newLeft > rightEdge) {
         newLeft = rightEdge
       }
+
       refRegulator.current.style.left = newLeft + 'px'
+
       let positionLeft
+
       if (refRegulator.current.offsetLeft > 0) {
         positionLeft = Math.round(
           ((refRegulator.current.offsetLeft + refRegulator.current.offsetWidth) / refTrack.current.offsetWidth) * 100,
@@ -46,24 +61,73 @@ export function PageChangeValuePayment () {
       }
       setValueRegulator(positionLeft)
     }
+
     function onMouseUp () {
       document.removeEventListener('mouseup', onMouseUp)
       document.removeEventListener('mousemove', onMouseMove)
     }
   }
+
+  useEffect(() => {
+    if(valueRegulator < 50 && changeValueRegulator !== 10) {
+      setChangeValueRegulator(10) 
+    } 
+    else if (valueRegulator === 100 && changeValueRegulator !== 100) {
+      setChangeValueRegulator(100)
+    } 
+    else if (valueRegulator > 50 && changeValueRegulator !== 50) {
+      setChangeValueRegulator(50)
+    }  else {
+      return
+    }
+  }, [valueRegulator])
+
+
   useEffect(() => {
     if (!refRegulator.current || !refTrack.current) return
     refRegulator.current.style.left =
       valueRegulator - (refRegulator.current.offsetWidth / refTrack.current.offsetWidth) * 100 + '%'
     refRegulator.current?.addEventListener('mousedown', handleDownOnRegulator)
-  }, [])
+  }, [changeValueRegulator])
+
   const handleChangeRadio = (e: ChangeEvent<HTMLInputElement>) => {
     setRadioValue(e.target.value)
   }
 
+  useEffect(() => {
+    if(businessmen.data.rule_payment === 'Upon receipt') {
+      setRadioValue('end')
+    }
+
+    if(businessmen.data.rule_payment === 'Prepayment 10%') {
+      setRadioValue('percent')
+      setChangeValueRegulator(10)
+      setValueRegulator(10)
+    }
+
+    if(businessmen.data.rule_payment === 'Prepayment 50%') {
+      setRadioValue('percent')
+      setChangeValueRegulator(50)
+      setValueRegulator(50)
+    }
+
+    if(businessmen.data.rule_payment === 'Prepayment 100%') {
+      setRadioValue('full')
+    }
+  }, 
+  [businessmen.data.rule_payment])
+
+  const handleClick = async  () => {
+    const formData = new FormData()
+    formData.append('rule_payment', `Prepayment ${changeValueRegulator}%`)
+    await dispatch(ChangeBusinessmenUserAsync(formData))
+    history.push(`/menu/account/business/myQuestionnaires/${typeService}/${id}`)
+  }
+
   return (
     <div className={styles.container}>
-      <ButtonBack addressLink={`/menu/account/business/myQuestionnaires/products/store/${id}`} />
+      <Loading loading={businessmen.loading}/>
+      <ButtonBack addressLink={`/menu/account/business/myQuestionnaires/${typeService}/${id}`} />
       <Text color={EColor.greenDark} className={styles.title} As="h2" size={24}>
         Способы оплаты
       </Text>
@@ -95,7 +159,7 @@ export function PageChangeValuePayment () {
               color={EColor.greenDark}
               className={`${styles.markerTextIndicator} ${styles.markerTextValue}`}
               size={16}
-            >{`${valueRegulator} %`}</Text>
+            >{`${changeValueRegulator} %`}</Text>
           </div>
         </div>
         <div className={styles.markerInfo}>
@@ -107,7 +171,7 @@ export function PageChangeValuePayment () {
           </Text>
         </div>
       </div>
-      <ButtonNextPage classNameButton={styles.button} text="Сохранить" onClick={() => {}} />
+      <ButtonNextPage classNameButton={styles.button} text="Сохранить" onClick={handleClick} />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 .slide {
   width: 78% !important;
-  height: 195px;
+  height: 195px !important;
   border-radius: 20px;
   overflow: hidden;
 }

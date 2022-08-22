@@ -9,15 +9,16 @@ import SwiperCore, { EffectCoverflow, Navigation } from 'swiper'
 
 import { generateRandomString } from '../../../../../utils/js/generateRandomIndex'
 import { IconArrow } from '../../../../Icons'
-
 interface ISwiperContainer {
   images: string[]
 }
+
 SwiperCore.use([EffectCoverflow, Navigation])
 
 export function SwiperContainer ({ images }: ISwiperContainer) {
   const navigationPrevRef = useRef(null)
   const navigationNextRef = useRef(null)
+
   return (
     <Swiper
       effect={'coverflow'}
@@ -47,7 +48,7 @@ export function SwiperContainer ({ images }: ISwiperContainer) {
       {images.map((elem: string) => {
         return (
           <SwiperSlide key={generateRandomString()} className={styles.slide}>
-            <img className={styles.img} src={elem} alt="Календарь" />
+            <img className={styles.img} src={elem ? elem : 'null'} alt="Календарь" />
           </SwiperSlide>
         )
       })}

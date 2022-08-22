@@ -1,30 +1,29 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link, useParams } from 'react-router-dom'
 import { generateRandomString } from '../../../../../../../utils/js/generateRandomIndex'
 import { IconElementPlus, IconLink } from '../../../../../../Icons'
 import { EColor, Text } from '../../../../../../universalComponent/Text'
 import { CreateComponentServices } from '../CreateComponentServices'
-import { TListComponentsServices } from '../ServiceInfo'
-
 import styles from './servicesinfocomponents.css'
 
 interface IList {
-  id: string
-  name: string
-  price: number
-  quantity: boolean
-  comment: string
+  id?: number
+  idFront: string
+  title: string
+  price: string
+  description: string
 }
 
 interface IServicesInfoComponents {
-  servicesList: TListComponentsServices
-  changeElementService: (element: IList, idElement: string) => void
+  servicesList: IList []
+  changeElementService: (element: IList, idElement: string, id: number | undefined) => void
   handleOpenModal: () => void
   handleClickSubmith: () => void
 }
 
 export function ServicesInfoComponents (props: IServicesInfoComponents) {
+  const { id } = useParams<{ id?: string; type?: string; typeService?: string }>()
+  
   return (
     <div id="create-services-container" className={styles.pageServices}>
       <div className={styles.pageServicesContent}>
@@ -35,12 +34,13 @@ export function ServicesInfoComponents (props: IServicesInfoComponents) {
           {props.servicesList.map((element) => {
             return (
               <CreateComponentServices
-                componentId={element.id}
-                handleClickOnChange={(idElement: string) => {
-                  props.changeElementService(element, idElement)
+                id={element.id}
+                componentId={element.idFront}
+                handleClickOnChange={(idElement: string, id: number | undefined) => {
+                  props.changeElementService(element, idElement, element.id)
                 }}
                 key={generateRandomString()}
-                nameServices={element.name}
+                nameServices={element.title}
               />
             )
           })}
@@ -52,16 +52,21 @@ export function ServicesInfoComponents (props: IServicesInfoComponents) {
           <IconElementPlus classNameSvg={styles.horizontalPlus} />
           <IconElementPlus classNameSvg={styles.verticalPlus} />
         </button>
-        <Link className={styles.basikInfo} to={'/menu/account/business/createServices/selection/service'}>
+        <Link className={styles.basikInfo} 
+          to={
+            location.pathname === '/menu/account/business/myQuestionnaires/service/177/changeInfo/components' 
+              ? `/menu/account/business/myQuestionnaires/service/${id}/changeInfo` :
+              '/menu/account/business/createServices/selection/service'
+              } >
           <Text className={styles.linkReturn} color={EColor.greenLight} size={16}>
             Основная информация
           </Text>
           <IconLink />
         </Link>
       </div>
-      <Link to={''} className={styles.btnServicesNextPage} onClick={props.handleClickSubmith}>
+      <button className={styles.btnServicesNextPage} onClick={props.handleClickSubmith}>
         Сохранить и опубликовать
-      </Link>
+      </button>
     </div>
   )
 }

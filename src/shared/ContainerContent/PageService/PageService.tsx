@@ -22,6 +22,9 @@ import { InfoServices } from './InfoServices'
 import styles from './pageservice.css'
 import { PageServiceMenu } from './PageServiceMenu'
 import { PageShoppingCardServices } from './PageShoppingCardServices'
+import { GetBusinessmenUserAsync } from '../../../store/businessman/get/action'
+import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
+import { Loading } from '../../universalComponent/Loading'
 
 interface IPageService {
   nameSpecialist?: string
@@ -36,24 +39,30 @@ export type TListServices = {
 const list = { images: [img1, img2, img3] }
 
 export function PageService ({ nameSpecialist = 'Мастер маникюра Иванова Катя' }: IPageService) {
+  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
   const { id } = useParams<{ id?: string }>()
   const { path, url } = useRouteMatch()
   const location = useLocation().pathname
+
   const [listImages, setListImages] = useState(list.images)
   const [pageServices, setPageServices] = useState('info')
   const [titlePage, setTitlePage] = useState(nameSpecialist)
-  const listServices = useSelector<RootState, TDataServices>((state) => state.servicesData.data)
+  // const listServices = useSelector<RootState, TDataServices>((state) => state.servicesData.data)
   const dispatch = useDispatch()
+
   useEffect(() => {
-    dispatch(getService())
-  }, [])
+    if(!id || String(businessmen.data.id) === id) return
+    dispatch(GetBusinessmenUserAsync(id))
+  }, [id])
 
   const handleClickNext = () => {
     setPageServices('ChoiceOfDate')
     setTitlePage('Выберите дату и время')
   }
+
   return (
     <div className={styles.container}>
+      <Loading loading={ businessmen.loading }/>
       <Switch>
         <Route path={`${url}/buyCart/payment`}>
           <div className={styles.subContainer}>
@@ -67,10 +76,16 @@ export function PageService ({ nameSpecialist = 'Мастер маникюра �
           <PageComments />
         </Route>
         <Route path={'/pageService/:id'}>
-          {pageServices === 'info' && <InfoServices listServices={listServices.list} listImages={listImages} />}
-          {pageServices === 'ChoiceOfServices' && (
-            <ChoiceOfServices id={id || ''} handleClickNext={handleClickNext} listServices={listServices} />
-          )}
+          {pageServices === 'info' && 
+            <InfoServices businessmen={businessmen.data} />
+          }
+          {/* {pageServices === 'ChoiceOfServices' && (
+            // <ChoiceOfServices 
+            //   id={id || ''} 
+            //   handleClickNext={handleClickNext} 
+            //   listServices={listServices} 
+            // />
+          )} */}
           {pageServices === 'ChoiceOfDate' && (
             <ChoiceOfDate
               clickBack={() => {

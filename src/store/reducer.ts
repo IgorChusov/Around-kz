@@ -1,8 +1,9 @@
 import { Reducer } from 'redux'
-
-import { ITEM } from './actionCreator/item'
 import { PRODUCT_LIST_SHOPPING, TProductListShopping } from './actionCreator/productShopingList'
 import { SERVICES_LIST_SHOPPING, TServicesListShopping } from './actionCreator/servicesShoppingList'
+import { CREATE_ADS_ERROR, CREATE_ADS_REQUEST, CREATE_ADS_SUCCESS } from './ads/action'
+import { createAdsReducer, CreateAdsState } from './ads/reduser'
+import { AllBusinessmenState } from './businessman/all/reduser'
 import { CREATE_BUSINESSMEN_ERROR, CREATE_BUSINESSMEN_REQUEST, CREATE_BUSINESSMEN_SUCCESS } from './businessman/create/action'
 import { createBusinessmenReducer, CreateBusinessmenState } from './businessman/create/reduser'
 import { GET_BUSINESSMEN_ERROR, GET_BUSINESSMEN_REQUEST, GET_BUSINESSMEN_SUCCESS } from './businessman/get/action'
@@ -27,15 +28,14 @@ export type RootState = {
   me: MeGetState
   businessman: CreateBusinessmenState
   businessmen: TGetBusinessmenState 
+  listBusinessmen: AllBusinessmenState
+  ads: CreateAdsState
   dateReserve: string
   cardsPay: IListCard
   shoppingCart: []
-  servicesData: ServicesState
   productsData: ProductsState
   servicesListShopping: TServicesListShopping
   productListShopping: TProductListShopping
-  item: string
- 
 }
 
 export type IListCard = {
@@ -74,10 +74,39 @@ const initialState: RootState = {
     loading: false,
     hasLoading: false,
     error: '',
+    data: {
+      id: 0,
+      tags: [],
+      images_service: [],
+      service:[],
+      product:[],
+      rule_payment: '',
+      title: '',
+      description: '',
+      questionnaire_type: '',
+      address: '',
+      date_create: null,
+      date_update: null,
+      icon: null,
+      type_booking: '',
+      time_bring:null,
+      time_end_of_applications: null,
+      home_service:false,
+      user_service:false,
+      user: 0
+    },
+  },
+  listBusinessmen: {
+    loading: false,
+    error: '',
+    data: null,
+  },
+  ads: {
+    loading: false,
+    error: '',
     data: null,
   },
 
-  item: '',
   dateReserve: '21.01',
   cardsPay: [],
   shoppingCart: [],
@@ -92,11 +121,6 @@ const initialState: RootState = {
     id: '',
     fullPrice: 0,
     name: '',
-  },
-  servicesData: {
-    loading: false,
-    error: '',
-    data: { idService: '', list: [{ id: '', nameService: '', price: 0, checked: false }] },
   },
   productsData: {
     loading: false,
@@ -113,11 +137,6 @@ const initialState: RootState = {
 
 export const rootReducer: Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ITEM:
-      return {
-        ...state,
-        item: action.item,
-      }
     case ME_REQUEST:
     case ME_REQUEST_SUCCESS:
     case ME_REQUEST_ERROR:
@@ -147,12 +166,12 @@ export const rootReducer: Reducer = (state = initialState, action) => {
         ...state,
         businessmen: getBusinessmenReducer(state.businessmen, action),
       }
-    case SERVICES_REQUEST:
-    case SERVICES_REQUEST_SUCCESS:
-    case SERVICES_REQUEST_ERROR:
+    case CREATE_ADS_REQUEST:
+    case CREATE_ADS_SUCCESS:
+    case CREATE_ADS_ERROR:
       return {
         ...state,
-        servicesData: servicesReducer(state.servicesData, action),
+        ads: createAdsReducer(state.ads, action),
       }
     case PRODUCT_REQUEST:
     case PRODUCT_REQUEST_SUCCESS:

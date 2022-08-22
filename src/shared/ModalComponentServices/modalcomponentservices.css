@@ -4,7 +4,7 @@
   width: 90%;
   left: 50%;
   transform: translateX(-50%);
-  padding: 24px 30px 57px;
+  padding: 24px 30px 37px;
   background-color: var(--white);
   border-radius: 40px;
   box-shadow: 0 -4px 40px 0 #00000026;
@@ -60,6 +60,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
+  margin-bottom: 20px;
 }
 
 .button {
@@ -99,6 +100,12 @@
 
 .containerTextError p {
   color: red;
+}
+
+.buttonDel {
+  display: flex;
+  width: 60px;
+  margin: 0 auto;
 }
 
 @media all and (min-width: 428px) {

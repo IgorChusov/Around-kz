@@ -4,7 +4,7 @@
 }
 
 .btnServicesNextPage {
-  padding: 12px 32px;
+  padding: 12px 0;
   background-color: var(--greenLight);
   color: var(--white);
   border-radius: 20px;

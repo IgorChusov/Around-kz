@@ -58,7 +58,7 @@ export function PageMenu () {
           <Route path={'/menu/account/business/myQuestionnaires/pageProducts/store/:id'}>
             <PageProduct />
           </Route>
-          <Route path={'/menu/account/business/myQuestionnaires/:typeService/:type/:id/changePay'}>
+          <Route path={'/menu/account/business/myQuestionnaires/:typeService/:id/changePay'}>
             <PageChangeValuePayment />
           </Route>
           <Route path={'/menu/account/business/myQuestionnaires/products/:type/:id/changeInfo'}>
