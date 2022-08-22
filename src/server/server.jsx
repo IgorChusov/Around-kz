@@ -5,6 +5,7 @@ import { App } from '../App';
 import { indexTemplate } from './indexTemplate'
 import { StaticRouter} from "react-router";
 import favicon from 'serve-favicon';
+const PORT = process.env.PORT || PORT
 
 const app = express();
 app.use(favicon('./public/64x64.ico'))
@@ -21,6 +22,6 @@ app.get('*', (req, res) => {
       )),)
 })
 
-app.listen(3000, () => {
-  console.log('Server started on http://localhost:3000')
+app.listen(PORT, () => {
+  console.log(`Server started on http://localhost:${PORT}`)
 })

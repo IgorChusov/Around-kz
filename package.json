@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "lint-staged": {
     "**/*.{css, scss}": [
       "stylelint --quiet"
@@ -13,9 +16,10 @@
     "lint:prettier": "prettier --write ./src",
     "lint:styles": "stylelint '**/*.{css, scss}' --fix",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js",
-    "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "dev": "cross-env NODE_ENV=development node ./bin/dev.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./dist/server/server.js"
   },
   "author": "ChusovIgor",
   "license": "ISC",
