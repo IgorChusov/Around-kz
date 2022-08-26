@@ -99,7 +99,7 @@ export const LoginUserAsync = (phone: string): ThunkAction<void, RootState, unkn
   }
 
 export const RegisterSmsActivateAsync =
-(phone: string, username: string, code: string, ): ThunkAction<void, RootState, unknown, Action<string>> =>
+(phone: string, username: string, code: string, coordinates: [number, number] ): ThunkAction<void, RootState, unknown, Action<string>> =>
  async (dispatch) => {
     dispatch(registerRequest())
     try {
@@ -107,13 +107,14 @@ export const RegisterSmsActivateAsync =
         phone: phone,
         username: username,
         user_code: code,
+        user_coordinates: coordinates
       })
 
       const respToken = await api.post(`/users/token`, {
         phone: phone,
         username: username,
         user_code: code,
-        password: respRegister.data.password
+        password: '12345'
       })
         dispatch(tokenRequestSuccess(respToken.data))
         localStorage.setItem('token', 'true')

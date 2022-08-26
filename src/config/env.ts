@@ -3,6 +3,10 @@ class EnvConfig {
     return String(process.env.REACT_APP_API_URL).trim()
   }
 
+  public static get frontUrl (): string {
+    return String(process.env.REACT_APP_FRONT_URL).trim()
+  }
+
   public static get apiKey (): string {
     return String(process.env.REACT_APP_API_KEY).trim()
   }

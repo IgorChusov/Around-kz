@@ -6,14 +6,16 @@ import {
   GetBusinessmenRequestSuccessAction,
   GET_BUSINESSMEN_ERROR, 
   GET_BUSINESSMEN_REQUEST, 
-  GET_BUSINESSMEN_SUCCESS 
+  GET_BUSINESSMEN_SUCCESS,
+  CHANGE_BUSINESSMEN_SUCCESS,
+  ChangeBusinessmenSuccessAction
 } from './action'
 
 type TGetBusinessmenActions = 
   GetBusinessmenRequestAction 
   | GetBusinessmenRequestErrorAction 
   | GetBusinessmenRequestSuccessAction 
-;
+  | ChangeBusinessmenSuccessAction
 
 export interface IDataBusinessmen {
   id: number,
@@ -63,6 +65,7 @@ export const getBusinessmenReducer: Reducer<TGetBusinessmenState, TGetBusinessme
         loading: false,
       }
     case GET_BUSINESSMEN_SUCCESS:
+    case CHANGE_BUSINESSMEN_SUCCESS:
       return {
         ...state,
         data: action.data,

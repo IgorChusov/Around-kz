@@ -72,12 +72,6 @@ export function ChangeInfoService () {
   const refFile4 = useRef<HTMLInputElement>(null)
   const refFile5 = useRef<HTMLInputElement>(null)
 
-  useEffect(()=> {
-    if(!businessmen.data) {
-      history.push(`/menu/account/business/myQuestionnaires/service/${id}`)
-    }
-  }, [businessmen.data])
-
   // функции изменения состояний интутов
   function handleChangeInputName (e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault()
@@ -193,18 +187,28 @@ export function ChangeInfoService () {
     const arr = []
     if(refFile1?.current?.files?.[0]) {
       arr.push(refFile1.current?.files[0])
+    } else {
+      arr.push(undefined)
     }
     if(refFile2?.current?.files?.[0]) {
       arr.push(refFile2.current?.files[0])
+    } else {
+      arr.push(undefined)
     }
     if(refFile3?.current?.files?.[0]) {
       arr.push(refFile3.current?.files[0])
+    } else {
+      arr.push(undefined)
     }
     if(refFile4?.current?.files?.[0]) {
       arr.push(refFile4.current?.files[0])
+    } else {
+      arr.push(undefined)
     }
     if(refFile5?.current?.files?.[0]) {
       arr.push(refFile5.current?.files[0])
+    } else {
+      arr.push(undefined)
     }
     const formData = new FormData();
 
@@ -219,10 +223,24 @@ export function ChangeInfoService () {
     formData.append('title', valueActivity.trim())
     formData.append('address', valueAddress)
     formData.append('description', valueDescription)
-    for (let i = 0; i < arr.length; i++) {
-      if(arr.length === 0) return
-      formData.append('images_service', arr[i]);
+    // for (let i = 0; i < arr.length; i++) {
+    //   if(arr.length === 0) return
+    //   formData.append('images_service', arr[i]);
+    // }
+    const arrI = []
+    for (let i = 0; i < 5; i++) {
+      if(arr[i]) {
+        console.log(arr)
+        // @ts-ignore
+        formData.append('images_service', arr[i]);
+        arrI.push(JSON.stringify(arr[i]))
+      } else if (businessmen.data?.images_service[i]) {
+        formData.append('images_service', businessmen.data?.images_service[i]);
+        arrI.push(businessmen.data?.images_service[i])
+      } 
     }
+
+    console.log(arrI)
 
     formData.append('questionnaire_type', 'Service')
 

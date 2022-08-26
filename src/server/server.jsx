@@ -5,7 +5,7 @@ import { App } from '../App';
 import { indexTemplate } from './indexTemplate'
 import { StaticRouter} from "react-router";
 import favicon from 'serve-favicon';
-const PORT = process.env.PORT || PORT
+const PORT = process.env.PORT || 3000
 
 const app = express();
 app.use(favicon('./public/64x64.ico'))

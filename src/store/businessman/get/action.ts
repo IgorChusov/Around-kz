@@ -27,6 +27,19 @@ export const getBusinessmenSuccess: ActionCreator<GetBusinessmenRequestSuccessAc
   data
 })
 
+
+// добавление sevice
+export const CHANGE_BUSINESSMEN_SUCCESS = 'CHANGE_BUSINESSMEN_SUCCESS'
+export type ChangeBusinessmenSuccessAction = {
+  type: typeof CHANGE_BUSINESSMEN_SUCCESS
+  data: IDataBusinessmen
+}
+
+export const ChangeBusinessmenSuccess: ActionCreator<ChangeBusinessmenSuccessAction> = (data: IDataBusinessmen) => ({
+  type: CHANGE_BUSINESSMEN_SUCCESS,
+  data
+})
+
 // запрос с ошибкой
 export const GET_BUSINESSMEN_ERROR = 'GET_BUSINESSMEN_ERROR'
 export type GetBusinessmenRequestErrorAction = {
@@ -65,6 +78,7 @@ export const GetBusinessmenUserAsync = (id: string): ThunkAction<void, RootState
       dispatch(getBusinessmenError(error.message))
     }
   }
+
 
 export const DeleteBusinessmenUserAsync = (id: string): ThunkAction<void, RootState, unknown, Action<string>> =>
 async (dispatch, getState) => {

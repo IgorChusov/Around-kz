@@ -36,6 +36,13 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(docx)$/i,
+        loader: 'file-loader',
+        options: {
+          name: 'assets/docx/[name].[ext]',
+        },
+      },
+      {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader',
         options: {

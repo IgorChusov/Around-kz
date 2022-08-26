@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react'
 
-import { Text, EColor } from '../../../../../../universalComponent/Text'
+import { Text, EColor } from '../../../../../../../universalComponent/Text'
 
 import styles from './informationbuypage.css'
 

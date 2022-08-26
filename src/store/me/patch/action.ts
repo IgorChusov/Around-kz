@@ -36,12 +36,22 @@ export const mePatchError: ActionCreator<MePatchErrorAction> = (error: string) =
   error,
 })
 
-export const MePatchUserAsync = ({}): ThunkAction<void, RootState, unknown, Action<string>> =>
-  async (dispatch) => { 
+export const MePatchUserAsync = (coordinates: string []): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch, getState) => { 
     dispatch(mePatchRequest())
+    const newData = new FormData()
+    for (let i = 0; i < coordinates.length; i++) {
+      newData.append('coordinates', coordinates[i])
+    }
+
+   
     try {
-      const resp = await api.put(`/users/me`, {
-      })
+      const resp = await api.patch(`/users/me`, {
+        coordinates: newData
+      }, { 
+        headers: {
+        'Authorization': `JWT ${getState().token.tokenText}`
+      }} )
       dispatch(mePatchSuccess(resp))
       return resp
     } catch (error: any) {

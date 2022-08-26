@@ -1,9 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
-
 import { ButtonNextPage } from '../../../../../universalComponent/ButtonNextPage'
 import { ErrorPanel, IErrorPanel } from '../../../../../universalComponent/ErrorPanel'
 import { Text } from '../../../../../universalComponent/Text'
-
 import styles from './smsactivate.css'
 
 interface ISmsActivate {
@@ -18,6 +16,7 @@ interface ISmsActivate {
   setValueSecond: (e: string) => void
   setValueThird: (e: string) => void
   setValueFourth: (e: string) => void
+  buttonText: string
 }
 
 export function SmsActivate (props: ISmsActivate) {
@@ -29,10 +28,6 @@ export function SmsActivate (props: ISmsActivate) {
   const ref4 = useRef<HTMLInputElement>(null)
   // разобрать таймер
   const [timer, setTimer] = useState(30)
-  // const [valueFirst, setValueFirst] = useState('')
-  // const [valueSecond, setValueSecond] = useState('')
-  // const [valueThird, setValueThird] = useState('')
-  // const [valueFourth, setValueFourth] = useState('')
 
   useEffect(() => {
     timerCurrent.current = setInterval(() => {
@@ -167,7 +162,7 @@ export function SmsActivate (props: ISmsActivate) {
             Отправить код повторно
           </button>
         )}
-        <ButtonNextPage classNameButton="" onClick={props.onClick} text="Зарегистрироваться" />
+        <ButtonNextPage classNameButton="" onClick={props.onClick} text={props.buttonText} />
       </form>
       {props.listError.find((elem) => elem.name === 'activate' && !elem.valid) && (
         <ErrorPanel list={props.listError.filter((elem) => elem.name === 'activate')} />

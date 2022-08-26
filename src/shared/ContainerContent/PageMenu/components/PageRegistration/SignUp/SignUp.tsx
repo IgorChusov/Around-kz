@@ -17,8 +17,16 @@ import styles from '../pageregistration.css'
 
 import ClipLoader from 'react-spinners/ClipLoader'
 import { Loading } from '../../../../../universalComponent/Loading'
+import { usePosition } from '../../../../../../hooks/usePosition'
+
+interface Is {
+  latitude?: string
+  longitude?: string
+  error: any
+}
 
 export function SignUp () {
+  const { latitude, longitude, error }: Is = usePosition()
   const location = useLocation()
   const history = useHistory()
   const dispatch = useDispatch()
@@ -109,7 +117,8 @@ export function SignUp () {
 
   const handleClickActivate = async (e: FormEvent) => {
     e.preventDefault()
-    dispatch(RegisterSmsActivateAsync(valuePhone, valueName,`${valueFirst}${valueSecond}${valueThird}${valueFourth}`))
+    if(!latitude || !longitude) return
+    dispatch(RegisterSmsActivateAsync(valuePhone, valueName,`${valueFirst}${valueSecond}${valueThird}${valueFourth}`, [Number(latitude), Number(longitude)]))
    
   }
 
@@ -162,6 +171,7 @@ export function SignUp () {
           setValueSecond={(e) => setValueSecond(e)}
           setValueFourth={(e) => setValueFourth(e)}
           setValueThird={(e) => setValueThird(e)}
+          buttonText='Зарегистрироваться'
         />}
         <Loading loading={token.loading} />
     </div>

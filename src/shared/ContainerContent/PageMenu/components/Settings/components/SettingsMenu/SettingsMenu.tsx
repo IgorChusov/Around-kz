@@ -24,13 +24,13 @@ export function SettingsMenu () {
   const handleClickOut = () => {
     localStorage.removeItem('token')
     dispatch(tokenRequestSuccess(''))
-    history.push('/menu')
+    history.push('/')
   }
 
   const handleClickChange = () => {
     localStorage.removeItem('token')
     dispatch(tokenRequestSuccess(''))
-    history.push('/menu')
+    history.push('/sign-in')
   }
 
   return (
@@ -58,7 +58,7 @@ export function SettingsMenu () {
             <IconArrowRight />
           </Link>
         </li>
-        <li className={styles.item}>
+        {/* <li className={styles.item}>
           <Link className={styles.link} to={''}>
             <IconShieldTick />
             <Text color={EColor.greenDark} size={16}>
@@ -66,9 +66,9 @@ export function SettingsMenu () {
             </Text>
             <IconArrowRight />
           </Link>
-        </li>
+        </li> */}
         <li className={styles.item}>
-          <Link className={styles.link} to={''}>
+          <Link className={styles.link} to={'/menu/account/settings/information'}>
             <IconInfo />
             <Text color={EColor.greenDark} size={16}>
               Информация
@@ -77,7 +77,7 @@ export function SettingsMenu () {
           </Link>
         </li>
         <li className={styles.item}>
-          <Link className={styles.link} to={''}>
+          <Link className={styles.link} to={'/menu/account/settings/feedback'}>
             <IconMessageText />
             <Text color={EColor.greenDark} size={16}>
               Ваша обратная связь

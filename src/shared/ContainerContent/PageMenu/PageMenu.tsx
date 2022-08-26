@@ -36,6 +36,7 @@ export function PageMenu () {
     <>
       {!isOuth && (
         <Switch>
+        
           <Route path={'/menu/sign-up'}>
             <SignUp />
            </Route>
@@ -45,6 +46,7 @@ export function PageMenu () {
           <Route exact path={'/menu/account'}>
             <StartPage />
           </Route>
+          {/* <Redirect from={'/menu/account/*'} to={'/menu/account/'} /> */}
         </Switch>
       )}
       {isOuth && (
@@ -61,7 +63,7 @@ export function PageMenu () {
           <Route path={'/menu/account/business/myQuestionnaires/:typeService/:id/changePay'}>
             <PageChangeValuePayment />
           </Route>
-          <Route path={'/menu/account/business/myQuestionnaires/products/:type/:id/changeInfo'}>
+          <Route path={'/menu/account/business/myQuestionnaires/products/:id/changeInfo'}>
             <ChangeInfoProduct />
           </Route>
           <Route path={'/menu/account/business/myQuestionnaires/service/:id/changeInfo'}>
@@ -85,8 +87,8 @@ export function PageMenu () {
           <Route path={'/menu/account'}>
             <PageStartAccount />
           </Route>
-          <Redirect exact from='/menu/sign-up' to='/menu/account' />
-          <Redirect exact from='/menu/sign-in' to='/menu/account' />
+          <Redirect exact from='/menu/sign-up' to='/menu/account/personal' />
+          <Redirect exact from='/menu/sign-in' to='/menu/account/personal' />
         </Switch>
       )}
     </>

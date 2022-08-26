@@ -1,20 +1,18 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router'
 import { CreateBusinessmenUserAsync } from '../../../../../../store/businessman/create/action'
-
+import { CreateBusinessmenState } from '../../../../../../store/businessman/create/reduser'
+import { RootState } from '../../../../../../store/reducer'
 import { ButtonBack } from '../../../../../universalComponent/ButtonBack'
 import { IErrorPanel } from '../../../../../universalComponent/ErrorPanel'
+import { Loading } from '../../../../../universalComponent/Loading'
 import { EColor, Text} from '../../../../../universalComponent/Text'
 import { InfoPageBasic } from '../../InfoPageBasic'
-
-import styles from './buyinfo.css'
-import { BuyInfoPageBasic } from './BuyInfoPageBasic'
-import { ListProducts } from './components/ListProducts'
 import { PageSelectProduct } from './components/PageSelectedProduct'
 import { PageSettingScheduleBringing } from './components/PageSettingScheduleBringing'
 import { PageSettingScheduleStore } from './components/PageSettingScheduleStore'
-import { InformationBuyPage } from './InformationBuyPage'
+import styles from './buyinfo.css'
 
 const listValueLocationDefault = [
   {
@@ -41,10 +39,14 @@ export function BuyInfo () {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation().pathname
+
   const refPresentation = useRef<HTMLDivElement>(null)
+
+  const businessmen = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
+
   // состояния чекбоксов выбора места предоставления услуг
   const [listValueLocation, setListValueLocation] = useState(listValueLocationDefault)
-  // const [valueLocation, setValueLocation] = useState('me');
+
   function changeValueLocation (position: number) {
     const newListValue = listValueLocation.map((elem, index) =>
       position === index ? { value: elem.value, textLabel: elem.textLabel, checked: !elem.checked } : elem,
@@ -53,14 +55,6 @@ export function BuyInfo () {
   }
 
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
-  // состояния импутов на второй странице
-  const [valueInputName, setValueInputName] = useState('')
-  const [valueInputPrice, setValueInputPrice] = useState('')
-  const [valueTextAreaInfoBuy, setValueTextAreaInfoBuy] = useState('')
-  const [valueAvailableQuantity, setValueAvailableQuantity] = useState('')
-  const [valueInputMin, setValueInputMin] = useState('')
-  const [valueSelect, setValueSelect] = useState('')
-
   const [valueActivity, setValueActivity] = useState('')
   const [valueAddress, setValueAddress] = useState('')
   const [valueDescription, setValueDescription] = useState('')
@@ -90,35 +84,6 @@ export function BuyInfo () {
     setValueDescription(e.target.value)
   }
 
-  // функции измененй состояний полей на второй странице
-  function handleSubmitForm (e: FormEvent) {
-    e.preventDefault()
-    history.push('/menu/account/business/createServices/selection/buy/listProduct')
-  }
-
-  function handleChangeValueInputName (e: ChangeEvent<HTMLInputElement>) {
-    setValueInputName(e.target.value)
-  }
-
-  function handleChangeValueInputPrice (e: ChangeEvent<HTMLInputElement>) {
-    setValueInputPrice(e.target.value)
-  }
-
-  function handleChangeValueTextAreaInfoBuy (e: ChangeEvent<HTMLTextAreaElement>) {
-    setValueTextAreaInfoBuy(e.target.value)
-  }
-
-  function handleChangeInputAvailableQuantity (e: ChangeEvent<HTMLInputElement>) {
-    setValueAvailableQuantity(e.target.value)
-  }
-
-  function handleChangeInputMin (e: ChangeEvent<HTMLInputElement>) {
-    setValueInputMin(e.target.value)
-  }
-  function handleChangeSelect (e: ChangeEvent<HTMLSelectElement>) {
-    setValueSelect(e.target.value)
-  }
-  //
   useEffect(() => {
     if (location === '/menu/account/business/createServices/selection/buy') {
       if (refPresentation.current) {
@@ -162,7 +127,6 @@ export function BuyInfo () {
     }
 
     const newArrError = arrError.concat()
-
     setArrError(newArrError)
 
     if (arrError.find((elem) => !elem.valid)) return
@@ -186,9 +150,11 @@ export function BuyInfo () {
     const resp = await dispatch(CreateBusinessmenUserAsync(formData))
 
     if(!!resp) {
-      history.push('/menu/account/business/createServices/selection/buy/listProduct')
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      history.push(`/menu/account/business/myQuestionnaires/product/${resp?.id}`)
     }
-   
+
   }
 
   return (
@@ -220,35 +186,6 @@ export function BuyInfo () {
         <Route path={'/menu/account/business/createServices/selection/buy/selectionType'}>
           <PageSelectProduct />
         </Route>
-        <Route path={'/menu/account/business/createServices/selection/buy/add'}>
-          <ButtonBack
-            className={styles.btn}
-            addressLink={'/menu/account/business/createServices/selection/buy/listProduct'}
-          />
-          <InformationBuyPage
-            handleSubmitForm={handleSubmitForm}
-            valueName={valueInputName}
-            handleChangeValueName={handleChangeValueInputName}
-            valuePrice={valueInputPrice}
-            handleChangeValuePrice={handleChangeValueInputPrice}
-            valueTextArea={valueTextAreaInfoBuy}
-            handleChangeValueTextArea={handleChangeValueTextAreaInfoBuy}
-            valueAvailableQuantity={valueAvailableQuantity}
-            handleChangeValueAvailableQuantity={handleChangeInputAvailableQuantity}
-            valueInputMin={valueInputMin}
-            handleChangeValueInputMin={handleChangeInputMin}
-            valueSelect={valueSelect}
-            handleChangeSelect={handleChangeSelect}
-          />
-        </Route>
-        <Route path={'/menu/account/business/createServices/selection/buy/listProduct'}>
-          <ButtonBack
-            addressLink={'/menu/account/business/createServices/selection/buy'}
-            className={styles.btn}
-            handleClick={() => {}}
-          />
-          <ListProducts linkAddNewProduct="/menu/account/business/createServices/selection/buy/add" />
-        </Route>
         <Route path={'/menu/account/business/createServices/selection/buy'}>
           <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
              Заполните информацию о себе
@@ -271,14 +208,9 @@ export function BuyInfo () {
             setValueDescription={(e) => changeValueDescription(e)}
             arrError={arrError}
           />
-
-          {/* <BuyInfoPageBasic
-            handleSubmit={() => {
-              history.push('/menu/account/business/createServices/selection/buy/listProduct')
-            }}
-          /> */}
         </Route>
       </Switch>
+      <Loading loading={businessmen.loading}/>
     </div>
   )
 }

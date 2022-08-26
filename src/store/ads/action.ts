@@ -1,7 +1,8 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../config/api'
-import { SwiperDate } from '../../shared/ContainerContent/PageService/ChoiceOfDate/SwiperDate'
+import { ChangeBusinessmenSuccess } from '../businessman/get/action'
+
 import { RootState } from '../reducer'
 
 
@@ -14,7 +15,16 @@ export const createAdsRequest: ActionCreator<CreateAdsRequestAction> = () => ({
   type: CREATE_ADS_REQUEST,
 })
 
-// запрос смс успешен
+// запрос на удаление отправлен
+export const DELETE_ADS_REQUEST = 'DELETE_ADS_REQUEST'
+export type DeleteAdsRequestAction = {
+  type: typeof DELETE_ADS_REQUEST
+}
+export const deleteAdsRequest: ActionCreator<DeleteAdsRequestAction> = () => ({
+  type: DELETE_ADS_REQUEST,
+})
+
+// запрос успешен
 export const CREATE_ADS_SUCCESS = 'CREATE_ADS_SUCCESS'
 export type CreateAdsRequestSuccessAction = {
   type: typeof CREATE_ADS_SUCCESS
@@ -26,6 +36,17 @@ export const createAdsSuccess: ActionCreator<CreateAdsRequestSuccessAction> = (d
   data
 })
 
+// запрос удаления успешен
+export const DELETE_ADS_SUCCESS = 'DELETE_ADS_SUCCESS'
+export type DeleteAdsRequestSuccessAction = {
+  type: typeof DELETE_ADS_SUCCESS
+  data: any
+}
+
+export const deleteAdsSuccess: ActionCreator<DeleteAdsRequestSuccessAction> = (data: any) => ({
+  type: DELETE_ADS_SUCCESS,
+  data
+})
 
 // запрос с ошибкой
 export const CREATE_ADS_ERROR = 'CREATE_ADS_ERROR'
@@ -64,7 +85,10 @@ export const CreateAdsUserAsync = (
 
       dispatch(createAdsSuccess(resp.data))
 
-      return resp
+      const newData = getState().businessmen.data
+      newData.service = [...newData.service, resp.data ]
+      dispatch(ChangeBusinessmenSuccess(newData))
+      return resp.data
     } catch (error: any) {
       dispatch(createAdsError(error.message))
     }
@@ -103,7 +127,7 @@ export const CreateAdsUserAsync = (
     id: string
   ): ThunkAction<void, RootState, unknown, Action<string>> =>
     async (dispatch, getState) => {
-      dispatch(createAdsRequest())
+      dispatch(deleteAdsRequest())
   
       try {
         const resp = await api.delete(`/ads/services/${id}`,
@@ -112,7 +136,7 @@ export const CreateAdsUserAsync = (
           'Authorization': `JWT ${getState().token.tokenText}`,
         }})
   
-        dispatch(createAdsSuccess(resp.data))
+        dispatch(deleteAdsSuccess(resp.data))
   
         return resp
       } catch (error: any) {

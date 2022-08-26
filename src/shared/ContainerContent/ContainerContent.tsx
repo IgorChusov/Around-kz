@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useLocation } from 'react-router-dom'
 import { ButtonCloseContent } from './ButtonCloseContent'
 import { PageProduct } from './PageProduct'
 import { PageService } from './PageService'
@@ -16,12 +16,13 @@ import { RefreshTokenAsync } from '../../store/token/action'
 import { TokenState } from '../../store/token/reduser'
 
 export function ContainerContent () {
+  const location = useLocation()
   const me = useSelector<RootState, MeGetState>((state) => state.me)
   const token = useToken()
   const dispatch = useDispatch()
   
   useEffect(()=> {
-    if(token.tokenLocalStorage) {
+    if(token.tokenLocalStorage && token.token.length === 0) {
       dispatch(RefreshTokenAsync())
     }
   }, [token.tokenLocalStorage])
@@ -33,10 +34,9 @@ export function ContainerContent () {
   }, 
   [token.token])
 
-  
   return (
     <div className={styles.content}>
-      {(me.loading) && (
+      {(me.loading && location.pathname.includes('menu')) && (
         <div className={styles.loading}>
           <Loading loading={me.loading}/>
         </div>

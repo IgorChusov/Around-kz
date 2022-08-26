@@ -277,8 +277,6 @@ export function ServiceInfo () {
     for (let i = 0; i <= 4; i++) {
       if(arrImg[i]) {
         formData.append('images_service', arrImg[i]);
-      } else if (businessmen.data?.images_service[i]) {
-        formData.append('images_service', businessmen.data?.images_service[i]);
       }
     }
     
@@ -295,19 +293,7 @@ export function ServiceInfo () {
       history.push('/menu/account/business/createServices/selection/service')
       return
     }
-
-      // formData.append('service', JSON.stringify(services))
-
-      // await Promise.all(services.map((elem) => {
-      //   return dispatch(CreateAdsUserAsync(
-      //     elem.title,
-      //     elem.description,
-      //     String(elem.price),
-      //     // @ts-ignore
-      //     resp.id
-      //   ))
-      // }))
-      
+  
       history.push('/menu/account/business/myQuestionnaires')
   } 
 

@@ -132,6 +132,7 @@ export function SignIn () {
           setValueSecond={(e) => setValueSecond(e)}
           setValueFourth={(e) => setValueFourth(e)}
           setValueThird={(e) => setValueThird(e)}
+          buttonText='Войти'
         />
       }
       <Loading loading={token.loading} />

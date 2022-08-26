@@ -103,7 +103,7 @@ export function MenuQuestionnaire () {
                 to={
                   typeService === 'service'
                     ? `/menu/account/business/myQuestionnaires/${typeService}/${id}/changeInfo`
-                    : `/menu/account/business/myQuestionnaires/products/${type}/${id}/changeInfo`
+                    : `/menu/account/business/myQuestionnaires/products/${id}/changeInfo`
                 }
               ></Link>
             </li>
@@ -133,7 +133,7 @@ export function MenuQuestionnaire () {
                 to={
                   typeService === 'service'
                     ? `/menu/account/business/myQuestionnaires/${typeService}/${id}/changeInfo/components`
-                    : `/menu/account/business/myQuestionnaires/products/${type}/${id}/changeInfo/listProduct`
+                    : `/menu/account/business/myQuestionnaires/products/${id}/changeInfo/listProduct`
                 }
               ></Link>
             </li>

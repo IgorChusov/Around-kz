@@ -1,12 +1,14 @@
 import { Reducer } from 'redux'
+import { TValueArea, VALUE_AREA } from './actionCreator/valueArea'
 import { PRODUCT_LIST_SHOPPING, TProductListShopping } from './actionCreator/productShopingList'
 import { SERVICES_LIST_SHOPPING, TServicesListShopping } from './actionCreator/servicesShoppingList'
+import { TValueSearch, VALUE_SEARCH } from './actionCreator/valueSearch'
 import { CREATE_ADS_ERROR, CREATE_ADS_REQUEST, CREATE_ADS_SUCCESS } from './ads/action'
 import { createAdsReducer, CreateAdsState } from './ads/reduser'
 import { AllBusinessmenState } from './businessman/all/reduser'
 import { CREATE_BUSINESSMEN_ERROR, CREATE_BUSINESSMEN_REQUEST, CREATE_BUSINESSMEN_SUCCESS } from './businessman/create/action'
 import { createBusinessmenReducer, CreateBusinessmenState } from './businessman/create/reduser'
-import { GET_BUSINESSMEN_ERROR, GET_BUSINESSMEN_REQUEST, GET_BUSINESSMEN_SUCCESS } from './businessman/get/action'
+import { CHANGE_BUSINESSMEN_SUCCESS, GET_BUSINESSMEN_ERROR, GET_BUSINESSMEN_REQUEST, GET_BUSINESSMEN_SUCCESS } from './businessman/get/action'
 import { getBusinessmenReducer, IDataBusinessmen, TGetBusinessmenState } from './businessman/get/reduser'
 import { ME_REQUEST, ME_REQUEST_ERROR, ME_REQUEST_SUCCESS } from './me/get/action'
 import { meGetReducer, MeGetState } from './me/get/reduser'
@@ -30,6 +32,9 @@ export type RootState = {
   businessmen: TGetBusinessmenState 
   listBusinessmen: AllBusinessmenState
   ads: CreateAdsState
+  dataSearch: TValueSearch
+  valueArea: TValueArea | null
+
   dateReserve: string
   cardsPay: IListCard
   shoppingCart: []
@@ -106,6 +111,12 @@ const initialState: RootState = {
     error: '',
     data: null,
   },
+  dataSearch: {
+    valueSearch: '',
+    view: false
+  },
+  
+  valueArea: null,
 
   dateReserve: '21.01',
   cardsPay: [],
@@ -162,6 +173,7 @@ export const rootReducer: Reducer = (state = initialState, action) => {
     case GET_BUSINESSMEN_REQUEST:
     case GET_BUSINESSMEN_SUCCESS:
     case GET_BUSINESSMEN_ERROR:
+    case CHANGE_BUSINESSMEN_SUCCESS:
       return {
         ...state,
         businessmen: getBusinessmenReducer(state.businessmen, action),
@@ -172,6 +184,16 @@ export const rootReducer: Reducer = (state = initialState, action) => {
       return {
         ...state,
         ads: createAdsReducer(state.ads, action),
+      }
+    case VALUE_SEARCH:
+      return {
+        ...state, 
+        dataSearch: action.dataSearch
+      }
+    case VALUE_AREA:
+      return {
+        ...state, 
+        valueArea: action.valueArea
       }
     case PRODUCT_REQUEST:
     case PRODUCT_REQUEST_SUCCESS:

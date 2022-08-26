@@ -1,0 +1,52 @@
+.title {
+  max-width: 200px;
+  margin: 40px auto 24px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 16px 28px;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+  resize: none;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 400;
+  height: 115px;
+  color: var(--gray99);
+}
+
+.labelTag {
+  padding-left: 8px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+.contentInput {
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.text {
+  font-weight: 400;
+}
+
+.text:not(:last-of-type) {
+  margin-bottom: 30px;
+}
+
+.text:last-of-type {
+  margin-bottom: 20px;
+}
+
+.link {
+  display: flex;
+  max-width: 260px;
+  margin: 0 auto;
+  padding: 12px 79px;
+  background-color: var(--greenLight);
+  color: #fff;
+  font-size: 20px;
+  border-radius: 20px;
+}

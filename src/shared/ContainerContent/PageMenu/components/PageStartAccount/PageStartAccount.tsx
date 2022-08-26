@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Redirect, Route, useHistory } from 'react-router-dom'
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 
 import { RootState } from '../../../../../store/reducer'
 import { ButtonAccount } from '../../../../universalComponent/ButtonAccount'
@@ -23,28 +23,30 @@ export function PageStartAccount () {
           <ChangeAccount />
         </div>
         <Redirect from="/menu/account" to="/menu/account/personal" />
-        <Route path="/menu/account/personal">
-          <div className={styles.buttonGroup}>
-            <ButtonAccount
-              classNameContainer={styles.buttonAccount}
-              path="/menu/account/create-order/basic-info"
-              text="Создать новый заказ"
-            />
-            <ButtonSchedule path="/menu/account/mySchedule" text="Мои записи и заказы" />
-          </div>
-          <Menu />
-        </Route>
-        <Route path="/menu/account/business">
-          <div className={styles.buttonGroup}>
-            <ButtonAccount
-              classNameContainer={styles.buttonAccount}
-              path="/menu/account/business/myQuestionnaires"
-              text="Мои анкеты"
-            />
-            <ButtonSchedule path="/menu/account/mySchedule" text="Мои записи и заказы" />
-          </div>
-          <Menu />
-        </Route>
+        <Switch>
+          <Route path="/menu/account/personal">
+            <div className={styles.buttonGroup}>
+              <ButtonAccount
+                classNameContainer={styles.buttonAccount}
+                path="/menu/account/create-order/basic-info"
+                text="Создать новый заказ"
+              />
+              <ButtonSchedule path="/menu/account/mySchedule" text="Мои записи и заказы" />
+            </div>
+            <Menu />
+          </Route>
+          <Route path="/menu/account/business">
+            <div className={styles.buttonGroup}>
+              <ButtonAccount
+                classNameContainer={styles.buttonAccount}
+                path="/menu/account/business/myQuestionnaires"
+                text="Мои анкеты"
+              />
+              <ButtonSchedule path="/menu/account/mySchedule" text="Мои записи и заказы" />
+            </div>
+            <Menu />
+          </Route>
+        </Switch>
       </div>
     </div>
   )

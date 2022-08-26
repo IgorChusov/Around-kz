@@ -38,15 +38,20 @@ export const allBusinessmenRequestError: ActionCreator<AllBusinessmenRequestErro
   error,
 })
 
-export const AllBusinessmenUserAsync = (tags: string): ThunkAction<void, RootState, unknown, Action<string>> =>
+export const AllBusinessmenUserAsync = (tags: string , coordinates: [[number, number], [number, number]]): ThunkAction<void, RootState, unknown, Action<string>> =>
    async (dispatch, getState) => {
       dispatch(allBusinessmenRequest())
-
+      const str = tags.trim().split(' ').filter(entry => /\S/.test(entry)).join('&')
       try {
+        const paramsResp = new URLSearchParams();
+        paramsResp.append("tags", str);
+        paramsResp.append("left", String(coordinates[0][0]))
+        paramsResp.append("left", String(coordinates[0][1]))
+        paramsResp.append("right", String(coordinates[1][0]))
+        paramsResp.append("right", String(coordinates[1][1]))
+
         const resp = await api.get(`/users/businessmen/`, {
-          params:{
-            search: tags
-          },
+          params: paramsResp,
           headers: {
           'Authorization': `JWT ${getState().token.tokenText}`
         }
