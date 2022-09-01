@@ -27,7 +27,16 @@ export interface IDataBusinessmen {
     price: string
     title: string
   }[],
-  product:[],
+  product:{
+    id: number
+    description: string
+    image: string
+    min_quantity: number
+    price: string
+    quantity: number
+    title: string
+    unit: string
+  }[],
   rule_payment: string,
   title: string,
   description: string,

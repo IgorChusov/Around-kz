@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { TProductListShopping } from '../../../../store/actionCreator/productShopingList'
 import { servicesListShopping } from '../../../../store/actionCreator/servicesShoppingList'
-import { TDataProducts } from '../../../../store/products/reduces'
+
 import { RootState } from '../../../../store/reducer'
 import { ButtonBack } from '../../../universalComponent/ButtonBack'
 import { ButtonCarousel } from '../../../universalComponent/ButtonCarousel'
@@ -111,39 +111,39 @@ interface IElement {
 }
 interface IPageProductReserve {}
 export function PageProductReserveBringing (props: IPageProductReserve) {
-  const dispatch = useDispatch()
-  const listShopping = useSelector<RootState, TProductListShopping>((state) => state.productListShopping)
-  const [list, setList] = useState(listFull)
-  const { id, idProduct } = useParams<{ id?: string; idProduct?: string }>()
-  const data = useSelector<RootState, TDataProducts>((state) => state.productsData.data)
-  const [fullPrice, setFullPrice] = useState(0)
-  const [fullAmount, setFullAmount] = useState(0)
-  const [fullList, setFullList] = useState(listShopping.list)
-  useEffect(() => {
-    const price = listShopping.list?.reduce((sum, order) => sum + order.price * Number(order.amount), 0)
-    const amount = listShopping.list?.reduce((sum, order) => sum + Number(order.amount), 0)
-    setFullPrice(price || 0)
-    setFullAmount(amount || 0)
-  }, [listShopping, fullList])
+  // const dispatch = useDispatch()
+  // const listShopping = useSelector<RootState, TProductListShopping>((state) => state.productListShopping)
+  // const [list, setList] = useState(listFull)
+  // const { id, idProduct } = useParams<{ id?: string; idProduct?: string }>()
+  // const data = useSelector<RootState, TDataProducts>((state) => state.productsData.data)
+  // const [fullPrice, setFullPrice] = useState(0)
+  // const [fullAmount, setFullAmount] = useState(0)
+  // const [fullList, setFullList] = useState(listShopping.list)
+  // useEffect(() => {
+  //   const price = listShopping.list?.reduce((sum, order) => sum + order.price * Number(order.amount), 0)
+  //   const amount = listShopping.list?.reduce((sum, order) => sum + Number(order.amount), 0)
+  //   setFullPrice(price || 0)
+  //   setFullAmount(amount || 0)
+  // }, [listShopping, fullList])
 
-  const clickPlus = (index: number) => {
-    if (!fullList) return
-    const newList = fullList.slice()
-    newList[index].amount = String(Number(newList[index].amount) + 1)
-    dispatch(servicesListShopping({ id: id, fullPrice: fullPrice, name: data.name, list: newList }))
-    setFullList(newList)
-  }
-  const clickMinus = (index: number) => {
-    if (!fullList) return
-    const newList = fullList.slice()
-    newList[index].amount = String(Number(newList[index].amount) - 1)
-    dispatch(servicesListShopping({ id: id, fullPrice: fullPrice, name: data.name, list: newList }))
-    setFullList(newList)
-  }
+  // const clickPlus = (index: number) => {
+  //   if (!fullList) return
+  //   const newList = fullList.slice()
+  //   newList[index].amount = String(Number(newList[index].amount) + 1)
+  //   dispatch(servicesListShopping({ id: id, fullPrice: fullPrice, name: data.name, list: newList }))
+  //   setFullList(newList)
+  // }
+  // const clickMinus = (index: number) => {
+  //   if (!fullList) return
+  //   const newList = fullList.slice()
+  //   newList[index].amount = String(Number(newList[index].amount) - 1)
+  //   dispatch(servicesListShopping({ id: id, fullPrice: fullPrice, name: data.name, list: newList }))
+  //   setFullList(newList)
+  // }
 
   return (
     <div className={styles.container}>
-      <ButtonBack addressLink={`/pageProducts/bringing/${id}/buyCart`} className={styles.buttonBack} />
+      {/* <ButtonBack addressLink={`/pageProducts/bringing/${id}/buyCart`} className={styles.buttonBack} />
       <Text className={styles.title} size={24} As="h2" color={EColor.greenDark}>
         {data.name}
       </Text>
@@ -213,7 +213,7 @@ export function PageProductReserveBringing (props: IPageProductReserve) {
         <Text color={EColor.white} size={20}>
           Забронировать
         </Text>
-      </Link>
+      </Link> */}
     </div>
   )
 }

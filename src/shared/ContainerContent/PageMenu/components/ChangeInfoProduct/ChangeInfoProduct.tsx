@@ -35,13 +35,7 @@ export function ChangeInfoProduct () {
   const [title, setTitle] = useState('Заполните информацию о себе')
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
 
-  // состояния импутов на второй странице
-  const [valueInputName, setValueInputName] = useState('')
-  const [valueInputPrice, setValueInputPrice] = useState('')
-  const [valueTextAreaInfoBuy, setValueTextAreaInfoBuy] = useState('')
-  const [valueAvailableQuantity, setValueAvailableQuantity] = useState('')
-  const [valueInputMin, setValueInputMin] = useState('')
-  const [valueSelect, setValueSelect] = useState('')
+
 
   const [valueActivity, setValueActivity] = useState(businessmen.data?.title || '')
   const [valueAddress, setValueAddress] = useState(businessmen.data?.address || '')
@@ -75,30 +69,6 @@ export function ChangeInfoProduct () {
   function handleSubmitForm (e: FormEvent) {
     e.preventDefault()
     console.log('отправлено')
-  }
-
-  function handleChangeValueInputName (e: ChangeEvent<HTMLInputElement>) {
-    setValueInputName(e.target.value)
-  }
-
-  function handleChangeValueInputPrice (e: ChangeEvent<HTMLInputElement>) {
-    setValueInputPrice(e.target.value)
-  }
-
-  function handleChangeValueTextAreaInfoBuy (e: ChangeEvent<HTMLTextAreaElement>) {
-    setValueTextAreaInfoBuy(e.target.value)
-  }
-
-  function handleChangeInputAvailableQuantity (e: ChangeEvent<HTMLInputElement>) {
-    setValueAvailableQuantity(e.target.value)
-  }
-
-  function handleChangeInputMin (e: ChangeEvent<HTMLInputElement>) {
-    setValueInputMin(e.target.value)
-  }
-
-  function handleChangeSelect (e: ChangeEvent<HTMLSelectElement>) {
-    setValueSelect(e.target.value)
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -185,37 +155,26 @@ export function ChangeInfoProduct () {
         </div>
       )}
       <Switch>
+        <Route path={'/menu/account/business/myQuestionnaires/products/:id/changeInfo/components/:idProduct'}>
+          <ButtonBack
+            addressLink={`/menu/account/business/myQuestionnaires/products/${id}/changeInfo/listProduct`}
+            className={styles.btn}
+          />
+          <InformationBuyPage />
+        </Route>
         <Route path={'/menu/account/business/myQuestionnaires/products/:id/changeInfo/components'}>
-          <div>
-            <ButtonBack
-              addressLink={`/menu/account/business/myQuestionnaires/products/${id}/changeInfo/listProduct`}
-              className={styles.btn}
-            />
-            <InformationBuyPage
-              handleSubmitForm={handleSubmitForm}
-              valueName={valueInputName}
-              handleChangeValueName={handleChangeValueInputName}
-              valuePrice={valueInputPrice}
-              handleChangeValuePrice={handleChangeValueInputPrice}
-              valueTextArea={valueTextAreaInfoBuy}
-              handleChangeValueTextArea={handleChangeValueTextAreaInfoBuy}
-              valueAvailableQuantity={valueAvailableQuantity}
-              handleChangeValueAvailableQuantity={handleChangeInputAvailableQuantity}
-              valueInputMin={valueInputMin}
-              handleChangeValueInputMin={handleChangeInputMin}
-              valueSelect={valueSelect}
-              handleChangeSelect={handleChangeSelect}
-            />
-          </div>
+          <ButtonBack
+            addressLink={`/menu/account/business/myQuestionnaires/products/${id}/changeInfo/listProduct`}
+            className={styles.btn}
+          />
+          <InformationBuyPage />
         </Route>
         <Route path={'/menu/account/business/myQuestionnaires/products/:id/changeInfo/listProduct'}>
           <ButtonBack
             addressLink={`/menu/account/business/myQuestionnaires/products/${id}`}
             className={styles.btn}
           />
-          <ListProducts
-            linkAddNewProduct={`/menu/account/business/myQuestionnaires/products/${id}/changeInfo/components`}
-          />
+          <ListProducts />
         </Route>
         <Route path={'/menu/account/business/myQuestionnaires/products/:id/changeInfo/'}>
           <ButtonBack

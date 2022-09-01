@@ -9,14 +9,10 @@ import { AllBusinessmenState } from './businessman/all/reduser'
 import { CREATE_BUSINESSMEN_ERROR, CREATE_BUSINESSMEN_REQUEST, CREATE_BUSINESSMEN_SUCCESS } from './businessman/create/action'
 import { createBusinessmenReducer, CreateBusinessmenState } from './businessman/create/reduser'
 import { CHANGE_BUSINESSMEN_SUCCESS, GET_BUSINESSMEN_ERROR, GET_BUSINESSMEN_REQUEST, GET_BUSINESSMEN_SUCCESS } from './businessman/get/action'
-import { getBusinessmenReducer, IDataBusinessmen, TGetBusinessmenState } from './businessman/get/reduser'
+import { getBusinessmenReducer, TGetBusinessmenState } from './businessman/get/reduser'
 import { ME_REQUEST, ME_REQUEST_ERROR, ME_REQUEST_SUCCESS } from './me/get/action'
 import { meGetReducer, MeGetState } from './me/get/reduser'
 import { SHOPPING_CARD_LIST } from './payList/action'
-import { PRODUCT_REQUEST, PRODUCT_REQUEST_ERROR, PRODUCT_REQUEST_SUCCESS } from './products/action'
-import { productsReducer, ProductsState } from './products/reduces'
-import { SERVICES_REQUEST, SERVICES_REQUEST_ERROR, SERVICES_REQUEST_SUCCESS } from './services/action'
-import { servicesReducer, ServicesState } from './services/reducer'
 import {
   REGISTER_REQUEST,
   SMS_REQUEST_SUCCESS,
@@ -24,6 +20,8 @@ import {
   TOKEN_REQUEST_ERROR
 } from './token/action'
 import { tokenReducer, TokenState } from './token/reduser'
+import { TMarketState, marketReducer } from './market/reduser'
+import { CREATE_MARKET_ERROR, CREATE_MARKET_REQUEST, CREATE_MARKET_SUCCESS, DELETE_MARKET_REQUEST, DELETE_MARKET_SUCCESS } from './market/action'
 
 export type RootState = {
   token: TokenState
@@ -32,13 +30,13 @@ export type RootState = {
   businessmen: TGetBusinessmenState 
   listBusinessmen: AllBusinessmenState
   ads: CreateAdsState
+  market: TMarketState
   dataSearch: TValueSearch
   valueArea: TValueArea | null
 
   dateReserve: string
   cardsPay: IListCard
   shoppingCart: []
-  productsData: ProductsState
   servicesListShopping: TServicesListShopping
   productListShopping: TProductListShopping
 }
@@ -115,8 +113,14 @@ const initialState: RootState = {
     valueSearch: '',
     view: false
   },
-  
   valueArea: null,
+  market: {
+    loading: false,
+    error: '',
+    data: null,
+  },
+
+
 
   dateReserve: '21.01',
   cardsPay: [],
@@ -132,17 +136,6 @@ const initialState: RootState = {
     id: '',
     fullPrice: 0,
     name: '',
-  },
-  productsData: {
-    loading: false,
-    error: '',
-    data: {
-      name: '',
-      idStore: '',
-      typeStore: '',
-      description: '',
-      list: [{ id: '', nameProduct: '', price: 0, min: 0, description: '', img: '', amountProduct: 0, unit: '' }],
-    },
   },
 }
 
@@ -195,12 +188,14 @@ export const rootReducer: Reducer = (state = initialState, action) => {
         ...state, 
         valueArea: action.valueArea
       }
-    case PRODUCT_REQUEST:
-    case PRODUCT_REQUEST_SUCCESS:
-    case PRODUCT_REQUEST_ERROR:
+    case CREATE_MARKET_REQUEST:
+    case DELETE_MARKET_REQUEST:
+    case CREATE_MARKET_SUCCESS:
+    case DELETE_MARKET_SUCCESS:
+    case CREATE_MARKET_ERROR:
       return {
         ...state,
-        productsData: productsReducer(state.productsData, action),
+        market: marketReducer(state.market, action),
       }
     case 'CARDS_LIST':
       return {

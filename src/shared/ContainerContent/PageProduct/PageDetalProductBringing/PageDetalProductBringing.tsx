@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 
 import { productListShopping, TProductListShopping } from '../../../../store/actionCreator/productShopingList'
-import { TDataProducts } from '../../../../store/products/reduces'
+
 import { RootState } from '../../../../store/reducer'
 import { ButtonBack } from '../../../universalComponent/ButtonBack'
 import { ButtonCarousel } from '../../../universalComponent/ButtonCarousel'
@@ -30,38 +30,38 @@ interface IElement {
 }
 
 export function PageDetalProductBringing (props: IPageDetalProductBringing) {
-  const dispatch = useDispatch()
-  const { id, idProduct } = useParams<{ id?: string; idProduct?: string }>()
-  const data = useSelector<RootState, TDataProducts>((state) => state.productsData.data)
-  const listShopping = useSelector<RootState, TProductListShopping>((state) => state.productListShopping)
-  const [elementProduct, setElementProduct] = useState<IElement>()
-  useEffect(() => {
-    const [element] = data.list.filter((f) => {
-      return f.id === idProduct
-    })
-    setElementProduct(element)
-  }, [data])
-  const handleClick = () => {
-    if (!elementProduct) return
-    const fullPrice = props.amount * elementProduct?.price
-    const shoppingList = listShopping.list ? listShopping.list : []
-    const filterShoppingList = shoppingList.filter((elem) => {
-      return elem.id !== idProduct
-    })
-    const newProduct = {
-      id: elementProduct.id,
-      nameProduct: elementProduct.nameProduct,
-      price: elementProduct.price,
-      amount: props.amount,
-      unit: elementProduct.unit,
-    }
-    dispatch(
-      productListShopping({ id: id, fullPrice: fullPrice, name: data.name, list: [...filterShoppingList, newProduct] }),
-    )
-  }
+  // const dispatch = useDispatch()
+  // const { id, idProduct } = useParams<{ id?: string; idProduct?: string }>()
+  // const data = useSelector<RootState, TDataProducts>((state) => state.productsData.data)
+  // const listShopping = useSelector<RootState, TProductListShopping>((state) => state.productListShopping)
+  // const [elementProduct, setElementProduct] = useState<IElement>()
+  // useEffect(() => {
+  //   const [element] = data.list.filter((f) => {
+  //     return f.id === idProduct
+  //   })
+  //   setElementProduct(element)
+  // }, [data])
+  // const handleClick = () => {
+  //   if (!elementProduct) return
+  //   const fullPrice = props.amount * elementProduct?.price
+  //   const shoppingList = listShopping.list ? listShopping.list : []
+  //   const filterShoppingList = shoppingList.filter((elem) => {
+  //     return elem.id !== idProduct
+  //   })
+  //   const newProduct = {
+  //     id: elementProduct.id,
+  //     nameProduct: elementProduct.nameProduct,
+  //     price: elementProduct.price,
+  //     amount: props.amount,
+  //     unit: elementProduct.unit,
+  //   }
+  //   dispatch(
+  //     productListShopping({ id: id, fullPrice: fullPrice, name: data.name, list: [...filterShoppingList, newProduct] }),
+  //   )
+  // }
   return (
     <div className={styles.container}>
-      <ButtonBack
+      {/* <ButtonBack
         handleClick={props.clickOnButtonBack}
         className={styles.buttonBack}
         addressLink={`/pageProducts/bringing/${id}`}
@@ -99,7 +99,7 @@ export function PageDetalProductBringing (props: IPageDetalProductBringing) {
         <Text color={EColor.white} size={20}>
           Добавить в корзину
         </Text>
-      </Link>
+      </Link> */}
     </div>
   )
 }

@@ -1,44 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { Route, Switch, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
-
 import { PageServiceMenu } from '../PageService/PageServiceMenu'
-
 import { PagePay } from '../PagePay'
-
-import { getProducts } from '../../../store/products/action'
-
 import { RootState } from '../../../store/reducer'
-
-import { TDataProducts } from '../../../store/products/reduces'
-
 import { PageComments } from '../PageComments'
-
 import { PageAllProduct } from './PageAllProduct'
 import { PageDetalProductBringing } from './PageDetalProductBringing'
 import { PageProductReserveBringing } from './PageProductReserveBringing'
 import { PageProductChat } from './PageProductChat'
 import { PageDetalProductStore } from './PageDetalProductStore'
-
 import styles from './pageproduct.css'
 
 import { PageProductListShopping } from './PageProductListShopping'
 import { PageProductReserveStore } from './PageProductReserveStore'
+import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
 
 export function PageProduct () {
   const { id, type } = useParams<{ id?: string; type?: string }>()
+  const dispatch = useDispatch()
   const { path, url } = useRouteMatch()
+  const location = useLocation().pathname
+  const history = useHistory()
+  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+
   // const [amountReserveProduct, setAmountReserveProduct] = useState<{id: string, amount: number}[]>([{id:'', amount: 1}]);
   const [amountReserveProduct, setAmountReserveProduct] = useState(1)
   const [listImg, setListImg] = useState<string[]>()
-  const location = useLocation().pathname
-  const history = useHistory()
-  const data = useSelector<RootState, TDataProducts>((state) => state.productsData.data)
+
+  // const data = useSelector<RootState, TDataProducts>((state) => state.productsData.data)
   // временное
-  const dispatch = useDispatch()
+ 
+
   useEffect(() => {
-    dispatch(getProducts(id || '', type || ''))
+    // dispatch()
   }, [url])
 
   // info / chat / ChoiceOfDate
@@ -120,7 +115,6 @@ export function PageProduct () {
             id={id || ''}
             type={type || ''}
             clickOnProduct={() => {}}
-            productList={data}
           />
         </Route>
       </Switch>

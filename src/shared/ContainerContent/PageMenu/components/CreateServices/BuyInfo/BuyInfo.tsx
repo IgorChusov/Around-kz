@@ -187,13 +187,17 @@ export function BuyInfo () {
           <PageSelectProduct />
         </Route>
         <Route path={'/menu/account/business/createServices/selection/buy'}>
-          <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
+          <Text 
+            className={styles.title} 
+            As="h2" 
+            color={EColor.greenDark} 
+            size={24}
+          >
              Заполните информацию о себе
           </Text>
           <ButtonBack
             addressLink="/menu/account/business/createServices/selection"
             className={styles.btn}
-            handleClick={() => {}}
           />
           <InfoPageBasic 
             type='Product'
