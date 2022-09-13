@@ -11,8 +11,18 @@ export const ME_REQUEST = 'ME_REQUEST'
 export type MeRequestAction = {
   type: typeof ME_REQUEST
 }
+
 export const meRequest: ActionCreator<MeRequestAction> = () => ({
   type: ME_REQUEST,
+})
+
+// запрос на изменение отправлен
+export const ME_CHANGE_REQUEST = 'ME_CHANGE_REQUEST'
+export type MeChangeRequestAction = {
+  type: typeof ME_CHANGE_REQUEST
+}
+export const meChangeRequest: ActionCreator<MeChangeRequestAction> = () => ({
+  type: ME_CHANGE_REQUEST,
 })
 
 // успешно
@@ -24,6 +34,18 @@ export type MeRequestSuccessAction = {
 
 export const meRequestSuccess: ActionCreator< MeRequestSuccessAction> = (data: IMe) => ({
   type: ME_REQUEST_SUCCESS,
+  data,
+})
+
+// успешно изменено
+export const ME_CHANGE_SUCCESS = 'ME_CHANGE_SUCCESS'
+export type MeChangeRequestSuccessAction = {
+  type: typeof ME_CHANGE_SUCCESS
+  data: IMe
+}
+
+export const meChangeRequestSuccess: ActionCreator<MeChangeRequestSuccessAction> = (data: IMe) => ({
+  type: ME_CHANGE_SUCCESS,
   data,
 })
 
@@ -56,3 +78,21 @@ export const MeGetUserAsync = (token: string): ThunkAction<void, RootState, unkn
       dispatch(meRequestError(error))
     }
   }
+
+export const MeChangeUserAsync = (props: Partial<IMe>): ThunkAction<void, RootState, unknown, Action<string>> =>
+async (dispatch, getState) => { 
+  dispatch(meRequest())
+
+  try {
+    const resp = await api.patch(`/users/me`, props, {
+      headers: {
+      'Authorization': `JWT ${getState().token.tokenText}`
+    }
+    })
+    dispatch(meRequestSuccess(resp.data))
+
+    return resp
+  } catch (error: any) {
+    dispatch(meRequestError(error))
+  }
+}

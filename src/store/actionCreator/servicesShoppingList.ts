@@ -1,15 +1,12 @@
 import { ActionCreator } from 'redux'
+import { TListServices } from '../../shared/ContainerContent/PageService'
 
 export type TServicesListShopping = {
   id: string
   date: string
   time: string
   fullPrice: number
-  list?: {
-    id: string
-    nameService: string
-    price: number
-  }[]
+  list?: TListServices[]
 }
 export const SERVICES_LIST_SHOPPING = 'SERVICES_LIST_SHOPPING'
 export type ServicesListAction = {
