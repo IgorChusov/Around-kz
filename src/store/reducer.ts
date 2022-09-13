@@ -66,6 +66,10 @@ const initialState: RootState = {
       avatar:  null,
       status: '',
       bank_card: null,
+      user_coordinates: {
+        latitude: null,
+        longitude: null,
+      }
     },
   },
   businessman: {

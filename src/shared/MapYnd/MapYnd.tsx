@@ -1,24 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react'
-
-import { Map, Placemark, YMaps, YMapsApi } from 'react-yandex-maps'
-
+import React, { useEffect, useState } from 'react'
+import { Map, Placemark } from 'react-yandex-maps'
 import { useHistory } from 'react-router'
-
 import { useDispatch, useSelector } from 'react-redux'
-
 import { usePosition } from '../../hooks/usePosition'
-import img from '../../assets/images/yourLocation.png'
+import myPosition from '../../assets/images/yourLocation.svg'
+import myBusiness from '../../assets/images/my-business.svg'
 
 import { RootState } from '../../store/reducer'
 import { IconCenterCoordinates } from '../Icons'
-
 import styles from './mapynd.css'
-import { MePatchUserAsync } from '../../store/me/patch/action'
-import { TokenState } from '../../store/token/reduser'
 import { AllBusinessmenState } from '../../store/businessman/all/reduser'
 import { changeValueArea, TValueArea } from '../../store/actionCreator/valueArea'
 import { TValueSearch } from '../../store/actionCreator/valueSearch'
 import { AllBusinessmenUserAsync } from '../../store/businessman/all/action'
+import { MeChangeUserAsync } from '../../store/me/get/action'
+import { MeGetState } from '../../store/me/get/reduser'
 
 interface Is {
   latitude?: string
@@ -35,6 +31,7 @@ export function MapYnd () {
 
   const valueSearch = useSelector<RootState, TValueSearch >((state) => state.dataSearch)
   const valueArea = useSelector<RootState, TValueArea | null>((state) => state.valueArea)
+  const me = useSelector<RootState, MeGetState>((state) => state.me)
 
   const { latitude, longitude, error }: Is = usePosition()
   const [maps, setMaps] = useState<any>({})
@@ -47,11 +44,19 @@ export function MapYnd () {
     dispatch(changeValueArea(mapRef?.getBounds()))
 
     setIsGetCoords(false)
-    const geo = await ymaps.get('target').geoObjects.get(0)
+    const geo = await ymaps.get('target').geoObjects.get(1)
     geo.events.add('dragend', function (e: any) {
       setTouchedCoords(true)
       const coordinates = geo.geometry.getCoordinates()
-      setCoords(coordinates)
+      dispatch(MeChangeUserAsync(
+        {
+          user_coordinates: {
+            'latitude':	coordinates[0],
+            'longitude':	coordinates[1]
+            }
+        }))
+      // setCoords(coordinates)
+     
     })
     setIsGetCoords(true)
   }
@@ -104,19 +109,34 @@ export function MapYnd () {
         <Placemark
           geometry={coords}
           options={{
-            draggable: true,
             cursor: 'pointer',
             iconCaption: 'Вы здесь',
             iconLayout: 'default#imageWithContent',
-            iconImageSize: [44, 44],
+            iconImageSize: [64, 64],
             iconImageOffset: [-22, -35],
-            iconImageHref: img,
+            iconImageHref: myPosition,
           }}
         />
 
         <Placemark
+          geometry={coords}
+          options={{
+            draggable: true,
+            cursor: 'pointer',
+            iconCaption: 'Вы здесь',
+            iconLayout: 'default#imageWithContent',
+            iconImageSize: [45, 45],
+            iconImageOffset: [-22, -35],
+            iconImageHref: myBusiness,
+          }}  
+        />
+
+
+
+
+        {/* <Placemark
           onClick={() => {
-            history.push(`/pageService/${123}`)
+            history.push(`/pageService/${274}`)
           }}
           defaultGeometry={[60.05695327479101, 30.439678014399785]}
         />
@@ -133,7 +153,7 @@ export function MapYnd () {
             history.push(`/pageProducts/${'store'}/${124}`)
           }}
           defaultGeometry={[60.05897327479101, 30.439678014399785]}
-        />
+        /> */}
       </Map>
     </div>
   )

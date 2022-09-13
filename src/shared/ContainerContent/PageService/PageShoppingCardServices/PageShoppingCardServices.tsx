@@ -1,15 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-
 import { servicesListShopping, TServicesListShopping } from '../../../../store/actionCreator/servicesShoppingList'
 import { RootState } from '../../../../store/reducer'
 import { ButtonBack } from '../../../universalComponent/ButtonBack'
 import { IconCancel } from '../../../Icons/IconCancel'
 import { EColor, Text } from '../../../universalComponent/Text'
-
 import styles from './pageshoppingcardservices.css'
 import { useToken } from '../../../../hooks/useToken'
+import { TListServices } from '../PageService'
 
 interface IPageShoppingCardServices {
   list?: []
@@ -17,17 +16,14 @@ interface IPageShoppingCardServices {
 }
 
 export function PageShoppingCardServices (props: IPageShoppingCardServices) {
+  const dispatch = useDispatch()
   const {tokenLocalStorage, token} = useToken()
-  // const token =
-  //   useSelector<RootState, string>((state) => state.token.tokenText) || typeof window !== 'undefined'
-  //     ? localStorage.getItem('TOKEN')
-  //     : null
 
   const servicesData = useSelector<RootState, TServicesListShopping>((state) => state.servicesListShopping)
-  const dispatch = useDispatch()
-  const clickDelete = (id: number, ls: { id: string; nameService: string; price: number }[]) => {
-    ls.splice(id, 1)
-    const fullPrice = ls.reduce((sum, order) => sum + order.price, 0)
+
+  const clickDelete = (index: number, ls: TListServices[]) => {
+    ls.splice(index, 1)
+    const fullPrice = ls.reduce((sum, order) => sum + Number(order.price), 0)
     dispatch(
       servicesListShopping({
         id: '123',
@@ -59,7 +55,7 @@ export function PageShoppingCardServices (props: IPageShoppingCardServices) {
                   <IconCancel />
                 </button>
                 <Text className={styles.textName} color={EColor.greenMiddle} As="p" size={16}>
-                  {elem.nameService}
+                  {elem.title}
                 </Text>
               </div>
               <Text color={EColor.greenMiddle} size={16}>{`${elem.price}тнг`}</Text>

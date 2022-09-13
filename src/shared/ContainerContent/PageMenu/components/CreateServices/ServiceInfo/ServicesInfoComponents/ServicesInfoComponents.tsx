@@ -36,7 +36,7 @@ export function ServicesInfoComponents (props: IServicesInfoComponents) {
               <CreateComponentServices
                 id={element.id}
                 componentId={element.idFront}
-                handleClickOnChange={(idElement: string, id: number | undefined) => {
+                handleClickOnChange={(idElement: string) => {
                   props.changeElementService(element, idElement, element.id)
                 }}
                 key={generateRandomString()}
@@ -54,7 +54,7 @@ export function ServicesInfoComponents (props: IServicesInfoComponents) {
         </button>
         <Link className={styles.basikInfo} 
           to={
-            location.pathname === '/menu/account/business/myQuestionnaires/service/177/changeInfo/components' 
+            location.pathname === `/menu/account/business/myQuestionnaires/service/${id}/changeInfo/components` 
               ? `/menu/account/business/myQuestionnaires/service/${id}/changeInfo` :
               '/menu/account/business/createServices/selection/service'
               } >

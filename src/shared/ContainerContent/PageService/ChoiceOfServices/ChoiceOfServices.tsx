@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { TListServices } from '..'
@@ -12,7 +12,7 @@ import { PresentationLine } from '../PresentationLine'
 import styles from './choiceofservices.css'
 
 interface IChoiceOfServices {
-  listServices: TListServices
+  listServices: TListServices []
   handleClickNext: () => void
   id: string
 }
@@ -28,11 +28,11 @@ export function ChoiceOfServices ({ id, listServices, handleClickNext }: IChoice
   const handleChange = (e: ChangeEvent<HTMLFormElement>) => {
     //  идекс с 18 индекса строки
     const idElementOnList = Number(e.target.id.slice(18))
-    listServices.list[idElementOnList].checked = e.target.checked
-    const listChecked = listServices.list.filter((elem) => {
+    listServices[idElementOnList].checked = e.target.checked
+    const listChecked = listServices.filter((elem) => {
       return elem.checked
     })
-    const fullPrice = listChecked.reduce((sum, order) => sum + order.price, 0)
+    const fullPrice = listChecked.reduce((sum, order) => sum + Number(order.price), 0)
     dispatch(servicesListShopping({ id: id, date: '', time: '', fullPrice: fullPrice, list: listChecked }))
   }
 
@@ -44,10 +44,10 @@ export function ChoiceOfServices ({ id, listServices, handleClickNext }: IChoice
       <PresentationLine />
       <form onChange={handleChange} className={styles.form}>
         <ul className={styles.listServices}>
-          {listServices.list.map((elem, index) => {
+          {listServices.map((elem, index) => {
             return (
               <li className={styles.listItem} key={generateRandomString()}>
-                <CustomCheckbox defaultChecked={elem.checked} index={index} name={elem.nameService} />
+                <CustomCheckbox defaultChecked={elem.checked || false} index={index} name={elem.title} />
                 <Text className={styles.itemInfo} size={16}>{`${elem.price}тнг`}</Text>
               </li>
             )

@@ -1,9 +1,7 @@
 .presentationContainer {
   position: relative;
-  left: -24px;
   margin-bottom: 18px;
   height: 4px;
-  width: 100vw;
   background-color: var(--grayF0);
 }
 

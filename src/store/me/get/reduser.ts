@@ -16,6 +16,10 @@ export type IMe = {
   avatar: string | null
   status: string
   bank_card: string | null
+  user_coordinates: {
+    latitude: number | null,
+    longitude: number | null
+  }
 }
 
 export type MeGetState = {

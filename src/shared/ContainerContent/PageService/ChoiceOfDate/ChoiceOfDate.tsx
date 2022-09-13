@@ -116,6 +116,7 @@ export function ChoiceOfDate (props: IChoiceOfDate) {
   const date = useSelector<RootState, string>((state) => state.dateReserve)
   const [listTime, setListTime] = useState([{ time: '11:00', freedom: false }])
   const [checkedRadio, setCheckedRadio] = useState('')
+  
   useEffect(() => {
     const times = listFull.find((city) => date === city.date)?.choiceTime
     if (times) {
