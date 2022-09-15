@@ -1,9 +1,0 @@
-#!/bin/sh
- 
-ssh app@188.225.79.181 <<EOF
-  cd ~/Around-front-prod
-  git pull
-  npm install --production
-  nodemon ./dist/server/server.js
-  exit
-EOF
