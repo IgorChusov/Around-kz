@@ -7,7 +7,7 @@ import { StaticRouter} from "react-router";
 import favicon from 'serve-favicon';
 import compression from 'compression'
 import helmet from 'helmet'
-
+const NODE_ENV = process.env.NODE_ENV
 const IS_PROD = NODE_ENV === 'production'
 const PORT = process.env.PORT || 3000
 
@@ -16,7 +16,7 @@ const app = express();
 if(IS_PROD) {
   app.use(compression())
   app.use(helmet({
-    contentSecurityPolicy: false
+    contentSecurityPolicy: false,
   }))
 }
 
