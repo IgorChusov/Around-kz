@@ -24,10 +24,10 @@
   "author": "ChusovIgor",
   "license": "ISC",
   "dependencies": {
-    "@types/js-cookie": "^3.0.2",
     "axios": "^0.25.0",
+    "compression": "^1.7.4",
     "express": "^4.17.1",
-    "js-cookie": "^3.0.1",
+    "helmet": "^6.0.0",
     "nodemon": "^2.0.15",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

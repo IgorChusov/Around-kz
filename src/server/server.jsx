@@ -5,12 +5,23 @@ import { App } from '../App';
 import { indexTemplate } from './indexTemplate'
 import { StaticRouter} from "react-router";
 import favicon from 'serve-favicon';
+import compression from 'compression'
+import helmet from 'helmet'
+
+const IS_PROD = NODE_ENV === 'production'
 const PORT = process.env.PORT || 3000
 
 const app = express();
+
+if(IS_PROD) {
+  app.use(compression())
+  app.use(helmet({
+    contentSecurityPolicy: false
+  }))
+}
+
 app.use(favicon('./public/64x64.ico'))
 app.use('/static', express.static('./dist/client'))
-
 
 app.get('*', (req, res) => {
   const context = {};
