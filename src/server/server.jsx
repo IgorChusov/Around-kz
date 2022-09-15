@@ -17,6 +17,7 @@ if(IS_PROD) {
   app.use(compression())
   app.use(helmet({
     contentSecurityPolicy: false,
+    crossOriginResourcePolicy: false,
   }))
 }
 

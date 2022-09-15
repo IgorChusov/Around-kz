@@ -1,7 +1,7 @@
 import React from 'react'
 import { hot } from 'react-hot-loader/root'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { applyMiddleware, createStore } from 'redux'
 import { YMaps } from 'react-yandex-maps'
