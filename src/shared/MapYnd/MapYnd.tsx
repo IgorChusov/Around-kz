@@ -35,7 +35,7 @@ export function MapYnd () {
 
   const { latitude, longitude, error }: Is = usePosition()
   const [maps, setMaps] = useState<any>({})
-  const [coords, setCoords] = useState<number[]>([])
+  const [coords, setCoords] = useState<number[]>([51.16681515500828, 71.41997509314217])
   const [isGetCoords, setIsGetCoords] = useState(true)
   const [touchedCoords, setTouchedCoords] = useState(false)
   const [mapRef, setMapRef] = useState<any>({})
@@ -44,18 +44,18 @@ export function MapYnd () {
     dispatch(changeValueArea(mapRef?.getBounds()))
 
     setIsGetCoords(false)
-    const geo = await ymaps.get('target').geoObjects.get(1)
+    const geo = await ymaps.get('target').geoObjects.get(0)
     geo.events.add('dragend', function (e: any) {
       setTouchedCoords(true)
       const coordinates = geo.geometry.getCoordinates()
-      dispatch(MeChangeUserAsync(
-        {
-          user_coordinates: {
-            'latitude':	coordinates[0],
-            'longitude':	coordinates[1]
-            }
-        }))
-      // setCoords(coordinates)
+      // dispatch(MeChangeUserAsync(
+      //   {
+      //     user_coordinates: {
+      //       'latitude':	coordinates[0],
+      //       'longitude':	coordinates[1]
+      //       }
+      //   }))
+      setCoords(coordinates)
      
     })
     setIsGetCoords(true)
@@ -71,16 +71,12 @@ export function MapYnd () {
     dispatch(changeValueArea(mapRef?.getBounds()))
   }, [mapRef])
 
-  // const polygonLayout = useMemo(()=>{
-  //   return maps.templateLayoutFactory.createClass('<div class="placemark_layout_container"><div class="polygon_layout">!</div></div>');
-  // }, [maps])
-
   function handleCenterMyPosition () {
     mapRef.setCenter(coords, 17)
   }
 
   useEffect(() => {
-    if (touchedCoords) return
+    if (touchedCoords || !latitude || !longitude) return
     setCoords([Number(latitude), Number(longitude)])
   }, [latitude, longitude])
 
@@ -99,8 +95,8 @@ export function MapYnd () {
       <Map
         width={'100%'}
         height={'100%'}
-        defaultState={{ center: [Number(latitude), Number(longitude)], zoom: 17 }}
-        //  state={{ center: coords, zoom: 17}}
+        // defaultState={{ center: [Number(latitude || 51.16681515500828), Number(longitude || 71.41997509314217)], zoom: 17 }}
+         state={{ center: coords, zoom: 16}}
         instanceRef={(ref) => setMapRef(ref)}
         onLoad={(ymaps: any) => onLoad(ymaps)}
         modules={['geolocation', 'geocode', 'templateLayoutFactory', 'layout.ImageWithContent']}
@@ -109,6 +105,7 @@ export function MapYnd () {
         <Placemark
           geometry={coords}
           options={{
+            draggable: true,
             cursor: 'pointer',
             iconCaption: 'Вы здесь',
             iconLayout: 'default#imageWithContent',
@@ -118,7 +115,7 @@ export function MapYnd () {
           }}
         />
 
-        <Placemark
+        {/* <Placemark
           geometry={coords}
           options={{
             draggable: true,
@@ -129,7 +126,7 @@ export function MapYnd () {
             iconImageOffset: [-22, -35],
             iconImageHref: myBusiness,
           }}  
-        />
+        /> */}
 
 
 
