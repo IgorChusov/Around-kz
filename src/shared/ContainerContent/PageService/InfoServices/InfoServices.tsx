@@ -1,10 +1,10 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { SwiperContainer } from '../components/SwiperContainer'
-import { Text, EColor } from '../../../universalComponent/Text'
+import { Text, EColor } from '../../../components/Text'
 import { generateRandomString } from '../../../../utils/js/generateRandomIndex'
 import { PresentationLine } from '../PresentationLine'
-import { UserRatingIndicator } from '../../../universalComponent/UserRatingIndicator'
+import { UserRatingIndicator } from '../../../components/UserRatingIndicator'
 
 import styles from './infoservices.css'
 import { IDataBusinessmen } from '../../../../store/businessman/get/reduser'

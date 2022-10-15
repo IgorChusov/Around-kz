@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, RefObject, useEffect, useRef } from 'react'
 import { IconElementPlus } from '../../../../Icons'
-import { IErrorPanel } from '../../../../universalComponent/ErrorPanel'
-import { Input } from '../../../../universalComponent/Input'
-import { EColor, Text } from '../../../../universalComponent/Text'
+import { IErrorPanel } from '../../../../components/ErrorPanel'
+import { Input } from '../../../../components/Input'
+import { EColor, Text } from '../../../../components/Text'
 import styles from './infopagebasic.css'
 import cn from 'classnames'
 

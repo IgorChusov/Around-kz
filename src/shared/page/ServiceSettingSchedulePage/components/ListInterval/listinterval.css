@@ -1,0 +1,11 @@
+.container {
+  max-width: 357px;
+  width: 100%;
+  display: flex;
+}
+
+.title {
+  margin: 0 auto 32px;
+  text-align: center;
+  max-width: 215px;
+}

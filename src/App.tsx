@@ -5,14 +5,15 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { applyMiddleware, createStore } from 'redux'
 import { YMaps } from 'react-yandex-maps'
-import { Layout } from './shared/Layout'
-import { Search } from './shared/Search'
-import { MapYnd } from './shared/MapYnd'
-import { ContainerContent } from './shared/ContainerContent'
+import { Layout } from './shared/components/Layout'
+import { Search } from './shared/components/Search'
+import { MapYnd } from './shared/components/MapYnd'
+// import { ContainerContent } from './shared/ContainerContent'
 import { rootReducer } from './store/reducer'
 import EnvConfig from './config/env'
 
 import './main.global.css'
+import { Routes } from './shared/Routes'
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
@@ -23,7 +24,7 @@ function AppComponent () {
       <YMaps query={{ apikey: EnvConfig.keyYand }}>
         <Layout>
           <Search />
-          <ContainerContent />
+          <Routes />
           <MapYnd />
         </Layout>
       </YMaps>

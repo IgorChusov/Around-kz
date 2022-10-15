@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-import { Text } from '../../../../../universalComponent/Text'
+import { Text } from '../../../../../components/Text'
 
 import styles from './changeaccount.css'
 

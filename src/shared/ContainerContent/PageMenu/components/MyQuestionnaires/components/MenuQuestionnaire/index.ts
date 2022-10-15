@@ -1,1 +1,1 @@
-export * from './MenuQuestionnaire'
+export * from './MenuQuestionnairePage'

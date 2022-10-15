@@ -5,7 +5,7 @@ import { TListServices } from '..'
 import { servicesListShopping } from '../../../../store/actionCreator/servicesShoppingList'
 import { RootState } from '../../../../store/reducer'
 import { generateRandomString } from '../../../../utils/js/generateRandomIndex'
-import { EColor, Text } from '../../../universalComponent/Text'
+import { EColor, Text } from '../../../components/Text'
 import { CustomCheckbox } from '../CustomCheckbox'
 import { PresentationLine } from '../PresentationLine'
 

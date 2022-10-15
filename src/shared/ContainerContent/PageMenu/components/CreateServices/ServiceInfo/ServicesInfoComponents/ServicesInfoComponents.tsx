@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { generateRandomString } from '../../../../../../../utils/js/generateRandomIndex'
 import { IconElementPlus, IconLink } from '../../../../../../Icons'
-import { EColor, Text } from '../../../../../../universalComponent/Text'
+import { EColor, Text } from '../../../../../../components/Text'
 import { CreateComponentServices } from '../CreateComponentServices'
 import styles from './servicesinfocomponents.css'
 

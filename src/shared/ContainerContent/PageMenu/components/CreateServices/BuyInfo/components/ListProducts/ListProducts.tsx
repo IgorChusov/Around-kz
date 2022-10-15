@@ -5,7 +5,7 @@ import { TGetBusinessmenState } from '../../../../../../../../store/businessman/
 import { RootState } from '../../../../../../../../store/reducer'
 import { transformUnit } from '../../../../../../../../utils/js/unit'
 import { IconElementPlus } from '../../../../../../../Icons'
-import { EColor, Text } from '../../../../../../../universalComponent/Text'
+import { EColor, Text } from '../../../../../../../components/Text'
 import styles from './listproducts.css'
 
 export function ListProducts () {

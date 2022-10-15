@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom'
 
 import { RootState } from '../../../../../store/reducer'
-import { ButtonAccount } from '../../../../universalComponent/ButtonAccount'
-import { ButtonSchedule } from '../../../../universalComponent/ButtonSchedule'
-import { Menu } from '../../../../Menu'
+
+import { ButtonSchedule } from '../../../../components/ButtonSchedule'
+import { Menu } from '../../../../components/Menu'
 
 import styles from './pagestartaccount.css'
 import { ChangeAccount } from './ChangeAccount'
 import { MeGetState } from '../../../../../store/me/get/reduser'
+import { ButtonAccount } from '../../../../components/ButtonAccount'
 
 export function PageStartAccount () {
   const me = useSelector<RootState, MeGetState>((state) => state.me)

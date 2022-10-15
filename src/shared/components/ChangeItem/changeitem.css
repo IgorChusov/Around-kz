@@ -1,0 +1,32 @@
+.btn {
+  padding: 8px 24px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 16px 0 #00000026;
+  position: relative;
+  border-radius: 8px;
+}
+
+.btn:not(:last-of-type) {
+  margin-bottom: 8px;
+}
+
+.horizontalPlus {
+  width: 25px;
+  height: 4px;
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.verticalPlus {
+  width: 25px;
+  height: 4px;
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+}

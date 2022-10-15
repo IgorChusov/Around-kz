@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { MeGetState } from '../../../../../store/me/get/reduser'
 import { RootState } from '../../../../../store/reducer'
-import { Menu } from '../../../../Menu'
-import { ButtonBack } from '../../../../universalComponent/ButtonBack'
-import { EColor, Text } from '../../../../universalComponent/Text'
+import { Menu } from '../../../../components/Menu'
+import { ButtonBack } from '../../../../components/ButtonBack'
+import { EColor, Text } from '../../../../components/Text'
 
 import styles from './myquestionnaires.css'
 
