@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
-import { ButtonBack } from '../../../../../../../universalComponent/ButtonBack'
-import { ButtonNextPage } from '../../../../../../../universalComponent/ButtonNextPage'
-import { DualCheckbox, TDualCheckboxValue } from '../../../../../../../universalComponent/DualCheckbox'
-import { Text } from '../../../../../../../universalComponent/Text'
-import { UniversalSelect } from '../../../../../../../universalComponent/UniversalSelect'
+import { ButtonBack } from '../../../../../../../components/ButtonBack'
+import { ButtonNextPage } from '../../../../../../../components/ButtonNextPage'
+import { DualCheckbox, TDualCheckboxValue } from '../../../../../../../components/DualCheckbox'
+
+import { Text } from '../../../../../../../components/Text'
+import { UniversalSelect } from '../../../../../../../components/UniversalSelect'
 import { dataDaysDefault } from '../PageSettingScheduleBringing'
 import { ElementCheckDays } from '../PageSettingScheduleBringing/components/ElementCheckDays'
 

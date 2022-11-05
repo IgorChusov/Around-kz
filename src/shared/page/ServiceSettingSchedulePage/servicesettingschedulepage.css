@@ -1,0 +1,38 @@
+.subTitle {
+  margin: 32px auto 8px;
+}
+
+.subTitleSecond {
+  margin: 8px auto 22px;
+}
+
+.subTitleThird {
+  margin: 0 auto 8px;
+}
+
+.inputContainer {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputContainer label {
+  display: flex;
+  max-width: 169px;
+}
+
+.inputContainer input {
+  max-width: 150px;
+  padding: 12px 15px;
+  display: flex;
+  border-radius: 20px;
+  border: 2px solid var(--greenLight);
+}
+
+.checkbox {
+  margin-bottom: 27px;
+}
+
+.button {
+  margin-top: 48px;
+}

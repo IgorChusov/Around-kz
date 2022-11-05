@@ -50,15 +50,12 @@ export const registerRequestError: ActionCreator<RegisterRequestErrorAction> = (
 })
 
 export const RegisterUserAsync =
-  (phone: string, username: string): ThunkAction<void, RootState, unknown, Action<string>> =>
-   async (dispatch) => {
+  (data: {phone: string, username: string}): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch) => {
       dispatch(registerRequest())
 
       try {
-        const resp = await api.post(`/users/register`, {
-          phone: phone,
-          username: username,
-        })
+        const resp = await api.post(`/users/register`, data)
 
         dispatch(smsRequestSuccess())
 
@@ -75,13 +72,13 @@ export const RegisterUserAsync =
       }
     }
 
-export const LoginUserAsync = (phone: string): ThunkAction<void, RootState, unknown, Action<string>> =>
+export const LoginUserAsync = (data: {phone: string}): ThunkAction<void, RootState, unknown, Action<string>> =>
   async (dispatch) => {
     dispatch(registerRequest())
     try {
       const resp = await api.post(`/users/login`, 
         {
-          phone: phone,
+          phone: data.phone,
           password: '123456'
         },
         )

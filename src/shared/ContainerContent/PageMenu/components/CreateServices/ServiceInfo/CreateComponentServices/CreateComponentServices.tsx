@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { IconPan } from '../../../../../../Icons'
-import { Text } from '../../../../../../universalComponent/Text'
+import { Text } from '../../../../../../components/Text'
 
 import styles from './createcomponentservices.css'
 

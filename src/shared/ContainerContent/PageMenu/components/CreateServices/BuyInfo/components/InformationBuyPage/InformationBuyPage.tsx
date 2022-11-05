@@ -2,11 +2,11 @@ import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'reac
 import { useDispatch, useSelector } from 'react-redux'
 import { ChangeMarketUserAsync, CreateMarketAsync, DeleteMarketUserAsync } from '../../../../../../../../store/market/action'
 import { generateRandomString } from '../../../../../../../../utils/js/generateRandomIndex'
-import { ErrorPanel, IErrorPanel } from '../../../../../../../universalComponent/ErrorPanel'
-import { Input } from '../../../../../../../universalComponent/Input'
-import { Loading } from '../../../../../../../universalComponent/Loading'
-import { Text, EColor } from '../../../../../../../universalComponent/Text'
-import { UniversalSelect } from '../../../../../../../universalComponent/UniversalSelect'
+import { ErrorPanel, IErrorPanel } from '../../../../../../../components/ErrorPanel'
+import { Input } from '../../../../../../../components/Input'
+import { Loading } from '../../../../../../../components/Loading'
+import { Text, EColor } from '../../../../../../../components/Text'
+import { UniversalSelect } from '../../../../../../../components/UniversalSelect'
 import styles from './informationbuypage.css'
 import cn from 'classnames'
 import { RootState } from '../../../../../../../../store/reducer'
@@ -224,7 +224,6 @@ export function InformationBuyPage () {
               onChange={handleChangeValueInputName} 
               placeholder={''}
               labelText='Название товара'
-              idInput={generateRandomString()}
               error={arrError[0].text}
             />
           </div>
@@ -234,7 +233,6 @@ export function InformationBuyPage () {
               onChange={handleChangeValueInputPrice} 
               placeholder={''}
               labelText='Стоимость'
-              idInput={generateRandomString()}
               error={arrError[1].text}
               classNameContainer={styles.inputPriceContainer}
               classNameInput={styles.inputPrice}

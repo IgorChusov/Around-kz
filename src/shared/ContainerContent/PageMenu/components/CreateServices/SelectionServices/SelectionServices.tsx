@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-import { ButtonBack } from '../../../../../universalComponent/ButtonBack'
-import { DualRadio } from '../../../../../universalComponent/DualRadio'
-import { LinkNextPage } from '../../../../../universalComponent/LinkNextPage'
-import { EColor, Text } from '../../../../../universalComponent/Text'
+import { ButtonBack } from '../../../../../components/ButtonBack'
+import { DualRadio } from '../../../../../components/DualRadio'
+import { LinkNextPage } from '../../../../../components/LinkNextPage'
+import { EColor, Text } from '../../../../../components/Text'
 
 import styles from './selectionservices.css'
 

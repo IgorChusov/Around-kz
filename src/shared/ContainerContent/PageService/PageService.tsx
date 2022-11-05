@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 import { RootState } from '../../../store/reducer'
-import { PagePay } from '../PagePay'
-
-import { PageComments } from '../PageComments'
-
 import { ChoiceOfDate } from './ChoiceOfDate'
 import { ChoiceOfServices } from './ChoiceOfServices'
 import { InfoServices } from './InfoServices'
@@ -14,7 +10,10 @@ import { PageServiceMenu } from './PageServiceMenu'
 import { PageShoppingCardServices } from './PageShoppingCardServices'
 import { GetBusinessmenUserAsync } from '../../../store/businessman/get/action'
 import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
-import { Loading } from '../../universalComponent/Loading'
+import { Loading } from '../../components/Loading'
+
+import { CommentsPage } from '../../page/CommentsPage'
+import { PayPage } from '../../page/PayPage'
 
 interface IPageService {
   nameSpecialist?: string
@@ -55,14 +54,14 @@ export function PageService ({ nameSpecialist = 'Мастер маникюра �
       <Switch>
         <Route path={`${url}/buyCart/payment`}>
           <div className={styles.subContainer}>
-            <PagePay addressBack={`${url}/buyCart`} />
+            <PayPage addressBack={`${url}/buyCart`} />
           </div>
         </Route>
         <Route path={`${url}/buyCart`}>
           <PageShoppingCardServices id={id || ''} />
         </Route>
         <Route path={'/pageService/:id/comments'}>
-          <PageComments />
+          <CommentsPage />
         </Route>
         <Route path={'/pageService/:id'}>
           {pageServices === 'info' && 

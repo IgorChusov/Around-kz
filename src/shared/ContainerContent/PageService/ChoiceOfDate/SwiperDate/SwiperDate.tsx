@@ -6,7 +6,7 @@ import SwiperCore, { Navigation } from 'swiper'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { generateRandomString } from '../../../../../utils/js/generateRandomIndex'
-import { Text } from '../../../../universalComponent/Text'
+import { Text } from '../../../../components/Text'
 import { RootState } from '../../../../../store/reducer'
 
 import styles from './swiperdate.css'

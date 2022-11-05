@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.subContainer {
+  padding: 33px 24px;
+}
+
+@media all and (min-width: 1024px) {
+  .container {
+    min-height: calc(100vh - 60px);
+  }
+
+  .title {
+    max-width: 340px;
+  }
+}

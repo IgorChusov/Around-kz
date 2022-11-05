@@ -1,8 +1,8 @@
 import React, { ChangeEvent, FormEvent, RefObject, useEffect, useRef } from 'react'
 import { IconElementPlus } from '../../../../Icons'
-import { IErrorPanel } from '../../../../universalComponent/ErrorPanel'
-import { Input } from '../../../../universalComponent/Input'
-import { EColor, Text } from '../../../../universalComponent/Text'
+import { IErrorPanel } from '../../../../components/ErrorPanel'
+import { Input } from '../../../../components/Input'
+import { EColor, Text } from '../../../../components/Text'
 import styles from './infopagebasic.css'
 import cn from 'classnames'
 
@@ -102,7 +102,6 @@ export function InfoPageBasic (
         <Input 
           value={valueActivity}
           onChange={(e) => setValueActivity(e)}
-          idInput='inputActivity'
           placeholder=''
           labelText='Вид деятельности'
           classNameContainer={styles.inputContainer}
@@ -111,7 +110,6 @@ export function InfoPageBasic (
         <Input 
           value={valueAddress}
           onChange={(e) => {setValueAddress(e)}}
-          idInput='inputAddress'
           placeholder=''
           labelText='Адрес'
           classNameContainer={styles.inputContainer}

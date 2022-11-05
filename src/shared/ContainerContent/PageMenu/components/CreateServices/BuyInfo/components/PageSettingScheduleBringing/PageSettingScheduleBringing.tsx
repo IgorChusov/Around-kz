@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 
-import { ButtonBack } from '../../../../../../../universalComponent/ButtonBack'
-import { ButtonNextPage } from '../../../../../../../universalComponent/ButtonNextPage'
-import { CreatableSelectUniversal } from '../../../../../../../universalComponent/CreatableSelectUniversal'
-import { DualCheckbox, TDualCheckboxValue } from '../../../../../../../universalComponent/DualCheckbox'
-import { EColor, Text } from '../../../../../../../universalComponent/Text'
-import { UniversalSelect } from '../../../../../../../universalComponent/UniversalSelect'
+import { ButtonBack } from '../../../../../../../components/ButtonBack'
+import { ButtonNextPage } from '../../../../../../../components/ButtonNextPage'
+import { CreatableSelectUniversal } from '../../../../../../../components/CreatableSelectUniversal'
+import { DualCheckbox, TDualCheckboxValue } from '../../../../../../../components/DualCheckbox'
+
+import { EColor, Text } from '../../../../../../../components/Text'
+import { UniversalSelect } from '../../../../../../../components/UniversalSelect'
 
 import { ElementCheckDays } from './components/ElementCheckDays'
 import styles from './pagesettingschedulebringing.css'
