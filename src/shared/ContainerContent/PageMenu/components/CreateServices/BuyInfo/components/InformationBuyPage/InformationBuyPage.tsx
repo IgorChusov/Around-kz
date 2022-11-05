@@ -224,7 +224,6 @@ export function InformationBuyPage () {
               onChange={handleChangeValueInputName} 
               placeholder={''}
               labelText='Название товара'
-              idInput={generateRandomString()}
               error={arrError[0].text}
             />
           </div>
@@ -234,7 +233,6 @@ export function InformationBuyPage () {
               onChange={handleChangeValueInputPrice} 
               placeholder={''}
               labelText='Стоимость'
-              idInput={generateRandomString()}
               error={arrError[1].text}
               classNameContainer={styles.inputPriceContainer}
               classNameInput={styles.inputPrice}

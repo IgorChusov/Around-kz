@@ -1,8 +1,8 @@
-import React, { ChangeEvent, CSSProperties, FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState, useImperativeHandle } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory, useLocation } from 'react-router-dom'
-
-
+import { Link } from 'react-router-dom'
+import classnames from 'classnames';
+import InputMask from 'react-input-mask';
 import { RootState } from '../../../../store/reducer'
 import { RegisterSmsActivateAsync, RegisterUserAsync } from '../../../../store/token/action'
 import { TokenState } from '../../../../store/token/reduser'
@@ -11,13 +11,10 @@ import { ErrorPanel, IErrorPanel } from '../../../components/ErrorPanel'
 import { Input } from '../../../components/Input'
 import { Text } from '../../../components/Text'
 import { SmsActivatePage } from '../SmsActivatePage/SmsActivatePage'
-
-
-import styles from '../pageregistration.css'
-
-import ClipLoader from 'react-spinners/ClipLoader'
 import { Loading } from '../../../components/Loading'
 import { usePosition } from '../../../../hooks/usePosition'
+import { useForm, Controller, ControllerRenderProps } from 'react-hook-form'
+import styles from '../pageregistration.css'
 
 interface Is {
   latitude?: string
@@ -27,8 +24,7 @@ interface Is {
 
 export function SignUpPage () {
   const { latitude, longitude, error }: Is = usePosition()
-  const location = useLocation()
-  const history = useHistory()
+  const ref = useRef<HTMLFormElement>(null)
   const dispatch = useDispatch()
   const token = useSelector<RootState, TokenState>((state) => state.token)
 
@@ -37,6 +33,13 @@ export function SignUpPage () {
   const [valueThird, setValueThird] = useState('')
   const [valueFourth, setValueFourth] = useState('')
 
+  const { control, handleSubmit, formState, register, watch, setValue, getValues } = useForm({
+    defaultValues: {
+      username: '',
+      phone: ''
+    }
+});
+
   const dateErrorBasic = [
     { name: 'name', text: '', valid: true },
     { name: 'phone', text: '', valid: true },
@@ -44,8 +47,6 @@ export function SignUpPage () {
   ]
 
   // сотояния импутов
-  const [valueName, setValueName] = useState('')
-  const [valuePhone, setValuePhone] = useState('')
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
 
   // activate, inputInfo
@@ -58,39 +59,11 @@ export function SignUpPage () {
     setArrError(newArrError)
   }
 
-  const functionValidatePhone = () => {
-    if (valuePhone.length < 10) {
-      changeError('Введите номер телефона', 1, false)
-    }
-    if (!/^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/.test(valuePhone)) {
-      changeError('Неверный формат номера телефона', 1, false)
-      return false
-    }
-    changeError('', 1, true)
-    return true
-  }
-
-  const functionValidateName = () => {
-    if (valueName.length < 4) {
-      changeError('Минимальная длинна имени 4 символа', 0, false)
-      return false
-    }
-    if (!/^[A-Z][-'a-zA-Z]+$/.test(valueName)) {
-      changeError('Недопустимый формат имени', 0, false)
-      return false
-    }
-    changeError('', 0, true)
-    return true
-  }
-
   const handleClick = async (e: FormEvent) => {
     e.preventDefault()
-    const validName = functionValidateName()
-    const validPhone = functionValidatePhone()
-    const respToken = await dispatch(RegisterUserAsync(valuePhone, valueName))
 
-    if (validName && validPhone && !!respToken) {
-      setPage('activate')
+    if (ref.current) {
+      ref.current.handleSubmitForm();
     }
   }
 
@@ -102,25 +75,28 @@ export function SignUpPage () {
     )
   }, [token.error])
 
-  const changeValueName = (e: ChangeEvent<HTMLInputElement>) => {
-    setValueName(e.target.value.trim())
-    changeError('', 0, true)
-  }
-
-  const changeValuePhone = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    if (!value.match(/[a-z]/) || !value) {
-      setValuePhone(e.target.value.trim())
-      changeError('', 1, true)
-    }
-  }
-
   const handleClickActivate = async (e: FormEvent) => {
     e.preventDefault()
     if(!latitude || !longitude) return
-    dispatch(RegisterSmsActivateAsync(valuePhone, valueName,`${valueFirst}${valueSecond}${valueThird}${valueFourth}`, [Number(latitude), Number(longitude)]))
+    dispatch(RegisterSmsActivateAsync(getValues('phone'), getValues('username'),`${valueFirst}${valueSecond}${valueThird}${valueFourth}`, [Number(latitude), Number(longitude)]))
    
   }
+  
+  const onSubmit = async ( data: any) => {
+    const respToken = await dispatch(RegisterUserAsync(data))
+    if (!!respToken) {
+      setPage('activate')
+    }
+  }
+
+  // @ts-ignore:next-line
+  useImperativeHandle(ref, () => ({
+    handleSubmitForm: () => {
+        handleSubmit((data) => {
+            onSubmit(data);
+        })();
+    }
+  }));
 
   return (
     <div>
@@ -129,26 +105,60 @@ export function SignUpPage () {
           <Text As="h2" className={styles.title} size={24}>
             Зарегистрироваться
           </Text>
-          <form className={styles.form}>
-            <Input
-              classNameContainer={`${styles.containerInput} ${!arrError[0].valid ? styles.inputInvalid : null}`}
-              value={valueName}
-              placeholder="Имя"
-              onChange={(e) => {
-                changeValueName(e)
+          <form ref={ref} onSubmit={e => e.preventDefault()} className={styles.form}>
+            <Controller
+              name="username"
+              control={control}
+              rules={{
+                  required: true,
               }}
-              idInput="registration-input-name"
-              labelText="Как вас зовут"
+              render={({field}) => (
+                <Input
+                  inputRef={field.ref}
+                  classNameContainer={classnames(styles.containerInput, {
+                    [styles.inputInvalid]: !!formState.errors.username
+                  })}
+                  value={field.value}
+                  placeholder="Имя"
+                  onChange={field.onChange}
+                  labelText="Как вас зовут"
+                  error={!!formState.errors.username ? 'Заполните поле' : undefined}
+                />
+              )} 
             />
-            <Input
-              classNameContainer={`${styles.containerInput} ${!arrError[1].valid ? styles.inputInvalid : null}`}
-              value={valuePhone}
-              placeholder="+7"
-              onChange={(e) => {
-                changeValuePhone(e)
+            <Controller
+              name="phone"
+              control={control}
+              rules={{
+                  required: true,
               }}
-              idInput="registration-input-phone"
-              labelText="Номер телефона"
+              render={({field}) => (
+                <InputMask mask="+70000000000"
+                  maskChar={null}
+                  // @ts-ignore:next-line
+                  formatChars={{
+                      '0': '[0-9]'
+                  }}
+                  {...register(field.name, {
+                      required: true,
+                      pattern: /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/,
+                  })}
+                  {...field}>
+                    {(inputProps: ControllerRenderProps) => (
+                        <Input
+                          inputRef={inputProps.ref}
+                          classNameContainer={classnames(styles.containerInput, {
+                            [styles.inputInvalid] : !!formState.errors.phone
+                          })}
+                          value={inputProps.value}
+                          placeholder="+7"
+                          onChange={inputProps.onChange}
+                          labelText="Номер телефона"
+                          error={!!formState.errors.phone ? 'Заполните поле' : undefined}
+                        />
+                    )}
+                </InputMask>
+              )} 
             />
             <ButtonNextPage classNameButton={styles.button} onClick={handleClick} text="Получить смс-код" />
             <Link className={styles.changeMethods} to={'/menu/sign-in'}>

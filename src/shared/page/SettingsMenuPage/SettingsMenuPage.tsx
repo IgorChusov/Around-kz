@@ -16,6 +16,7 @@ import { ButtonBack } from '../../components/ButtonBack'
 import { EColor, Text } from '../../components/Text'
 
 import styles from './settingsmenupage.css'
+import { PaddingContainer } from '../../components/PaddingContainer'
 
 export function SettingsMenuPage () {
   const dispatch = useDispatch()
@@ -34,7 +35,7 @@ export function SettingsMenuPage () {
   }
 
   return (
-    <div>
+    <PaddingContainer>
       <ButtonBack addressLink="/menu/account" />
       <Text className={styles.title} color={EColor.greenDark} As="h2" size={24}>
         Настройки
@@ -100,6 +101,6 @@ export function SettingsMenuPage () {
           <IconLink />
         </button>
       </div>
-    </div>
+    </PaddingContainer>
   )
 }

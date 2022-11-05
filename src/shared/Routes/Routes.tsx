@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 
 import { useToken } from '../../hooks/useToken'
 
@@ -9,7 +9,7 @@ import { MeGetUserAsync } from '../../store/me/get/action'
 import { RootState } from '../../store/reducer'
 import { MeGetState } from '../../store/me/get/reduser'
 import { Loading } from '../components/Loading'
-import { RefreshTokenAsync } from '../../store/token/action'
+import { RefreshTokenAsync, tokenRequestSuccess } from '../../store/token/action'
 import { ButtonCloseContent } from '../components/ButtonCloseContent'
 import { MenuRoutes } from './MenuRoutes'
 import { ProductRoutes } from './ProductRoutes/ProductRoutes'
@@ -17,6 +17,7 @@ import { ServiceRotes } from './ServiceRoutes'
 
 export function Routes () {
   const location = useLocation()
+  const history = useHistory()
   const me = useSelector<RootState, MeGetState>((state) => state.me)
   const token = useToken()
   const dispatch = useDispatch()
@@ -27,10 +28,19 @@ export function Routes () {
     }
   }, [token.tokenLocalStorage])
 
+  const loadMe = async () => {
+    const me = await dispatch(MeGetUserAsync(token.token))
+    if(!me) {
+      localStorage.removeItem('token')
+      dispatch(tokenRequestSuccess(''))
+      history.push('/')
+    }
+  }
   
   useEffect(()=>{
-    if(token.token.length === 0)  return
-      dispatch(MeGetUserAsync(token.token))
+    if(token.token.length !== 0) {
+      loadMe()
+    }
   }, 
   [token.token])
 

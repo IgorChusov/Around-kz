@@ -1,22 +1,25 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState, useImperativeHandle } from 'react'
+import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { RootState } from '../../../../store/reducer'
 import { TokenState } from '../../../../store/token/reduser'
 import { ButtonNextPage } from '../../../components/ButtonNextPage'
 import { ErrorPanel, IErrorPanel } from '../../../components/ErrorPanel'
-
 import { LoginSmsActivateAsync, LoginUserAsync } from '../../../../store/token/action'
 import { Input } from '../../../components/Input'
 import { Text } from '../../../components/Text'
 import { Loading } from '../../../components/Loading'
 import { SmsActivatePage } from '../SmsActivatePage'
+import { useForm, Controller, ControllerRenderProps } from 'react-hook-form'
+import InputMask from 'react-input-mask';
 import styles from '../pageregistration.css'
 
 export function SignInPage () {
   const location = useLocation()
   const history = useHistory()
   const dispatch = useDispatch()
+  const ref = useRef<HTMLFormElement>(null)
   const token = useSelector<RootState, TokenState>((state) => state.token)
 
   const [valueFirst, setValueFirst] = useState('')
@@ -31,11 +34,18 @@ export function SignInPage () {
   ]
 
   // сотояния импутов
-  const [valuePhone, setValuePhone] = useState('')
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
   const [errorBottomInput, setErrorBottomInput] = useState('')
   // activate, inputInfo
   const [page, setPage] = useState('inputInfo')
+
+  const { control, handleSubmit, formState, register, watch } = useForm({
+    defaultValues: {
+      phone: ''
+    }
+  });
+
+  const value = watch('phone')
 
   const changeError = (text: string, index: number, valid: boolean) => {
     arrError[index].text = text
@@ -44,41 +54,9 @@ export function SignInPage () {
     setArrError(newArrError)
   }
 
-  const functionValidatePhone = () => {
-    if (valuePhone.length < 10) {
-      changeError('Введите номер телефона', 0, false)
-    }
-    if (!/^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/.test(valuePhone)) {
-      changeError('Неверный формат номера телефона', 0, false)
-      return false
-    }
-    changeError('', 0, true)
-    return true
-  }
-
-  const handleClick = async (e: FormEvent) => {
-    e.preventDefault()
-  
-    const validPhone = functionValidatePhone()
-    
-    const respToken = await dispatch(LoginUserAsync(valuePhone))
-    
-    if (validPhone && token.error.length === 0  && !!respToken) {
-      setPage('activate')
-    }
-  }
-
-  const changeValuePhone = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    if (!value.match(/[a-z]/) || !value) {
-      setValuePhone(e.target.value.trim())
-      changeError('', 0, true)
-    }
-  }
-
   const handleClickActivate = async (e: FormEvent) => {
     e.preventDefault()
-    dispatch(LoginSmsActivateAsync(valuePhone,`${valueFirst}${valueSecond}${valueThird}${valueFourth}`))
+    dispatch(LoginSmsActivateAsync(value,`${valueFirst}${valueSecond}${valueThird}${valueFourth}`))
   }
 
   useEffect(()=> {
@@ -91,6 +69,35 @@ export function SignInPage () {
     }
   }, [token.error])
 
+  const onSubmit = async ( data: any) => {
+    const respToken = await dispatch(LoginUserAsync(data))
+    if (!!respToken && token.error.length === 0) {
+      setPage('activate')
+    }
+  }
+
+  const handleClick = async (e: FormEvent) => {
+    e.preventDefault()
+
+    if (ref.current) {
+      ref.current.handleSubmitForm();
+    }
+  }
+
+  useEffect(() => {
+   
+    setErrorBottomInput('')
+  }, [value])
+
+  // @ts-ignore:next-line
+    useImperativeHandle(ref, () => ({
+      handleSubmitForm: () => {
+          handleSubmit((data) => {
+              onSubmit(data);
+          })();
+      }
+    }));
+
   return (
     <div>
       {page === 'inputInfo' && (
@@ -98,18 +105,42 @@ export function SignInPage () {
           <Text As="h2" className={styles.title} size={24}>
             Войти
           </Text>
-          <form className={styles.form}>
-            <Input
-              classNameContainer={`${styles.containerInput} ${!arrError[0].valid ? styles.inputInvalid : null}`}
-              value={valuePhone}
-              placeholder="+7"
-              onChange={(e) => {
-                changeValuePhone(e)
-              }}
-              idInput="registration-input-phone"
-              labelText="Номер телефона"
-              error={errorBottomInput}
-            />
+          <form ref={ref} onSubmit={e => e.preventDefault()} className={styles.form}>
+            <Controller
+                name="phone"
+                control={control}
+                rules={{
+                    required: true,
+                }}
+                render={({field}) => (
+                  <InputMask mask="+70000000000"
+                    maskChar={null}
+                    // @ts-ignore:next-line
+                    formatChars={{
+                        '0': '[0-9]'
+                    }}
+                    {...register(field.name, {
+                        required: true,
+                        pattern: /^\+?[78][-\(]?\d{3}\)?-?\d{3}-?\d{2}-?\d{2}$/,
+                    })}
+                    {...field}>
+                      {(inputProps: ControllerRenderProps) => (
+                          <Input
+                            inputRef={inputProps.ref}
+                            classNameContainer={classnames(styles.containerInput, {
+                              [styles.inputInvalid]: !!formState.errors.phone
+                            })}
+                            value={inputProps.value}
+                            placeholder="+7"
+                            onChange={inputProps.onChange}
+                            labelText="Номер телефона"
+                            error={!!formState.errors.phone || errorBottomInput.length !== 0 ? 'Заполните поле' : ''}
+                        />
+                      )}
+                  </InputMask>
+                )} 
+              />
+        
             <ButtonNextPage classNameButton={styles.button} onClick={handleClick} text="Получить смс-код" />
             <Link className={styles.changeMethods} to={'/menu/sign-up'}>
               Sign up

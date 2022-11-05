@@ -102,7 +102,6 @@ export function InfoPageBasic (
         <Input 
           value={valueActivity}
           onChange={(e) => setValueActivity(e)}
-          idInput='inputActivity'
           placeholder=''
           labelText='Вид деятельности'
           classNameContainer={styles.inputContainer}
@@ -111,7 +110,6 @@ export function InfoPageBasic (
         <Input 
           value={valueAddress}
           onChange={(e) => {setValueAddress(e)}}
-          idInput='inputAddress'
           placeholder=''
           labelText='Адрес'
           classNameContainer={styles.inputContainer}

@@ -24,6 +24,7 @@ import { ServiceSettingSchedulePage } from '../../page/ServiceSettingSchedulePag
 import { FeedbackPage } from '../../page/FeedbackPage'
 import { InformationAccountPage } from '../../page/InformationAccountPage'
 import { SettingsMenuPage } from '../../page/SettingsMenuPage'
+import { MenuQuestionnairePage } from '../../page/MenuQuestionnairePage'
 
 
 export function MenuRoutes () {
@@ -81,14 +82,13 @@ export function MenuRoutes () {
           {/*  */}
           {/* <Route path={'/menu/account/business/myQuestionnaires/:typeService/:type/:id'}>
             <MenuQuestionnaire />
-          </Route>
-          <Route path={'/menu/account/business/myQuestionnaires/:typeService/:id'}>
-            <MenuQuestionnaire />
           </Route> */}
+          <Route path={'/menu/account/business/myQuestionnaires/:typeService/:id'}>
+            <MenuQuestionnairePage />
+          </Route>
           <Route path={'/menu/account/business/myQuestionnaires'}>
             <MyQuestionnaires />
           </Route>
-
           {/* создание анкеты */}
           <Route path={'/menu/account/business/createServices/selection/'}>
             <SelectionServicesPage />

@@ -6,16 +6,14 @@ import styles from './buttonnextpage.css'
 
 interface IButtonNextPage {
   text: string
-  onClick: (e: FormEvent) => void
+  onClick?: (e: FormEvent) => void
   classNameButton: string
 }
 
 export function ButtonNextPage ({ text, onClick, classNameButton }: IButtonNextPage) {
   return (
     <button
-      onClick={(e: FormEvent) => {
-        onClick(e)
-      }}
+      onClick={onClick}
       className={`${styles.button} ${classNameButton}`}
     >
       <Text color={EColor.white} size={20}>
