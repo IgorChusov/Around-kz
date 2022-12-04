@@ -18,3 +18,12 @@
 .buttonCancel span {
   color: var(--greenLight);
 }
+
+.button {
+  margin-bottom: 50px;
+}
+
+.buttonConfirm {
+  margin-top: 40px;
+  margin-bottom: 12px;
+}

@@ -14,6 +14,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    alias: {
+      'app': path.resolve(__dirname, '../src')
+    },
   },
   externals: [nodeExternals()],
   module: {

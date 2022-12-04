@@ -56,6 +56,7 @@ const customStyles: StylesConfig = {
     minWidth: '110px',
     left: '-10px',
     maxHeight: '210px',
+    zIndex: 10,
   }),
   menuList: (provided, state) => ({
     ...provided,

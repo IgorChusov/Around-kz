@@ -17,6 +17,7 @@ interface IInputProps {
 
 export function Input (props: IInputProps) {
   const idInput = uuidv4();
+  
   return (
     <div className={cn(styles.containerInput, props.classNameContainer)}>
       <input
@@ -25,7 +26,7 @@ export function Input (props: IInputProps) {
         value={props.value}
         placeholder={props.placeholder}
         className={cn(styles.input, props.classNameInput, {
-          [styles.inputInvalid] : props.error?.length && props.error?.length > 0
+          [styles.inputInvalid] :  !!props.error?.length
         })}
         id={idInput}
         type="text"

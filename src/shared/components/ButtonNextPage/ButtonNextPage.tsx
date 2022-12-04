@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import React, { FormEvent } from 'react'
 
 import { EColor, Text } from '../Text'
@@ -8,13 +9,16 @@ interface IButtonNextPage {
   text: string
   onClick?: (e: FormEvent) => void
   classNameButton: string
+  isTransparentBackground?: boolean
 }
 
-export function ButtonNextPage ({ text, onClick, classNameButton }: IButtonNextPage) {
+export function ButtonNextPage ({ text, onClick, classNameButton, isTransparentBackground }: IButtonNextPage) {
   return (
     <button
       onClick={onClick}
-      className={`${styles.button} ${classNameButton}`}
+      className={classnames(styles.button, classNameButton, {
+        [styles.backTransparent] : isTransparentBackground
+      })}
     >
       <Text color={EColor.white} size={20}>
         {text}

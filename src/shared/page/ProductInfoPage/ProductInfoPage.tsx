@@ -12,7 +12,6 @@ import { ButtonBack } from '../../components/ButtonBack'
 import { IErrorPanel } from '../../components/ErrorPanel'
 import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'
-
 import styles from './buyinfopage.css'
 
 const listValueLocationDefault = [
@@ -86,11 +85,11 @@ export function ProductInfoPage () {
   }
 
   useEffect(() => {
-    if (location === '/menu/account/business/createServices/selection/buy') {
+    if (location === '/menu/account/business/createServices/buy') {
       if (refPresentation.current) {
         refPresentation.current.style.transform = 'translateX(0)'
       }
-    } else if (location === '/menu/account/business/createServices/selection/buy/selectionType') {
+    } else if (location === '/menu/account/business/createServices/buy/selectionType') {
     } else {
       if (refPresentation.current) {
         refPresentation.current.style.transform = 'translateX(122%)'
@@ -160,34 +159,34 @@ export function ProductInfoPage () {
 
   return (
     <div className={styles.container}>
-      {location === '/menu/account/business/createServices/selection/buy' && (
+      {location === '/menu/account/business/createServices/buy' && (
         <div className={styles.presentation}>
           <div ref={refPresentation} className={styles.presentationChecked}></div>
         </div>
       )}
       <Switch>
-        <Route path={'/menu/account/business/createServices/selection/buy/store'}>
+        <Route path={'/menu/account/business/createServices/buy/store'}>
           <PageSettingScheduleStore
             listValueCheckboxLocation={listValueLocation}
             changeValueCheckboxLocation={changeValueLocation}
             selectedValueTransportUnit=""
             selectedValueTransportCapacity={3}
-            addressLinkBack="/menu/account/business/createServices/selection/buy/selectionType"
+            addressLinkBack="/menu/account/business/createServices/buy/selectionType"
           />
         </Route>
-        <Route path={'/menu/account/business/createServices/selection/buy/bringing'}>
+        <Route path={'/menu/account/business/createServices/buy/bringing'}>
           <PageSettingScheduleBringing
             listValueCheckboxLocation={listValueLocation}
             changeValueCheckboxLocation={changeValueLocation}
             selectedValueTransportUnit=""
             selectedValueTransportCapacity={3}
-            addressLinkBack="/menu/account/business/createServices/selection/buy/selectionType"
+            addressLinkBack="/menu/account/business/createServices/buy/selectionType"
           />
         </Route>
-        <Route path={'/menu/account/business/createServices/selection/buy/selectionType'}>
+        <Route path={'/menu/account/business/createServices/buy/selectionType'}>
           <PageSelectProduct />
         </Route>
-        <Route path={'/menu/account/business/createServices/selection/buy'}>
+        <Route path={'/menu/account/business/createServices/buy'}>
           <Text 
             className={styles.title} 
             As="h2" 

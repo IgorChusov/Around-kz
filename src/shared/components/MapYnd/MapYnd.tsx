@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Map, Placemark } from 'react-yandex-maps'
 import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { usePosition } from '../../../hooks/usePosition'
+import { usePosition } from '../../../hooks'
 import myPosition from '../../../assets/images/yourLocation.svg'
 import myBusiness from '../../../assets/images/my-business.svg'
 

@@ -6,7 +6,7 @@ const defaultSettings = {
   maximumAge: 0,
 }
 
-export const usePosition = (watch = false, userSettings = {}) => {
+const usePosition = (watch = false, userSettings = {}) => {
   const settings = {
     ...defaultSettings,
     ...userSettings,
@@ -46,3 +46,6 @@ export const usePosition = (watch = false, userSettings = {}) => {
 
   return { ...position, error }
 }
+
+
+export default usePosition

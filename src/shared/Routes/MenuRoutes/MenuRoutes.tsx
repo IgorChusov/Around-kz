@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { useToken } from '../../../hooks/useToken'
+import { useToken } from '../../../hooks'
 
 import { MyQuestionnaires } from '../../ContainerContent/PageMenu/components/MyQuestionnaires'
 
@@ -70,7 +70,7 @@ export function MenuRoutes () {
             <PageChangeValuePayment />
           </Route>
           {/* изменение анкет */}
-          <Route exact path={'/menu/account/business/myQuestionnaires/service/:id/changeInfo/schedule'}>
+          <Route exact path={'/menu/account/business/myQuestionnaires/service/:id/schedule'}>
             <ServiceSettingSchedulePage />
           </Route>
           <Route path={'/menu/account/business/myQuestionnaires/products/:id/changeInfo'}>
@@ -90,17 +90,17 @@ export function MenuRoutes () {
             <MyQuestionnaires />
           </Route>
           {/* создание анкеты */}
-          <Route path={'/menu/account/business/createServices/selection/'}>
-            <SelectionServicesPage />
-          </Route>
+
           <Route path={'/menu/account/business/createServices/service/'}>
             <ServiceInfoPage />
           </Route>
-          <Route path={'/menu/account/business/createServices/selection/buy'}>
+          <Route path={'/menu/account/business/createServices/buy'}>
             {/* <BuyInfo /> */}
             <ProductInfoPage />
           </Route>
-          
+          <Route path={'/menu/account/business/createServices/selection/'}>
+            <SelectionServicesPage />
+          </Route>
           {/* НАСТРОЙКИ  */}
           <Route path="/menu/account/settings/feedback">
             <FeedbackPage />

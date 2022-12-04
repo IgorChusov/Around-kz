@@ -12,7 +12,7 @@ import { Input } from '../../../components/Input'
 import { Text } from '../../../components/Text'
 import { SmsActivatePage } from '../SmsActivatePage/SmsActivatePage'
 import { Loading } from '../../../components/Loading'
-import { usePosition } from '../../../../hooks/usePosition'
+import { usePosition } from '../../../../hooks'
 import { useForm, Controller, ControllerRenderProps } from 'react-hook-form'
 import styles from '../pageregistration.css'
 

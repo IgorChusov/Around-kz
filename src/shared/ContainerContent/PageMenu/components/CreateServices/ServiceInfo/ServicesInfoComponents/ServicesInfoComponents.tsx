@@ -56,7 +56,7 @@ export function ServicesInfoComponents (props: IServicesInfoComponents) {
           to={
             location.pathname === `/menu/account/business/myQuestionnaires/service/${id}/changeInfo/components` 
               ? `/menu/account/business/myQuestionnaires/service/${id}/changeInfo` :
-              '/menu/account/business/createServices/selection/service'
+              '/menu/account/business/createServices/service'
               } >
           <Text className={styles.linkReturn} color={EColor.greenLight} size={16}>
             Основная информация

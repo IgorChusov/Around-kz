@@ -146,14 +146,7 @@ export function ServiceInfoPage () {
     setValueComment('')
   }
 
-  useEffect(() => {
-    if (!refPresentation.current) return
-    if (location === '/menu/account/business/createServices/selection/service') {
-      refPresentation.current.style.transform = 'translateX(0%)'
-    } else {
-      refPresentation.current.style.transform = 'translateX(121%)'
-    }
-  }, [location])
+
 
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
@@ -220,7 +213,7 @@ export function ServiceInfoPage () {
 
     setArrImg(arrImgFunc)
 
-    history.push('/menu/account/business/createServices/selection/service/components')
+    history.push('/menu/account/business/createServices/service/components')
   }
 
   const changeValueActivity = (e: ChangeEvent<HTMLInputElement>) => {
@@ -246,18 +239,6 @@ export function ServiceInfoPage () {
     arrError[3].valid=true
     setValueDescription(e.target.value)
   }
-
-  useEffect(() => {
-    const errs = []
-    if(businessmen.error.length > 0) {
-      errs.push({ name: 'server', text: businessmen.error, valid: false})
-    }
-    if(!arrError[4].valid) {
-      errs.push({ name: 'phone', text: arrError[4].text, valid: false})
-    }
-    setServerErrors(errs)
-  }, 
-  [businessmen.error, arrError[4].valid])
 
   const handleSave = async () => {
     const formData = new FormData();
@@ -297,6 +278,27 @@ export function ServiceInfoPage () {
       history.push('/menu/account/business/myQuestionnaires')
   } 
 
+  useEffect(() => {
+    const errs = []
+    if(businessmen.error.length > 0) {
+      errs.push({ name: 'server', text: businessmen.error, valid: false})
+    }
+    if(!arrError[4].valid) {
+      errs.push({ name: 'phone', text: arrError[4].text, valid: false})
+    }
+    setServerErrors(errs)
+  }, 
+  [businessmen.error, arrError[4].valid])
+
+  useEffect(() => {
+    if (!refPresentation.current) return
+    if (location === '/menu/account/business/createServices/service') {
+      refPresentation.current.style.transform = 'translateX(0%)'
+    } else {
+      refPresentation.current.style.transform = 'translateX(121%)'
+    }
+  }, [location])
+
   return (
     <div className={styles.container}>
       <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
@@ -307,14 +309,14 @@ export function ServiceInfoPage () {
       </div>
       <ButtonBack
         addressLink={
-          location === '/menu/account/business/createServices/selection/service'
+          location === '/menu/account/business/createServices/service'
             ? '/menu/account/business/createServices/selection'
-            : '/menu/account/business/createServices/selection/service'
+            : '/menu/account/business/createServices/service'
         }
         className={styles.btn}
       />
       <Switch>
-        <Route path={'/menu/account/business/createServices/selection/service/components'}>
+        <Route path={'/menu/account/business/createServices/service/components'}>
           <ServicesInfoComponents
             handleClickSubmith={handleSave}
             handleOpenModal={() => {
@@ -324,7 +326,7 @@ export function ServiceInfoPage () {
             servicesList={services}
           />
         </Route>
-        <Route path={'/menu/account/business/createServices/selection/service'}>
+        <Route path={'/menu/account/business/createServices/service'}>
           <InfoPageBasic 
             type='Service'
             handleSubmit={handleSubmit}

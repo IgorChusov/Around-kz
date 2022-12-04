@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
-
-import { useToken } from '../../hooks/useToken'
-
-import styles from './routes.css'
+import { useToken } from '../../hooks'
 import { useDispatch, useSelector } from 'react-redux'
 import { MeGetUserAsync } from '../../store/me/get/action'
 import { RootState } from '../../store/reducer'
@@ -14,6 +11,7 @@ import { ButtonCloseContent } from '../components/ButtonCloseContent'
 import { MenuRoutes } from './MenuRoutes'
 import { ProductRoutes } from './ProductRoutes/ProductRoutes'
 import { ServiceRotes } from './ServiceRoutes'
+import styles from './routes.css'
 
 export function Routes () {
   const location = useLocation()

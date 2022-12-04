@@ -25,7 +25,6 @@ export const allBusinessmenRequestSuccess: ActionCreator<AllBusinessmenRequestSu
   data
 })
 
-
 // запрос с ошибкой
 export const ALL_BUSINESSMEN_ERROR = 'ALL_BUSINESSMEN_ERROR'
 export type AllBusinessmenRequestErrorAction = {
@@ -37,6 +36,63 @@ export const allBusinessmenRequestError: ActionCreator<AllBusinessmenRequestErro
   type: ALL_BUSINESSMEN_ERROR,
   error,
 })
+
+// интервалы для расписания
+// запрос отправлен создание интервала
+export const CREATE_INTERVALS_REQUEST = 'CREATE_INTERVALS_REQUEST'
+export type CreateIntervalsRequestAction = {
+  type: typeof CREATE_INTERVALS_REQUEST
+}
+export const createIntervalsRequest: ActionCreator<CreateIntervalsRequestAction> = () => ({
+  type: CREATE_INTERVALS_REQUEST,
+})
+
+// запрос успешен 
+export const CREATE_INTERVALS_SUCCESS = 'CREATE_INTERVALS_SUCCESS'
+export type CreateIntervalsSuccessAction = {
+  type: typeof CREATE_INTERVALS_SUCCESS
+  data: any
+}
+
+export const createIntervalsSuccess: ActionCreator<CreateIntervalsSuccessAction> = (data: any) => ({
+  type: CREATE_INTERVALS_SUCCESS,
+  data
+})
+
+// запрос с ошибкой
+export const CREATE_INTERVALS_ERROR = 'CREATE_INTERVALS_ERROR'
+export type CreateIntervalsErrorAction = {
+  type: typeof CREATE_INTERVALS_ERROR
+  error: string
+}
+
+export const CreateIntervalAsync = (title: any, intervalTimeService: any, intervalTimeMarket: any): ThunkAction<void, RootState, unknown, Action<string>> =>
+   async (dispatch, getState) => {
+      dispatch(createIntervalsRequest())
+    
+      try {
+        const resp = await api.post(`/users/businessmen/${getState().businessmen.data.id}/schedule/intervals/create`, 
+          { 
+            title: title,
+            businessman: 319, 
+            interval_time_service: intervalTimeService ? intervalTimeService : undefined, 
+            interval_time_market: intervalTimeMarket ? intervalTimeMarket : undefined,
+          }, 
+          {headers: {
+              'Authorization': `JWT ${getState().token.tokenText}`
+            }
+          }
+        )
+
+        dispatch(allBusinessmenRequestSuccess(resp.data))
+
+        return resp.data
+      } catch (error: any) {
+        dispatch(allBusinessmenRequestError(error.message))
+      }
+    }
+
+
 
 export const AllBusinessmenUserAsync = (tags: string , coordinates: [[number, number], [number, number]]): ThunkAction<void, RootState, unknown, Action<string>> =>
    async (dispatch, getState) => {
@@ -64,3 +120,4 @@ export const AllBusinessmenUserAsync = (tags: string , coordinates: [[number, nu
         dispatch(allBusinessmenRequestError(error.message))
       }
     }
+ 

@@ -7,7 +7,7 @@ import { ButtonBack } from '../../../components/ButtonBack'
 import { IconCancel } from '../../../Icons/IconCancel'
 import { EColor, Text } from '../../../components/Text'
 import styles from './pageshoppingcardservices.css'
-import { useToken } from '../../../../hooks/useToken'
+import { useToken } from '../../../../hooks'
 import { TListServices } from '../PageService'
 
 interface IPageShoppingCardServices {

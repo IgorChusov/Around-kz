@@ -199,12 +199,12 @@ export function MenuQuestionnairePage () {
                 />
               </svg>
               <Text className={styles.text} size={16}>
-                Настройка расписание
+                Настройка расписания
               </Text>
               <div className={styles.right}>
                 <IconArrowRight />
               </div>
-              <Link className={styles.link} to={`/menu/account/business/myQuestionnaires/${typeService}/${id}/changeInfo/schedule`} />
+              <Link className={styles.link} to={`/menu/account/business/myQuestionnaires/${typeService}/${id}/schedule`} />
             </li>
           </ul>
           <div className={styles.buttonGroup}>

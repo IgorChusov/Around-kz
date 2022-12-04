@@ -31,7 +31,7 @@ export function ServiceSettingSchedulePage() {
   const [listValueLocation, setListValueLocation] = useState(listValueLocationDefault)
   const [valuePrice, setValuePrice] = useState('')
   const [pickData, setPickData] = useState([])
-  const [viewInterval, setViewInterval] = useState(true)
+  const [page, setPage] = useState('')
 
   function changeValueLocation (position: number) {
     const newListValue = listValueLocation.map((elem, index) =>
@@ -41,12 +41,13 @@ export function ServiceSettingSchedulePage() {
     setListValueLocation(newListValue)
   }
 
-  const clickOndate = () => {
-    console.log(Date)
+  const clickOndate = (e: any) => {
+    console.log(e)
+    setPage('lisInterval')
   }
 
   return (
-    <MenuContainer>
+    <MenuContainer isMaxHeight>
       <ButtonBack addressLink={`/menu/account/business/myQuestionnaires/service/${id}`} />
       <Title text='Настройка расписания' />
       <Text As='h3' className={styles.subTitle} size={16} color={EColor.greenDark}>Выберите рабочие дни</Text>
@@ -63,11 +64,12 @@ export function ServiceSettingSchedulePage() {
           </form>
           <Text As='h3' className={styles.subTitleThird} size={16} color={EColor.greenDark}>Радиус выезда</Text>
           <MiniMap />
-          </>
+        </>
       )}
-      {viewInterval && (
+      {page === 'lisInterval' && (
         <ListInterval />
       )}
+      {}
      
       <ButtonNextPage
         text='Сохранить'

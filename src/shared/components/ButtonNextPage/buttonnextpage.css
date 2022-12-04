@@ -7,9 +7,19 @@
   line-height: 23px;
   color: var(--white);
   background-color: var(--greenLight);
+  border: 2px solid var(--greenLight);
   border-radius: 20px;
 }
 
 .button span {
   display: block;
+}
+
+.backTransparent {
+  background-color: transparent;
+  color: var(--greenLight);
+}
+
+.backTransparent span {
+  color: var(--greenLight);
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Map, Placemark } from 'react-yandex-maps'
-import { usePosition } from '../../../hooks/usePosition';
+import { usePosition } from '../../../hooks';
 import yourLocation from '../../../assets/images/my-business.svg';
 
 import styles from './minimap.css';

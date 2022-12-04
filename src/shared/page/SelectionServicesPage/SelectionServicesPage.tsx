@@ -3,7 +3,6 @@ import { ButtonBack } from '../../components/ButtonBack'
 import { DualRadio } from '../../components/DualRadio'
 import { LinkNextPage } from '../../components/LinkNextPage'
 import { EColor, Text } from '../../components/Text'
-
 import styles from './selectionservicespage.css'
 
 export function SelectionServicesPage () {
@@ -30,7 +29,7 @@ export function SelectionServicesPage () {
         descriptionFirst={'Вы оказываете услуги (маникюр, услуги няни, сиделки, массажиста)'}
         descriptionSecond={'Вы продаёте товары (сетевой маркетинг, пельмени домашние, одежда и т.д.)'}
       />
-      <LinkNextPage addressPage={`/menu/account/business/createServices/selection/${value}`} text="Далее" />
+      <LinkNextPage addressPage={`/menu/account/business/createServices/${value}`} text="Далее" />
     </div>
   )
 }
