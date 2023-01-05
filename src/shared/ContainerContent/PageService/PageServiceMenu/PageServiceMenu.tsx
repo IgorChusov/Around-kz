@@ -32,6 +32,7 @@ export function PageServiceMenu ({
       </li>
       <li>
         <button
+          disabled
           onClick={handleClickOnChat}
           className={`${styles.buttonChat} ${activeBtn === 'chat' && styles.buttonActive}`}
         >

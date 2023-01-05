@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { servicesListShopping } from '../../../store/actionCreator/servicesShoppingList'
-import { IListCard, RootState } from '../../../store/reducer'
+import { RootState } from '../../../store/reducer'
 import { NewPaymentMethodPage } from '../NewPaymentMethodPage'
 import { PaymentMethodsPage } from '../PaymentMethodsPage'
 
@@ -17,7 +17,7 @@ interface IPagePay {
 export function PayPage (props: IPagePay) {
   // дри состояния страницы отплаты methods, success, addNewCard
   const [page, setPage] = useState('methods')
-  const listCard = useSelector<RootState, IListCard>((state) => state.cardsPay)
+  // const listCard = useSelector<RootState, IListCard>((state) => state.cardsPay)
   const [inputNumberCardValue, setInputNumberCardValue] = useState('')
   const [inputDateCardValue, setInputDateCardValue] = useState('')
   const [inputCodeCardValue, setInputCodeCardValue] = useState('')
@@ -36,14 +36,14 @@ export function PayPage (props: IPagePay) {
     setInputNameValue(e.target.value)
   }
   const handleClick = () => {
-    dispatch({
-      type: 'CARDS_LIST',
-      list: [
-        ...listCard,
-        { number: inputNumberCardValue, date: inputDateCardValue, code: inputCodeCardValue, name: inputNameValue },
-      ],
-    })
-    setPage('methods')
+    // dispatch({
+    //   type: 'CARDS_LIST',
+    //   list: [
+    //     ...listCard,
+    //     { number: inputNumberCardValue, date: inputDateCardValue, code: inputCodeCardValue, name: inputNameValue },
+    //   ],
+    // })
+    // setPage('methods')
   }
   const clickBackMethods = () => {
     setPage('methods')
@@ -61,7 +61,7 @@ export function PayPage (props: IPagePay) {
   }
   return (
     <div className={styles.container}>
-      {page === 'methods' && (
+      {/* {page === 'methods' && (
         <PaymentMethodsPage
           addressBack={props.addressBack}
           clickPay={handleClickPay}
@@ -70,7 +70,7 @@ export function PayPage (props: IPagePay) {
           }}
           list={listCard}
         />
-      )}
+      )} */}
       {page === 'addNewCard' && (
         <NewPaymentMethodPage
           inputNumberCardValue={inputNumberCardValue}

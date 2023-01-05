@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useLocation, useParams, useRouteMatch } from 'react-router-dom'
+import { TBusinessmenState } from '../../../store/businessman/reducer'
 import { RootState } from '../../../store/reducer'
-
-import styles from './pageservice.css'
-
-import { GetBusinessmenUserAsync } from '../../../store/businessman/get/action'
-import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
 import { Loading } from '../../components/Loading'
-
 import { PageShoppingCardServices } from '../../ContainerContent/PageService/PageShoppingCardServices'
-
-import { InfoServices } from '../../ContainerContent/PageService/InfoServices'
 import { ChoiceOfServices } from '../../ContainerContent/PageService/ChoiceOfServices'
-import { ChoiceOfDate } from '../../ContainerContent/PageService/ChoiceOfDate'
+import { ChoiceOfDatePage } from '../../page/ChoiceOfDatePage'
 import { PageServiceMenu } from '../../ContainerContent/PageService/PageServiceMenu'
 import { PayPage } from '../../page/PayPage'
 import { CommentsPage } from '../../page/CommentsPage'
+import { GetBusinessmenUserAsync } from '../../../store/businessman/action'
+import styles from './pageservice.css'
+import { InfoServicesPage } from '../../page/InfoServicesPage'
 
 interface IPageService {
   nameSpecialist?: string
@@ -30,8 +26,8 @@ export type TListServices = {
   checked?: boolean
 }
 
-export function ServiceRotes ({ nameSpecialist = 'Мастер маникюра Иванова Катя' }: IPageService) {
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+export function ServiceRoutes ({ nameSpecialist = 'Мастер маникюра Иванова Катя' }: IPageService) {
+  const businessmen = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
   const { id } = useParams<{ id?: string }>()
   const { path, url } = useRouteMatch()
   const location = useLocation().pathname
@@ -42,7 +38,7 @@ export function ServiceRotes ({ nameSpecialist = 'Мастер маникюра 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if(!id || String(businessmen.data.id) === id) return
+    if(!id) return
     dispatch(GetBusinessmenUserAsync(id))
   }, [id])
 
@@ -53,7 +49,7 @@ export function ServiceRotes ({ nameSpecialist = 'Мастер маникюра 
 
   return (
     <div className={styles.container}>
-      <Loading loading={ businessmen.loading }/>
+      <Loading loading={ businessmen.myBusinessmen.loading }/>
       <Switch>
         <Route path={`${url}/buyCart/payment`}>
           <div className={styles.subContainer}>
@@ -68,17 +64,17 @@ export function ServiceRotes ({ nameSpecialist = 'Мастер маникюра 
         </Route>
         <Route path={'/pageService/:id'}>
           {pageServices === 'info' && 
-            <InfoServices businessmen={businessmen.data} />
+            <InfoServicesPage />
           }
           {pageServices === 'ChoiceOfServices' && (
             <ChoiceOfServices 
               id={id || ''} 
               handleClickNext={handleClickNext} 
-              listServices={businessmen.data.service} 
+              listServices={businessmen.myBusinessmen.data.service} 
             />
           )}
           {pageServices === 'ChoiceOfDate' && (
-            <ChoiceOfDate
+            <ChoiceOfDatePage
               clickBack={() => {
                 setPageServices('ChoiceOfServices')
               }}
@@ -95,8 +91,8 @@ export function ServiceRotes ({ nameSpecialist = 'Мастер маникюра 
               setTitlePage('Запись к мастеру')
             }}
             handleClickOnChat={() => {
-              setPageServices('chat')
-              setTitlePage('Чат')
+              // setPageServices('chat')
+              // setTitlePage('Чат')
             }}
           />
         </Route>

@@ -3,17 +3,16 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './serviceinfopage.css'
 import { RootState } from '../../../store/reducer'
-import { CreateBusinessmenState } from '../../../store/businessman/create/reduser'
 import { ErrorPanel, IErrorPanel } from '../../components/ErrorPanel'
 import { generateRandomString } from '../../../utils/js/generateRandomIndex'
-import { CreateBusinessmenUserAsync } from '../../../store/businessman/create/action'
 import { EColor, Text } from '../../components/Text'
 import { ButtonBack } from '../../components/ButtonBack'
 import { ServicesInfoComponents } from '../../ContainerContent/PageMenu/components/CreateServices/ServiceInfo/ServicesInfoComponents'
 import { InfoPageBasic } from '../../ContainerContent/PageMenu/components/InfoPageBasic'
 import { ModalComponentServices } from '../../ModalComponentServices'
 import { Loading } from '../../components/Loading'
-
+import { TBusinessmenState } from '../../../store/businessman/reducer'
+import { CreateBusinessmenUserAsync } from '../../../store/businessman/action'
 
 export interface IListComponentsService {
   idFront: string
@@ -33,7 +32,7 @@ const dateErrorBasic = [
 
 
 export function ServiceInfoPage () {
-  const businessmen = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
+  const businessmen = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
   const refPresentation = useRef<HTMLDivElement>(null)
   const history = useHistory()
   const location = useLocation().pathname
@@ -280,15 +279,15 @@ export function ServiceInfoPage () {
 
   useEffect(() => {
     const errs = []
-    if(businessmen.error.length > 0) {
-      errs.push({ name: 'server', text: businessmen.error, valid: false})
+    if(businessmen.myBusinessmen.error.length > 0) {
+      errs.push({ name: 'server', text: businessmen.myBusinessmen.error, valid: false})
     }
     if(!arrError[4].valid) {
       errs.push({ name: 'phone', text: arrError[4].text, valid: false})
     }
     setServerErrors(errs)
   }, 
-  [businessmen.error, arrError[4].valid])
+  [businessmen.myBusinessmen.error, arrError[4].valid])
 
   useEffect(() => {
     if (!refPresentation.current) return
@@ -366,7 +365,7 @@ export function ServiceInfoPage () {
           onDelete={() => {}}
         />
       )}
-      <Loading loading={businessmen.loading} />
+      <Loading loading={businessmen.myBusinessmen.loading} />
       {serverErrors.length > 0 && 
         <ErrorPanel list={serverErrors} />
       }

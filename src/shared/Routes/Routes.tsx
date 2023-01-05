@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import { useToken } from '../../hooks'
-import { useDispatch, useSelector } from 'react-redux'
-import { MeGetUserAsync } from '../../store/me/get/action'
 import { RootState } from '../../store/reducer'
-import { MeGetState } from '../../store/me/get/reduser'
 import { Loading } from '../components/Loading'
-import { RefreshTokenAsync, tokenRequestSuccess } from '../../store/token/action'
+// import { RefreshTokenAsync, tokenRequestSuccess } from '../../store/token/action'
 import { ButtonCloseContent } from '../components/ButtonCloseContent'
 import { MenuRoutes } from './MenuRoutes'
 import { ProductRoutes } from './ProductRoutes/ProductRoutes'
-import { ServiceRotes } from './ServiceRoutes'
+import { ServiceRoutes } from './ServiceRoutes'
+import { TAccountState } from '../../store/account/reducer'
+import { AccountMeGetUserAsync } from '../../store/account/action'
+import { RefreshTokenAsync, tokenRequestSuccess } from '../../store/session/action'
 import styles from './routes.css'
 
 export function Routes () {
   const location = useLocation()
   const history = useHistory()
-  const me = useSelector<RootState, MeGetState>((state) => state.me)
+  const { user } = useSelector<RootState, TAccountState>((state) => state.account)
   const token = useToken()
   const dispatch = useDispatch()
   
@@ -27,7 +28,7 @@ export function Routes () {
   }, [token.tokenLocalStorage])
 
   const loadMe = async () => {
-    const me = await dispatch(MeGetUserAsync(token.token))
+    const me = await dispatch(AccountMeGetUserAsync(token.token))
     if(!me) {
       localStorage.removeItem('token')
       dispatch(tokenRequestSuccess(''))
@@ -44,26 +45,24 @@ export function Routes () {
 
   return (
     <div className={styles.content}>
-      {(me.loading && location.pathname.includes('menu')) && (
+      {(user.loading && location.pathname.includes('menu')) && (
         <div className={styles.loading}>
-          <Loading loading={me.loading}/>
+          <Loading loading={user.loading}/>
         </div>
       )}
-      {(!me.loading) && (
+      {(!user.loading) && (
         <>
-          <>
-            <Switch>
-              <Route path={'/pageProducts/:type/:id'}>
-                <ProductRoutes />
-              </Route>
-              <Route path={'/pageService/:id'}>
-                <ServiceRotes />
-              </Route>
-              <Route path={'/menu'}>
-                <MenuRoutes />
-              </Route>
-            </Switch>
-          </>
+          <Switch>
+            <Route path={'/pageProducts/:type/:id'}>
+              <ProductRoutes />
+            </Route>
+            <Route path={'/pageService/:id'}>
+              <ServiceRoutes />
+            </Route>
+            <Route path={'/menu'}>
+              <MenuRoutes />
+            </Route>
+          </Switch>
           <ButtonCloseContent />
         </>
       )}

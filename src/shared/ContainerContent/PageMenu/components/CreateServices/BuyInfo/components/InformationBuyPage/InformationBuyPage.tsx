@@ -10,9 +10,9 @@ import { UniversalSelect } from '../../../../../../../components/UniversalSelect
 import styles from './informationbuypage.css'
 import cn from 'classnames'
 import { RootState } from '../../../../../../../../store/reducer'
-import { TGetBusinessmenState } from '../../../../../../../../store/businessman/get/reduser'
 import { useHistory, useParams } from 'react-router'
 import { TMarketState } from '../../../../../../../../store/market/reduser'
+import { TBusinessmenState } from '../../../../../../../../store/businessman/reducer'
 
 const listOptionsUnitDefault = [
   { value: 'piece', label: 'шт' },
@@ -53,7 +53,7 @@ export function InformationBuyPage () {
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
   const [serverErrors, setServerErrors] = useState<IErrorPanel []>([])
  
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+  const businessmen = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
   const market = useSelector<RootState, TMarketState>((state) => state.market)
   const [product, setProduct] = useState<IProduct | null>(null)
   const [isChangeComponent, setIsChangeComponent] = useState(false)
@@ -162,7 +162,7 @@ export function InformationBuyPage () {
     formData.append('price',  valueInputPrice)
     formData.append('unit',  selected.value)
     formData.append('quantity',  valueAvailableQuantity)
-    formData.append('seller',  String(businessmen.data.id))
+    // formData.append('seller',  String(businessmen.data.id))
 
     if(refFile.current && refFile.current.files?.[0]) {
       formData.append('image', refFile.current.files[0]);
@@ -190,18 +190,18 @@ export function InformationBuyPage () {
     }
   }
 
-  useEffect(() => {
-    const product = businessmen.data.product.find((elem) => String(elem.id) === idProduct)
+  // useEffect(() => {
+  //   const product = businessmen.data.product.find((elem) => String(elem.id) === idProduct)
 
-    if(!idProduct || !product || isChangeComponent) return
-    setValueInputName(product.title)
-    setValueInputPrice(product.price)
-    setValueTextAreaInfoBuy(product.description)
-    setValueInputMin(String(product.min_quantity))
-    setValueAvailableQuantity(String(product.quantity))
-    setProduct(product)
-    setIsChangeComponent(true)
-  }, [idProduct, businessmen.data.product])
+  //   if(!idProduct || !product || isChangeComponent) return
+  //   setValueInputName(product.title)
+  //   setValueInputPrice(product.price)
+  //   setValueTextAreaInfoBuy(product.description)
+  //   setValueInputMin(String(product.min_quantity))
+  //   setValueAvailableQuantity(String(product.quantity))
+  //   setProduct(product)
+  //   setIsChangeComponent(true)
+  // }, [idProduct, businessmen.data.product])
 
   useEffect(() => {
     if(market.error.length > 0) {
@@ -219,7 +219,8 @@ export function InformationBuyPage () {
       <form onSubmit={handleSubmitForm} className={styles.form} action="">
         <div className={styles.inputGroup}>
           <div className={styles.inputContainer}>
-            <Input 
+            <Input
+              id="input-name"
               value={valueInputName}
               onChange={handleChangeValueInputName} 
               placeholder={''}
@@ -228,7 +229,8 @@ export function InformationBuyPage () {
             />
           </div>
           <div className={styles.inputChangeContainer}>
-            <Input 
+            <Input
+              id="input-price" 
               value={valueInputPrice}
               onChange={handleChangeValueInputPrice} 
               placeholder={''}

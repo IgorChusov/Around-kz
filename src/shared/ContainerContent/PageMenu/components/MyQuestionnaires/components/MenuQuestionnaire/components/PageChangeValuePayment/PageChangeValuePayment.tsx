@@ -1,8 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
-import { ChangeBusinessmenUserAsync } from '../../../../../../../../../store/businessman/create/action'
-import { TGetBusinessmenState } from '../../../../../../../../../store/businessman/get/reduser'
+import { TBusinessmenState } from '../../../../../../../../../store/businessman/reducer'
 import { RootState } from '../../../../../../../../../store/reducer'
 import { ButtonBack } from '../../../../../../../../components/ButtonBack'
 import { ButtonNextPage } from '../../../../../../../../components/ButtonNextPage'
@@ -16,7 +15,7 @@ export function PageChangeValuePayment () {
   const history = useHistory()
 
   const { id, typeService } = useParams<{ id?: string; typeService?: string }>()
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+  const businessmen = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
 
   const refRegulator = useRef<HTMLDivElement>(null)
   const refTrack = useRef<HTMLDivElement>(null)
@@ -94,39 +93,39 @@ export function PageChangeValuePayment () {
     setRadioValue(e.target.value)
   }
 
-  useEffect(() => {
-    if(businessmen.data.rule_payment === 'Upon receipt') {
-      setRadioValue('end')
-    }
+  // useEffect(() => {
+  //   if(businessmen.data.rule_payment === 'Upon receipt') {
+  //     setRadioValue('end')
+  //   }
 
-    if(businessmen.data.rule_payment === 'Prepayment 10%') {
-      setRadioValue('percent')
-      setChangeValueRegulator(10)
-      setValueRegulator(10)
-    }
+  //   if(businessmen.data.rule_payment === 'Prepayment 10%') {
+  //     setRadioValue('percent')
+  //     setChangeValueRegulator(10)
+  //     setValueRegulator(10)
+  //   }
 
-    if(businessmen.data.rule_payment === 'Prepayment 50%') {
-      setRadioValue('percent')
-      setChangeValueRegulator(50)
-      setValueRegulator(50)
-    }
+  //   if(businessmen.data.rule_payment === 'Prepayment 50%') {
+  //     setRadioValue('percent')
+  //     setChangeValueRegulator(50)
+  //     setValueRegulator(50)
+  //   }
 
-    if(businessmen.data.rule_payment === 'Prepayment 100%') {
-      setRadioValue('full')
-    }
-  }, 
-  [businessmen.data.rule_payment])
+  //   if(businessmen.data.rule_payment === 'Prepayment 100%') {
+  //     setRadioValue('full')
+  //   }
+  // }, 
+  // [businessmen.data.rule_payment])
 
   const handleClick = async  () => {
     const formData = new FormData()
     formData.append('rule_payment', `Prepayment ${changeValueRegulator}%`)
-    await dispatch(ChangeBusinessmenUserAsync(formData))
+    // await dispatch(ChangeBusinessmenUserAsync(formData))
     history.push(`/menu/account/business/myQuestionnaires/${typeService}/${id}`)
   }
 
   return (
     <div className={styles.container}>
-      <Loading loading={businessmen.loading}/>
+      {/* <Loading loading={businessmen.loading}/> */}
       <ButtonBack addressLink={`/menu/account/business/myQuestionnaires/${typeService}/${id}`} />
       <Text color={EColor.greenDark} className={styles.title} As="h2" size={24}>
         Способы оплаты

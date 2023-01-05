@@ -2,9 +2,6 @@ import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'reac
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation, useParams } from 'react-router'
 import { ChangeAdsUserAsync, CreateAdsUserAsync, DeleteAdsUserAsync } from '../../../store/ads/action'
-import { ChangeBusinessmenUserAsync } from '../../../store/businessman/create/action'
-import { CreateBusinessmenState } from '../../../store/businessman/create/reduser'
-import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
 import { RootState } from '../../../store/reducer'
 import { generateIdFront, generateRandomString } from '../../../utils/js/generateRandomIndex'
 import { ServicesInfoComponents } from '../../ContainerContent/PageMenu/components/CreateServices/ServiceInfo/ServicesInfoComponents'
@@ -15,7 +12,6 @@ import { ErrorPanel, IErrorPanel } from '../../components/ErrorPanel'
 import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'
 import { ServiceSettingSchedulePage } from '../ServiceSettingSchedulePage'
-
 import styles from './changeinfoservicepage.css'
 
 export interface IListComponentsServices {
@@ -42,8 +38,8 @@ export function ChangeInfoServicePage () {
   const refPresentation = useRef<HTMLDivElement>(null)
 
   const { id, type, typeService } = useParams<{ id?: string; type?: string; typeService?: string }>()
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
-  const businessman = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
+  // const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+  // const businessman = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
 
   const [page, setPage] = useState(true)
   const [title, setTitle] = useState('Заполните информацию о себе')
@@ -63,10 +59,10 @@ export function ChangeInfoServicePage () {
   const [isValidationPrice, setValidationPrice] = useState(false)
 
     // импуты базовой страницы
-  const [valueActivity, setValueActivity] = useState(businessmen.data?.title || '')
-  const [valueAddress, setValueAddress] = useState(businessmen.data?.address || '')
-  const [valueDescription, setValueDescription] = useState(businessmen.data?.description || '')
-  const [valueTags, setValueTags] = useState(businessmen.data?.tags.join() || '')
+  // const [valueActivity, setValueActivity] = useState(businessmen.data?.title || '')
+  // const [valueAddress, setValueAddress] = useState(businessmen.data?.address || '')
+  // const [valueDescription, setValueDescription] = useState(businessmen.data?.description || '')
+  // const [valueTags, setValueTags] = useState(businessmen.data?.tags.join() || '')
 
   const refFile1 = useRef<HTMLInputElement>(null)
   const refFile2 = useRef<HTMLInputElement>(null)
@@ -134,7 +130,7 @@ export function ChangeInfoServicePage () {
       setServices(services)
      
     } else {
-      await dispatch(CreateAdsUserAsync(valueName, valueComment, valuePrice, String(businessmen.data.id) ))
+      // await dispatch(CreateAdsUserAsync(valueName, valueComment, valuePrice, String(businessmen.data.id) ))
       setServices([
         ...services,
         {
@@ -156,33 +152,33 @@ export function ChangeInfoServicePage () {
   async function handleSubmit (e: FormEvent) {
     e.preventDefault()
 
-    if(valueActivity.length === 0) {
-      arrError[0].text='Заполните поле'
-      arrError[0].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
-    }
+    // if(valueActivity.length === 0) {
+    //   arrError[0].text='Заполните поле'
+    //   arrError[0].valid= false
+    //   const newArr = arrError.concat()
+    //   setArrError(newArr)
+    // }
 
-    if(valueAddress.length === 0) {
-      arrError[1].text='Заполните поле'
-      arrError[1].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
-    }
+    // if(valueAddress.length === 0) {
+    //   arrError[1].text='Заполните поле'
+    //   arrError[1].valid= false
+    //   const newArr = arrError.concat()
+    //   setArrError(newArr)
+    // }
 
-    if(valueTags.length === 0) {
-      arrError[2].text='Заполните поле'
-      arrError[2].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
-    }
+    // if(valueTags.length === 0) {
+    //   arrError[2].text='Заполните поле'
+    //   arrError[2].valid= false
+    //   const newArr = arrError.concat()
+    //   setArrError(newArr)
+    // }
 
-    if(valueDescription.length === 0) {
-      arrError[3].text='Заполните поле'
-      arrError[3].valid= false
-      const newArr = arrError.concat()
-      setArrError(newArr)
-    }
+    // if(valueDescription.length === 0) {
+    //   arrError[3].text='Заполните поле'
+    //   arrError[3].valid= false
+    //   const newArr = arrError.concat()
+    //   setArrError(newArr)
+    // }
 
     const find = arrError.find((elem) => !elem.valid)
     if (find) return
@@ -214,44 +210,44 @@ export function ChangeInfoServicePage () {
     }
     const formData = new FormData();
 
-    const arrTags = valueTags.split(',').map((elem) => {
-      return elem.trim()
-    })
+    // const arrTags = valueTags.split(',').map((elem) => {
+    //   return elem.trim()
+    // })
   
-    for (let i = 0; i < arrTags.length; i++) {
-      formData.append('tags', arrTags[i]);
-    }
+    // for (let i = 0; i < arrTags.length; i++) {
+    //   formData.append('tags', arrTags[i]);
+    // }
 
-    formData.append('title', valueActivity.trim())
-    formData.append('address', valueAddress)
-    formData.append('description', valueDescription)
+    // formData.append('title', valueActivity.trim())
+    // formData.append('address', valueAddress)
+    // formData.append('description', valueDescription)
     // for (let i = 0; i < arr.length; i++) {
     //   if(arr.length === 0) return
     //   formData.append('images_service', arr[i]);
     // }
     const arrI = []
-    for (let i = 0; i < 5; i++) {
-      if(arr[i]) {
-        console.log(arr)
-        // @ts-ignore
-        formData.append('images_service', arr[i]);
-        arrI.push(JSON.stringify(arr[i]))
-      } else if (businessmen.data?.images_service[i]) {
-        formData.append('images_service', businessmen.data?.images_service[i]);
-        arrI.push(businessmen.data?.images_service[i])
-      } 
-    }
+    // for (let i = 0; i < 5; i++) {
+    //   if(arr[i]) {
+    //     console.log(arr)
+    //     // @ts-ignore
+    //     formData.append('images_service', arr[i]);
+    //     arrI.push(JSON.stringify(arr[i]))
+    //   } else if (businessmen.data?.images_service[i]) {
+    //     formData.append('images_service', businessmen.data?.images_service[i]);
+    //     arrI.push(businessmen.data?.images_service[i])
+    //   } 
+    // }
 
-    console.log(arrI)
+    // console.log(arrI)
 
     formData.append('questionnaire_type', 'Service')
 
     
-    const resp = await dispatch(ChangeBusinessmenUserAsync(formData))
+    // const resp = await dispatch(ChangeBusinessmenUserAsync(formData))
 
-    if(!!resp) {
-      history.push(`/menu/account/business/myQuestionnaires/service/${id}`)
-    }
+    // if(!!resp) {
+    //   history.push(`/menu/account/business/myQuestionnaires/service/${id}`)
+    // }
   }
 
   useEffect(() => {
@@ -266,44 +262,44 @@ export function ChangeInfoServicePage () {
   const changeValueActivity = (e: ChangeEvent<HTMLInputElement>) => {
     arrError[0].text=''
     arrError[0].valid=true
-    setValueActivity(e.target.value)
+    // setValueActivity(e.target.value)
   }
 
   const changeValueAddress = (e: ChangeEvent<HTMLInputElement>) => {
     arrError[1].text=''
     arrError[1].valid=true
-    setValueAddress(e.target.value)
+    // setValueAddress(e.target.value)
   }
 
   const changeValueTags = (e: ChangeEvent<HTMLInputElement>) => {
     arrError[2].text=''
     arrError[2].valid=true
-    setValueTags(e.target.value)
+    // setValueTags(e.target.value)
   }
 
   const changeValueDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
     arrError[3].text=''
     arrError[3].valid=true
-    setValueDescription(e.target.value)
+    // setValueDescription(e.target.value)
   }
 
   useEffect(() => {
-    setServices(businessmen.data.service.map(generateIdFront))
+    // setServices(businessmen.data.service.map(generateIdFront))
   },[])
 
 
   const handleSubmitComponents = async  () => {
     const formData = new FormData()
 
-    for (let i = 0; i < businessmen.data.tags.length; i++) {
-      formData.append('tags', businessmen.data.tags[i]);
-    }
+    // for (let i = 0; i < businessmen.data.tags.length; i++) {
+    //   formData.append('tags', businessmen.data.tags[i]);
+    // }
 
-    for (let i = 0; i < services.length; i++) {
-      formData.append('service', JSON.stringify(services[i]));
-    }
+    // for (let i = 0; i < services.length; i++) {
+    //   formData.append('service', JSON.stringify(services[i]));
+    // }
 
-    dispatch(ChangeBusinessmenUserAsync(formData))
+    // dispatch(ChangeBusinessmenUserAsync(formData))
 
     history.push('/menu/account/business/myQuestionnaires')
   }
@@ -323,9 +319,9 @@ export function ChangeInfoServicePage () {
   }
 
   useEffect(()=> {
-    if(businessmen.data.id === 0) {
-      history.push('/menu/account/business/myQuestionnaires/')
-    }
+    // if(businessmen.data.id === 0) {
+    //   history.push('/menu/account/business/myQuestionnaires/')
+    // }
   }, [])
 
   return (
@@ -352,7 +348,7 @@ export function ChangeInfoServicePage () {
           />
         </Route>
         <Route path={'/menu/account/business/myQuestionnaires/service/:id/changeInfo'}>
-          <InfoPageBasic 
+          {/* <InfoPageBasic 
             type='Service'
             handleSubmit={handleSubmit}
             valueActivity={valueActivity}
@@ -374,7 +370,7 @@ export function ChangeInfoServicePage () {
             defaultPhoto3={businessmen.data?.images_service[2]}
             defaultPhoto4={businessmen.data?.images_service[3]}
             defaultPhoto5={businessmen.data?.images_service[4]}
-          />
+          /> */}
         </Route>
       </Switch>
       {isOpenModal && (
@@ -396,10 +392,10 @@ export function ChangeInfoServicePage () {
           onDelete={handleDeleteComponent}
         />
       )}
-      <Loading loading={businessman.loading} />
+      {/* <Loading loading={businessman.loading} />
       {businessman.error && 
         <ErrorPanel list={[{name: '', text: businessman.error, valid: false}]} />
-      }
+      } */}
     </div>
   )
 }

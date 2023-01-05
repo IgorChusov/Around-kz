@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from 'react'
 import cn from 'classnames'
-import { v4 as uuidv4 } from 'uuid'
 import styles from './input.css'
 
 interface IInputProps {
@@ -11,31 +10,31 @@ interface IInputProps {
   classNameContainer?: string
   classNameInput?: string
   classNameLabel?: string
-  error?: string
-  inputRef?: any
+  error?: string | boolean
+  inputRef?: any, 
+  id: string,
+  type?: string
 }
 
 export function Input (props: IInputProps) {
-  const idInput = uuidv4();
-  
+  const {inputRef, error, labelText, classNameLabel, classNameInput, classNameContainer, id, ...rest} = props;
+
   return (
-    <div className={cn(styles.containerInput, props.classNameContainer)}>
+    <div className={cn(styles.containerInput, classNameContainer)}>
       <input
-        ref={props.inputRef}
-        onChange={props.onChange}
-        value={props.value}
-        placeholder={props.placeholder}
-        className={cn(styles.input, props.classNameInput, {
-          [styles.inputInvalid] :  !!props.error?.length
+        ref={inputRef}
+        className={cn(styles.input, classNameInput, {
+          [styles.inputInvalid]: !!error
         })}
-        id={idInput}
+        id={id}
         type="text"
+        {...rest}
       />
-      {props.error && (
-        <span className={styles.error}>{props.error}</span>
+      {error && (
+        <span className={styles.error}>{error}</span>
       ) }
-      <label className={cn(styles.label, props.classNameLabel)} htmlFor={idInput}>
-        {props.labelText}
+      <label className={cn(styles.label, classNameLabel)} htmlFor={id}>
+        {labelText}
       </label>
     </div>
   )

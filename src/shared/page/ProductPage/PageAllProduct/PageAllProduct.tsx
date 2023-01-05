@@ -7,7 +7,7 @@ import { UserRatingIndicator } from '../../../components/UserRatingIndicator'
 import styles from './pageallproduct.css'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../../store/reducer'
-import { TGetBusinessmenState } from '../../../../store/businessman/get/reduser'
+// import { TGetBusinessmenState } from '../../../../store/businessman/get/reduser'
 
 interface IPageAllProduct {
   clickOnProduct: () => void
@@ -21,15 +21,15 @@ SwiperCore.use([Pagination])
 export function PageAllProduct (props: IPageAllProduct) {
   const { path, url } = useRouteMatch()
   const { id, idProduct, type } = useParams<{ id?: string; idProduct?: string; type?: string }>()
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+  // const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
 
   return (
     <div className={styles.container}>
       <Text className={styles.title} As="h2" size={24}>
-        {businessmen.data.title}
+        {/* {businessmen.data.title} */}
       </Text>
       <Text className={styles.description} As="p" size={16}>
-        {businessmen.data.description}
+        {/* {businessmen.data.description} */}
       </Text>
       <UserRatingIndicator
         className={styles.rating}
@@ -47,7 +47,7 @@ export function PageAllProduct (props: IPageAllProduct) {
         }}
         className={styles.swiper}
       >
-        {businessmen.data.product.map((elem, index) => {
+        {/* {businessmen.data.product.map((elem, index) => {
           return (
             <SwiperSlide className={styles.slide} key={elem.id}>
               <div className={styles.slideContainer}>
@@ -71,7 +71,7 @@ export function PageAllProduct (props: IPageAllProduct) {
               ></Link>
             </SwiperSlide>
           )
-        })}
+        })} */}
       </Swiper>
     </div>
   )

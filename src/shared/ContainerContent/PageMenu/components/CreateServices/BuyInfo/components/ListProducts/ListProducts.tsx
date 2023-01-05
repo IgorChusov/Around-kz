@@ -1,17 +1,17 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useHistory, useParams } from 'react-router-dom'
-import { TGetBusinessmenState } from '../../../../../../../../store/businessman/get/reduser'
 import { RootState } from '../../../../../../../../store/reducer'
 import { transformUnit } from '../../../../../../../../utils/js/unit'
 import { IconElementPlus } from '../../../../../../../Icons'
 import { EColor, Text } from '../../../../../../../components/Text'
 import styles from './listproducts.css'
+import { TBusinessmenState } from '../../../../../../../../store/businessman/reducer'
 
 export function ListProducts () {
   const history = useHistory()
   const { id } = useParams<{ id?: string;}>()
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+  const businessmen = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
   
   return (
     <div className={styles.container}>
@@ -26,7 +26,7 @@ export function ListProducts () {
           </div>
           <Link className={styles.link} to={`/menu/account/business/myQuestionnaires/products/${id}/changeInfo/components`}></Link>
         </li>
-        {businessmen.data.product.map((elem) => (
+        {/* {businessmen.data.product.map((elem) => (
           <li 
             key={`${elem.id}`} 
             className={styles.item}
@@ -47,7 +47,7 @@ export function ListProducts () {
               </Text>
             </div>
           </li>
-        ))}
+        ))} */}
       </ul>
       <Link className={styles.button} to={`/menu/account/business/myQuestionnaires/products/${id}`}>
         <Text color={EColor.white} size={20}>

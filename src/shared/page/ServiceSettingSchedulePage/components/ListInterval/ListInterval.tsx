@@ -1,11 +1,10 @@
 import React, { ForwardedRef, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { CreateIntervalAsync } from '../../../../../store/businessman/all/action';
-import { ScheduleGetIntervalsAsync } from '../../../../../store/schedule/actions';
+import { CreateIntervalAsync } from '../../../../../store/businessman/action';
 import { ButtonNextPage } from '../../../../components/ButtonNextPage';
 import { ChangeItem } from '../../../../components/ChangeItem';
 import { IntervalForm } from '../../../../components/Forms/IntervalForm';
-import { Popup } from '../../../../components/Popup';
+import { Popup } from '../../../../components/popups/Popup';
 import { Text } from '../../../../components/Text';
 import styles from './listinterval.css';
 type CountdownHandle = {
@@ -20,9 +19,9 @@ export function ListInterval() {
     setType('component')
   }
 
-  useEffect(() => {
-    dispatch(ScheduleGetIntervalsAsync())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(ScheduleGetIntervalsAsync())
+  // }, [])
 
   const handleSubmitInterval = (data: any)  => {
     dispatch(CreateIntervalAsync(data.title, data.listTime, null))

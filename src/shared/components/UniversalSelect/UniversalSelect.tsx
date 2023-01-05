@@ -1,8 +1,5 @@
 import React from 'react'
-
 import Select, { StylesConfig } from 'react-select'
-
-import styles from './universalselect.css'
 
 const customStyles: StylesConfig = {
   option: (provided, state) => {

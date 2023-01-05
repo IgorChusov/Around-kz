@@ -1,15 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import { IconArrowBack } from '../../Icons'
 import { EColor, Text } from '../Text'
-
 import styles from './buttonback.css'
+
 interface IButtonBack {
   handleClick?: () => void
   className?: string
   addressLink?: string
 }
+
 export function ButtonBack ({ addressLink, handleClick, className }: IButtonBack) {
   return (
     <div className={`${styles.position}  ${className}`}>

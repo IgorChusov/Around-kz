@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
-
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { useToken } from '../../../hooks'
-
 import { MyQuestionnaires } from '../../ContainerContent/PageMenu/components/MyQuestionnaires'
-
 import { PageChangeValuePayment } from '../../ContainerContent/PageMenu/components/MyQuestionnaires/components/MenuQuestionnaire/components/PageChangeValuePayment'
 import { MySchedulePage } from '../../page/MySchedulePage'
 import { CreateOrderPage } from '../../page/CreateOrderPage'
 import { SignInPage } from '../../page/PageRegistration/SignInPage'
 import { SignUpPage } from '../../page/PageRegistration/SignUpPage'
-import { PageStartAccount } from '../../ContainerContent/PageMenu/components/PageStartAccount'
-
 import { AccountPage } from '../../page/AccountPage'
 import { ProductPage } from '../../page/ProductPage'
 import { ChangeInfoProductPage } from '../../page/ChangeInfoProductPage'
@@ -20,27 +15,27 @@ import { ProductInfoPage } from '../../page/ProductInfoPage'
 import { SelectionServicesPage } from '../../page/SelectionServicesPage'
 import { ServiceInfoPage } from '../../page/ServiceInfoPage'
 import { ServiceSettingSchedulePage } from '../../page/ServiceSettingSchedulePage'
-
 import { FeedbackPage } from '../../page/FeedbackPage'
 import { InformationAccountPage } from '../../page/InformationAccountPage'
 import { SettingsMenuPage } from '../../page/SettingsMenuPage'
 import { MenuQuestionnairePage } from '../../page/MenuQuestionnairePage'
-
+import { AccountStartPage } from '../../page/AccountStartPage'
 
 export function MenuRoutes () {
   const [isOuth, setIsOuth] = useState(false)
-  const tokenHook = useToken()
+  const { token } = useToken()
 
   useEffect(()=>{
-    if(tokenHook.token.length === 0) {
+    if(token.length === 0) {
       setIsOuth(false)
     } else {
       setIsOuth(true)
     }
-  },[ tokenHook.token])
-
+  },[token])
+  console.log(token)
   return (
     <>
+      {/* is not autorization */}
       {!isOuth && (
         <Switch>     
           <Route path={'/menu/sign-up'}>
@@ -55,6 +50,7 @@ export function MenuRoutes () {
           {/* <Redirect from={'/menu/account/*'} to={'/menu/account/'} /> */}
         </Switch>
       )}
+      {/* is autorization */}
       {isOuth && (
         <Switch>
           <Route path={'/menu/account/mySchedule'}>
@@ -111,9 +107,8 @@ export function MenuRoutes () {
           <Route path="/menu/account/settings">
             <SettingsMenuPage />
           </Route>
-
           <Route path={'/menu/account'}>
-            <PageStartAccount />
+            <AccountStartPage />
           </Route>
           <Redirect exact from='/menu/sign-up' to='/menu/account/personal' />
           <Redirect exact from='/menu/sign-in' to='/menu/account/personal' />

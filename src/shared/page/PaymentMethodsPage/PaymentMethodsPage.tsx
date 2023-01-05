@@ -5,13 +5,13 @@ import { EColor, Text } from '../../components/Text'
 
 import applePay from '../../../assets/images/applePay.png'
 import creditCard from '../../../assets/images/creditCard.png'
-import { IListCard } from '../../../store/reducer'
+// import { IListCard } from '../../../store/reducer'
 import { generateRandomString } from '../../../utils/js/generateRandomIndex'
 
 import styles from './paymentmethods.css'
 
 interface IPaymentMethods {
-  list: IListCard
+  // list: IListCard
   addNewCard: () => void
   clickPay: () => void
   addressBack: string
@@ -68,7 +68,7 @@ export function PaymentMethodsPage (props: IPaymentMethods) {
             <img src={applePay} alt="платежная система Apple Pay" />
           </button>
         </li>
-        {props.list.map((elem) => {
+        {/* {props.list.map((elem) => {
           return (
             <li key={generateRandomString()} className={styles.item}>
               <button className={styles.listButton}>
@@ -77,7 +77,7 @@ export function PaymentMethodsPage (props: IPaymentMethods) {
               </button>
             </li>
           )
-        })}
+        })} */}
         <li className={styles.item}>
           <button onClick={props.addNewCard} className={styles.listButton}>
             <Text size={20} mobileSize={16}>

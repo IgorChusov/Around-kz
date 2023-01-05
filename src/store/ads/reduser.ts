@@ -1,6 +1,5 @@
 import { Reducer } from 'react'
 
-
 import {
   CreateAdsRequestAction, 
   CreateAdsRequestErrorAction, 
@@ -14,25 +13,25 @@ import {
   DELETE_ADS_SUCCESS
 } from './action'
 
-type CreateAdsActions = 
-  CreateAdsRequestAction 
-  | CreateAdsRequestErrorAction 
-  | CreateAdsRequestSuccessAction 
-  | DeleteAdsRequestAction
-  | DeleteAdsRequestSuccessAction
-;
+type CreateAdsActions = CreateAdsRequestAction | 
+  CreateAdsRequestErrorAction | 
+  CreateAdsRequestSuccessAction | 
+  DeleteAdsRequestAction | 
+  DeleteAdsRequestSuccessAction;
 
-export type CreateAdsState = {
+export type TAdsState = {
   loading: boolean
   error: string
   data: any
 }
 
-export interface IAdsList {
+const initialState = {
+  loading: false,
+  error: '',
+  data: null,
+};
 
-}
-
-export const createAdsReducer: Reducer<CreateAdsState, CreateAdsActions> = (state, action) => {
+export const adsReducer: Reducer<TAdsState, CreateAdsActions> = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_ADS_REQUEST:
     case DELETE_ADS_REQUEST:

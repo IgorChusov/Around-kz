@@ -1,7 +1,5 @@
 import React from 'react'
-
-import classNames from 'classnames'
-
+import classnames from 'classnames'
 import styles from './text.css'
 
 export enum EColor {
@@ -47,7 +45,7 @@ export function Text (props: ITextProps) {
     bold = false,
     className,
   } = props
-  const classes = classNames(
+  const classes = classnames(
     styles[`s${size}`],
     styles[color],
     { [styles.bold]: bold },

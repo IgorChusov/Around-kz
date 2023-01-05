@@ -100,6 +100,7 @@ export function InfoPageBasic (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.inputGroup}>
         <Input 
+          id="input-name"
           value={valueActivity}
           onChange={(e) => setValueActivity(e)}
           placeholder=''
@@ -107,7 +108,8 @@ export function InfoPageBasic (
           classNameContainer={styles.inputContainer}
           error={arrError[0].valid ? undefined : arrError[0].text}
         />
-        <Input 
+        <Input
+          id="input-address"
           value={valueAddress}
           onChange={(e) => {setValueAddress(e)}}
           placeholder=''

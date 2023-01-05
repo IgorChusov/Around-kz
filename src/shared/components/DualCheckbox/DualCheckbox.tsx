@@ -1,5 +1,4 @@
 import React from 'react'
-
 import styles from './dualcheckbox.css'
 
 export type TDualCheckboxValue = {
@@ -7,6 +6,7 @@ export type TDualCheckboxValue = {
   textLabel: string
   checked: boolean
 }
+
 interface IDualCheckbox {
   // firstValue: string;
   // firstTextLabel: string;
@@ -17,6 +17,7 @@ interface IDualCheckbox {
   classNameForm?: string
   listCheckbox: { value: string; textLabel: string; checked: boolean }[]
 }
+
 export function DualCheckbox (props: IDualCheckbox) {
   return (
     <form className={`${styles.form} ${props.classNameForm}`} action="">

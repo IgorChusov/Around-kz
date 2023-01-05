@@ -1,7 +1,7 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../config/api'
-import { ChangeBusinessmenSuccess } from '../businessman/get/action'
+import { ChangeBusinessmenSuccess } from '../businessman/action'
 import { RootState } from '../reducer'
 
 // запрос отправлен
@@ -69,12 +69,12 @@ export const CreateMarketAsync = (
       formData,
       { 
         headers: {
-        'Authorization': `JWT ${getState().token.tokenText}`,
+        'Authorization': `JWT ${getState().session.tokenText}`,
       }})
 
       dispatch(createMarketSuccess(resp.data))
 
-      const newData = getState().businessmen.data
+      const newData = getState().businessmen.myBusinessmen.data
       newData.product = [...newData.product, resp.data ]
       dispatch(ChangeBusinessmenSuccess(newData))
 
@@ -96,12 +96,12 @@ export const CreateMarketAsync = (
         formData,
         { 
           headers: {
-          'Authorization': `JWT ${getState().token.tokenText}`,
+          'Authorization': `JWT ${getState().session.tokenText}`,
         }})
         
         dispatch(createMarketSuccess(resp.data))
 
-        const newData = getState().businessmen.data
+        const newData = getState().businessmen.myBusinessmen.data
         const index = newData.product.findIndex((elem) => elem.id === resp.data.id)
         newData.product[index] = resp.data
         dispatch(ChangeBusinessmenSuccess(newData))
@@ -121,12 +121,12 @@ export const CreateMarketAsync = (
         const resp = await api.delete(`/market/products/${id}`,
         { 
           headers: {
-          'Authorization': `JWT ${getState().token.tokenText}`,
+          'Authorization': `JWT ${getState().session.tokenText}`,
         }})
   
         dispatch(deleteMarketSuccess(resp.data))
 
-        const newData = getState().businessmen.data
+        const newData = getState().businessmen.myBusinessmen.data
         const newProduct = newData.product.filter((elem) => String(elem.id) !== id)
         newData.product = newProduct
         

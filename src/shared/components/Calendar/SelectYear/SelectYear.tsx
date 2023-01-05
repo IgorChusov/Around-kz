@@ -1,8 +1,6 @@
 import React from 'react'
 import Select, { StylesConfig } from 'react-select'
 
-import styles from './selectyear.css'
-
 const customStyles: StylesConfig = {
   option: (provided, state) => {
     const color = state.isSelected ? 'white' : '#038175'
@@ -32,7 +30,9 @@ const customStyles: StylesConfig = {
     padding: '4px 0px',
   }),
 }
+
 export type TListOptionsYears = { value: number; label: string }[]
+
 interface ISelectYears {
   listOptions: TListOptionsYears
   onChangeOption: (e: { value: number; label: string }) => void

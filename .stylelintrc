@@ -16,6 +16,8 @@
     "property-no-unknown": [true, {
       "ignoreProperties": ["font-smoothing", "composes"]
     }],
+    "declaration-block-no-redundant-longhand-properties": null,
+    "property-no-vendor-prefix": null,
     "selector-pseudo-class-no-unknown": [true, {
       "ignorePseudoClasses": ["input-placeholder", "global", "local"]
     }]

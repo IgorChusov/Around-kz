@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { ButtonChat } from './ButtonChat'
 import { ButtonFavorites } from './ButtonFavorites'
 import { ButtonNotice } from './ButtonNotice'

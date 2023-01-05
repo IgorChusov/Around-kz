@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useParams } from 'react-router-dom'
-import { DeleteBusinessmenUserAsync, GetBusinessmenUserAsync } from '../../../store/businessman/get/action'
-import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
 import { RootState } from '../../../store/reducer'
 import { IconArrowRight, IconLink } from '../../Icons'
 import { ButtonBack } from '../../components/ButtonBack'
 import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'
+import { TBusinessmenState } from '../../../store/businessman/reducer'
+import { DeleteBusinessmenUserAsync, GetBusinessmenUserAsync } from '../../../store/businessman/action'
 import styles from './menuquestionnaire.css'
 
 export function MenuQuestionnairePage () {
   const dispatch = useDispatch()
   const history = useHistory()
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+  const { myBusinessmen } = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
   const { id, type, typeService } = useParams<{ id?: string; type?: string; typeService?: string }>()
   const [hasLoading, setHasLoading] = useState(false)
 
@@ -37,14 +37,12 @@ export function MenuQuestionnairePage () {
 
   return (
     <div className={styles.container}>
-      {businessmen.loading && (
-        <Loading loading={businessmen.loading} />
-      )}
+      <Loading loading={myBusinessmen.loading}/>
       {hasLoading && (
         <>
           <ButtonBack addressLink="/menu/account/business/myQuestionnaires" />
           <Text color={EColor.greenDark} As="h2" className={styles.title} size={24}>
-            {businessmen.data?.title}
+            {myBusinessmen.data.title}
           </Text>
           <ul className={styles.list}>
             <li className={styles.item}>

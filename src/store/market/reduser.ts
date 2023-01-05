@@ -49,8 +49,13 @@ export interface IMarketList {
   seller:	number
 }
 
+const initialState = {
+  loading: false,
+  error: '',
+  data: null
+};
 
-export const marketReducer: Reducer<TMarketState, CreateMarketActions> = (state, action) => {
+export const marketReducer: Reducer<TMarketState, CreateMarketActions> = (state=initialState, action) => {
   switch (action.type) {
     case CREATE_MARKET_REQUEST:
     case DELETE_MARKET_REQUEST:

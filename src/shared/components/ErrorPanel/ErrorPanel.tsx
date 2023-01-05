@@ -1,5 +1,4 @@
 import React from 'react'
-
 import styles from './errorpanel.css'
 
 export interface IErrorPanel {

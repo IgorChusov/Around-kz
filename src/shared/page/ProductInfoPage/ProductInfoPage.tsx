@@ -1,8 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router'
-import { CreateBusinessmenUserAsync } from '../../../store/businessman/create/action'
-import { CreateBusinessmenState } from '../../../store/businessman/create/reduser'
 import { RootState } from '../../../store/reducer'
 import { PageSelectProduct } from '../../ContainerContent/PageMenu/components/CreateServices/BuyInfo/components/PageSelectedProduct'
 import { PageSettingScheduleBringing } from '../../ContainerContent/PageMenu/components/CreateServices/BuyInfo/components/PageSettingScheduleBringing'
@@ -42,7 +40,7 @@ export function ProductInfoPage () {
 
   const refPresentation = useRef<HTMLDivElement>(null)
 
-  const businessmen = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
+  // const businessmen = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
 
   // состояния чекбоксов выбора места предоставления услуг
   const [listValueLocation, setListValueLocation] = useState(listValueLocationDefault)
@@ -147,13 +145,13 @@ export function ProductInfoPage () {
     formData.append('questionnaire_type', 'Product')
     formData.append('rule_payment', 'Prepayment 10%')
     
-    const resp = await dispatch(CreateBusinessmenUserAsync(formData))
+    // const resp = await dispatch(CreateBusinessmenUserAsync(formData))
 
-    if(!!resp) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      history.push(`/menu/account/business/myQuestionnaires/product/${resp?.id}`)
-    }
+    // if(!!resp) {
+    //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //   // @ts-ignore
+    //   history.push(`/menu/account/business/myQuestionnaires/product/${resp?.id}`)
+    // }
 
   }
 
@@ -214,7 +212,7 @@ export function ProductInfoPage () {
           />
         </Route>
       </Switch>
-      <Loading loading={businessmen.loading}/>
+      {/* <Loading loading={businessmen.loading}/> */}
     </div>
   )
 }

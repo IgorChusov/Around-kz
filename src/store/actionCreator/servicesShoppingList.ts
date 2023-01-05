@@ -1,5 +1,5 @@
 import { ActionCreator } from 'redux'
-import { TListServices } from '../../shared/ContainerContent/PageService'
+import { TListServices } from '../../shared/routes/ServiceRoutes'
 
 export type TServicesListShopping = {
   id: string

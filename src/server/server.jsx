@@ -1,12 +1,13 @@
-import React from 'react';
-import express from 'express';
-import ReactDOMServer from 'react-dom/server';
-import { App } from '../App';
+import React from 'react'
+import express from 'express'
+import ReactDOMServer from 'react-dom/server'
+import { App } from '../App'
 import { indexTemplate } from './indexTemplate'
-import { StaticRouter} from "react-router";
-import favicon from 'serve-favicon';
+import { StaticRouter} from "react-router"
+import favicon from 'serve-favicon'
 import compression from 'compression'
 import helmet from 'helmet'
+
 const NODE_ENV = process.env.NODE_ENV
 const IS_PROD = NODE_ENV === 'production'
 const PORT = process.env.PORT || 3000

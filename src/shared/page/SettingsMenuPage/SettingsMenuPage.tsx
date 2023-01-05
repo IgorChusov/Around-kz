@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 
-import { tokenRequestSuccess } from '../../../store/token/action'
+import { tokenRequestSuccess } from '../../../store/session/action'
 import {
   IconArrowRight,
   IconCards,

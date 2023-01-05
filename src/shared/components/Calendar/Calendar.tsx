@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { generateRandomString } from '../../../utils/js/generateRandomIndex';
 import { SelectMonth, TListOptionsMonth } from './SelectMonth'
 import { SelectYear, TListOptionsYears } from './SelectYear'
-import styles from './calendar.css';
 import { getActualMonth, getListYearsForSelect, getMonthDate } from '../../../utils/js/calendar';
+import styles from './calendar.css';
 
 const Month = [
   { value: 0, label: 'Январь' },

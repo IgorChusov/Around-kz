@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import { IconSetting } from '../../../Icons'
-
 import styles from './buttonsettings.css'
 
 export function ButtonSettings () {

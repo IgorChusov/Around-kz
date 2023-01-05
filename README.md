@@ -10,10 +10,6 @@ npm i
 
 npm run dev
 
-
-
-
-
 Запустить сборку в development: 
 
 npm run build:dev 

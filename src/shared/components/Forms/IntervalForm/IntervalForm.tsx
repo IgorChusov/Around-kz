@@ -1,8 +1,8 @@
 import React, { ChangeEvent, forwardRef, useImperativeHandle, useMemo, useState } from 'react';
 import { useForm, Controller, ControllerRenderProps } from 'react-hook-form';
-import { Input } from '../../Input';
-import InputMask from 'react-input-mask';
 import moment, { Moment } from 'moment';
+import InputMask from 'react-input-mask';
+import { Input } from '../../Input';
 import { IconCancel } from '../../../Icons/IconCancel';
 import { UniversalSelect } from '../../UniversalSelect';
 import styles from './intervalform.css';
@@ -73,6 +73,7 @@ export const IntervalForm = forwardRef<CountdownHandle, IProps>(({ onSubmit }, r
           }}
           render={({field}) => (
             <Input 
+              id="input-name"
               inputRef={field.ref}
               value={field.value} 
               placeholder='...' 
@@ -104,6 +105,7 @@ export const IntervalForm = forwardRef<CountdownHandle, IProps>(({ onSubmit }, r
             }}>
             {(inputProps: ControllerRenderProps) => (
               <Input
+                id="input-interval"
                 inputRef={inputProps.ref}
                 classNameContainer={styles.containerInput}
                 value={inputProps.value}

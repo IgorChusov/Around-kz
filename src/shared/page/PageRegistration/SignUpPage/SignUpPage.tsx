@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom'
 import classnames from 'classnames';
 import InputMask from 'react-input-mask';
 import { RootState } from '../../../../store/reducer'
-import { RegisterSmsActivateAsync, RegisterUserAsync } from '../../../../store/token/action'
-import { TokenState } from '../../../../store/token/reduser'
+import { RegisterSmsActivateAsync, RegisterUserAsync } from '../../../../store/session/action'
 import { ButtonNextPage } from '../../../components/ButtonNextPage'
 import { ErrorPanel, IErrorPanel } from '../../../components/ErrorPanel'
 import { Input } from '../../../components/Input'
@@ -14,6 +13,7 @@ import { SmsActivatePage } from '../SmsActivatePage/SmsActivatePage'
 import { Loading } from '../../../components/Loading'
 import { usePosition } from '../../../../hooks'
 import { useForm, Controller, ControllerRenderProps } from 'react-hook-form'
+import { TSessionState } from '../../../../store/session/reducer'
 import styles from '../pageregistration.css'
 
 interface Is {
@@ -26,7 +26,7 @@ export function SignUpPage () {
   const { latitude, longitude, error }: Is = usePosition()
   const ref = useRef<HTMLFormElement>(null)
   const dispatch = useDispatch()
-  const token = useSelector<RootState, TokenState>((state) => state.token)
+  const token = useSelector<RootState, TSessionState>((state) => state.session)
 
   const [valueFirst, setValueFirst] = useState('')
   const [valueSecond, setValueSecond] = useState('')
@@ -48,6 +48,7 @@ export function SignUpPage () {
 
   // сотояния импутов
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
+  const [errorBottomInput, setErrorBottomInput] = useState('')
 
   // activate, inputInfo
   const [page, setPage] = useState('inputInfo')
@@ -69,7 +70,7 @@ export function SignUpPage () {
 
   useEffect(()=>{
     if (token.error === 'This number is already registered') {
-      changeError('Аккаунт с таким номером уже существует', 1, false)
+      setErrorBottomInput('Аккаунт с таким номером уже существует')
     } else (
       changeError('', 1, true)
     )
@@ -114,6 +115,7 @@ export function SignUpPage () {
               }}
               render={({field}) => (
                 <Input
+                  id="input-name"
                   inputRef={field.ref}
                   classNameContainer={classnames(styles.containerInput, {
                     [styles.inputInvalid]: !!formState.errors.username
@@ -122,7 +124,7 @@ export function SignUpPage () {
                   placeholder="Имя"
                   onChange={field.onChange}
                   labelText="Как вас зовут"
-                  error={!!formState.errors.username ? 'Заполните поле' : undefined}
+                  error={!!formState.errors.username && 'Заполните поле'}
                 />
               )} 
             />
@@ -146,6 +148,8 @@ export function SignUpPage () {
                   {...field}>
                     {(inputProps: ControllerRenderProps) => (
                         <Input
+                          type="phone"
+                          id="input-phone"
                           inputRef={inputProps.ref}
                           classNameContainer={classnames(styles.containerInput, {
                             [styles.inputInvalid] : !!formState.errors.phone
@@ -154,7 +158,7 @@ export function SignUpPage () {
                           placeholder="+7"
                           onChange={inputProps.onChange}
                           labelText="Номер телефона"
-                          error={!!formState.errors.phone ? 'Заполните поле' : undefined}
+                          error={!!formState.errors.phone && 'Заполните поле' || errorBottomInput.length !== 0 ? 'Аккаунт уже существует' : ''}
                         />
                     )}
                 </InputMask>

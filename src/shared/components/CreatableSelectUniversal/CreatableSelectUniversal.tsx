@@ -1,9 +1,6 @@
 import React from 'react'
-
 import Select, { StylesConfig } from 'react-select'
 import CreatableSelect from 'react-select/creatable'
-
-import styles from './creatableselectuniversal.css'
 
 const customStyles: StylesConfig = {
   option: (provided, state) => {

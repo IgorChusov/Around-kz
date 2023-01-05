@@ -1,8 +1,6 @@
 import React, { ChangeEvent, FormEvent, MouseEventHandler } from 'react'
 import ReactDOM from 'react-dom'
-
 import { EColor, Text } from '../components/Text'
-
 import styles from './modalcomponentservices.css'
 
 interface IModalComponentServices {

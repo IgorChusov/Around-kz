@@ -1,7 +1,5 @@
 import React from 'react'
-
 import { EllipsePaginationIcon } from '../../../Icons'
-
 import styles from './searchpagination.css'
 
 export function SearchPagination () {

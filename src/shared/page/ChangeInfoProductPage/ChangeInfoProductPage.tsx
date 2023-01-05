@@ -1,9 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation, useParams } from 'react-router'
-import { ChangeBusinessmenUserAsync } from '../../../store/businessman/create/action'
-import { CreateBusinessmenState } from '../../../store/businessman/create/reduser'
-import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
 import { RootState } from '../../../store/reducer'
 import { InformationBuyPage } from '../../ContainerContent/PageMenu/components/CreateServices/BuyInfo/components/InformationBuyPage'
 import { ListProducts } from '../../ContainerContent/PageMenu/components/CreateServices/BuyInfo/components/ListProducts'
@@ -14,6 +11,7 @@ import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'
 
 import styles from './changeinfoproductpage.css'
+import { ChangeBusinessmenUserAsync } from '../../../store/businessman/action'
 
 const dateErrorBasic = [
   { name: 'activity', text: '', valid: true },
@@ -30,8 +28,8 @@ export function ChangeInfoProductPage () {
   const location = useLocation().pathname
   const history = useHistory()
 
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
-  const businessman = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
+  const businessmen = useSelector<RootState, any>((state) => state.businessmen)
+  const businessman = useSelector<RootState, any>((state) => state.businessmen)
   
   const [title, setTitle] = useState('Заполните информацию о себе')
   const [arrError, setArrError] = useState<IErrorPanel[]>(dateErrorBasic)
@@ -109,7 +107,7 @@ export function ChangeInfoProductPage () {
 
     const formData = new FormData()
 
-    const arrTags = valueTags.split(',').map((elem) => {
+    const arrTags = valueTags.split(',').map((elem: any) => {
       return elem.trim()
     })
   

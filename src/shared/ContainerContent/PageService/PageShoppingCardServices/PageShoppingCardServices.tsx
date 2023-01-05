@@ -8,7 +8,8 @@ import { IconCancel } from '../../../Icons/IconCancel'
 import { EColor, Text } from '../../../components/Text'
 import styles from './pageshoppingcardservices.css'
 import { useToken } from '../../../../hooks'
-import { TListServices } from '../PageService'
+import { TListServices } from '../../../routes/ServiceRoutes'
+
 
 interface IPageShoppingCardServices {
   list?: []
@@ -19,20 +20,20 @@ export function PageShoppingCardServices (props: IPageShoppingCardServices) {
   const dispatch = useDispatch()
   const {tokenLocalStorage, token} = useToken()
 
-  const servicesData = useSelector<RootState, TServicesListShopping>((state) => state.servicesListShopping)
+  // const servicesData = useSelector<RootState, TServicesListShopping>((state) => state.servicesListShopping)
 
   const clickDelete = (index: number, ls: TListServices[]) => {
     ls.splice(index, 1)
     const fullPrice = ls.reduce((sum, order) => sum + Number(order.price), 0)
-    dispatch(
-      servicesListShopping({
-        id: '123',
-        date: servicesData.date,
-        time: servicesData.time,
-        fullPrice: fullPrice,
-        list: ls,
-      }),
-    )
+    // dispatch(
+    //   servicesListShopping({
+    //     id: '123',
+    //     date: servicesData.date,
+    //     time: servicesData.time,
+    //     fullPrice: fullPrice,
+    //     list: ls,
+    //   }),
+    // )
   }
 
   return (
@@ -42,7 +43,7 @@ export function PageShoppingCardServices (props: IPageShoppingCardServices) {
         {'Вы выбрали'}
       </Text>
       <ul className={styles.list}>
-        {servicesData.list?.map((elem, index, ls) => {
+        {/* {servicesData.list?.map((elem, index, ls) => {
           return (
             <li key={elem.id} className={styles.item}>
               <div className={styles.nameItemGroup}>
@@ -61,7 +62,7 @@ export function PageShoppingCardServices (props: IPageShoppingCardServices) {
               <Text color={EColor.greenMiddle} size={16}>{`${elem.price}тнг`}</Text>
             </li>
           )
-        })}
+        })} */}
       </ul>
       <Text className={styles.subtitle} As="h3" color={EColor.greenDark} size={20}>
         Дата записи и время
@@ -71,13 +72,13 @@ export function PageShoppingCardServices (props: IPageShoppingCardServices) {
           <Text className={styles.textWeight} size={20}>
             Число:
           </Text>
-          <Text size={16}>{servicesData.date}</Text>
+          {/* <Text size={16}>{servicesData.date}</Text> */}
         </div>
         <div className={styles.textGroup}>
           <Text className={styles.textWeight} size={20}>
             Время:
           </Text>
-          <Text size={16}>{servicesData.time}</Text>
+          {/* <Text size={16}>{servicesData.time}</Text> */}
         </div>
       </div>
       {(!token && !tokenLocalStorage)  && (

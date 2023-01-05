@@ -4,17 +4,15 @@ import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePosition } from '../../../hooks'
 import myPosition from '../../../assets/images/yourLocation.svg'
-import myBusiness from '../../../assets/images/my-business.svg'
-
 import { RootState } from '../../../store/reducer'
 import { IconCenterCoordinates } from '../../Icons'
 import styles from './mapynd.css'
-import { AllBusinessmenState } from '../../../store/businessman/all/reduser'
-import { changeValueArea, TValueArea } from '../../../store/actionCreator/valueArea'
-import { TValueSearch } from '../../../store/actionCreator/valueSearch'
-import { AllBusinessmenUserAsync } from '../../../store/businessman/all/action'
-import { MeChangeUserAsync } from '../../../store/me/get/action'
-import { MeGetState } from '../../../store/me/get/reduser'
+// import { MeChangeUserAsync } from '../../../store/me/get/action'
+import { TAccountState } from '../../../store/account/reducer'
+import { TSearchState, TValueArea } from '../../../store/search/reducer'
+import { changeValueArea } from '../../../store/search/action'
+import { TBusinessmenState } from '../../../store/businessman/reducer'
+import { GetAllBusinessmenUserAsync } from '../../../store/businessman/action'
 
 interface Is {
   latitude?: string
@@ -23,15 +21,11 @@ interface Is {
 }
 
 export function MapYnd () {
-
   const dispatch = useDispatch()
   const history = useHistory()
-
-  const businessmenList = useSelector<RootState, AllBusinessmenState >((state) => state.listBusinessmen)
-
-  const valueSearch = useSelector<RootState, TValueSearch >((state) => state.dataSearch)
-  const valueArea = useSelector<RootState, TValueArea | null>((state) => state.valueArea)
-  const me = useSelector<RootState, MeGetState>((state) => state.me)
+  const businessmenList = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
+  const { valueArea, dataSearch } = useSelector<RootState, TSearchState>((state) => state.search)
+  const { user } = useSelector<RootState, TAccountState>((state) => state.account)
 
   const { latitude, longitude, error }: Is = usePosition()
   const [maps, setMaps] = useState<any>({})
@@ -82,8 +76,8 @@ export function MapYnd () {
 
 
   useEffect(() => {
-    if(valueSearch.view && valueSearch.valueSearch.length > 0 && valueArea) {
-      dispatch(AllBusinessmenUserAsync(valueSearch.valueSearch, valueArea))
+    if(dataSearch.view && dataSearch.valueSearch.length > 0 && valueArea) {
+      dispatch(GetAllBusinessmenUserAsync(dataSearch.valueSearch, valueArea))
     }
   }, [valueArea])
 

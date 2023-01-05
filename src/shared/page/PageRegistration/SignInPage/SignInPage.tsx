@@ -3,10 +3,8 @@ import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { RootState } from '../../../../store/reducer'
-import { TokenState } from '../../../../store/token/reduser'
 import { ButtonNextPage } from '../../../components/ButtonNextPage'
 import { ErrorPanel, IErrorPanel } from '../../../components/ErrorPanel'
-import { LoginSmsActivateAsync, LoginUserAsync } from '../../../../store/token/action'
 import { Input } from '../../../components/Input'
 import { Text } from '../../../components/Text'
 import { Loading } from '../../../components/Loading'
@@ -14,13 +12,15 @@ import { SmsActivatePage } from '../SmsActivatePage'
 import { useForm, Controller, ControllerRenderProps } from 'react-hook-form'
 import InputMask from 'react-input-mask';
 import styles from '../pageregistration.css'
+import { TSessionState } from '../../../../store/session/reducer'
+import { LoginSmsActivateAsync, LoginUserAsync } from '../../../../store/session/action'
 
 export function SignInPage () {
   const location = useLocation()
   const history = useHistory()
   const dispatch = useDispatch()
   const ref = useRef<HTMLFormElement>(null)
-  const token = useSelector<RootState, TokenState>((state) => state.token)
+  const token = useSelector<RootState, TSessionState>((state) => state.session)
 
   const [valueFirst, setValueFirst] = useState('')
   const [valueSecond, setValueSecond] = useState('')
@@ -126,15 +126,18 @@ export function SignInPage () {
                     {...field}>
                       {(inputProps: ControllerRenderProps) => (
                           <Input
+                            type="phone"
+                            id="input-phone"
                             inputRef={inputProps.ref}
                             classNameContainer={classnames(styles.containerInput, {
                               [styles.inputInvalid]: !!formState.errors.phone
                             })}
-                            value={inputProps.value}
+                            // value={inputProps.value}
                             placeholder="+7"
-                            onChange={inputProps.onChange}
+                            // onChange={inputProps.onChange}
                             labelText="Номер телефона"
-                            error={!!formState.errors.phone || errorBottomInput.length !== 0 ? 'Заполните поле' : ''}
+                            error={!!formState.errors.phone && 'Заполните поле' || errorBottomInput.length !== 0 ? 'Аккаунт не найден' : ''}
+                            {...inputProps}
                         />
                       )}
                   </InputMask>

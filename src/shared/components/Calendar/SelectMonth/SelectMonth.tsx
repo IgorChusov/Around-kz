@@ -1,8 +1,6 @@
 import React from 'react'
 import Select, { StylesConfig } from 'react-select'
 
-import styles from './selectmonth.css'
-
 const customStyles: StylesConfig = {
   option: (provided, state) => {
     const color = state.isSelected ? 'white' : '#038175'

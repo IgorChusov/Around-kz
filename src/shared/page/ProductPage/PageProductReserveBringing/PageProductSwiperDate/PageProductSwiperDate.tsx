@@ -26,11 +26,12 @@ interface ISwiperDate {
 
 export function PageProductSwiperDate ({ list, handleClickOnDate }: ISwiperDate) {
   // свайпер выбора даты на странице продукта
-  const date = useSelector<RootState, string>((state) => state.dateReserve)
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch({ type: 'DATE_CHOICE_RESERVE', date: list[0].date })
-  }, [])
+  // const date = useSelector<RootState, string>((state) => state.dateReserve)
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch({ type: 'DATE_CHOICE_RESERVE', date: list[0].date })
+  // }, [])
+
   return (
     <div className={styles.container}>
       <Swiper
@@ -54,13 +55,13 @@ export function PageProductSwiperDate ({ list, handleClickOnDate }: ISwiperDate)
           return (
             <SwiperSlide key={generateRandomString()} className={styles.slide}>
               <button
-                onClick={() => {
-                  dispatch({ type: 'DATE_CHOICE_RESERVE', date: elem.date })
-                }}
+                // onClick={() => {
+                //   dispatch({ type: 'DATE_CHOICE_RESERVE', date: elem.date })
+                // }}
               >
-                <Text As="p" className={`${styles.text} ${date === elem.date && styles.active}`} size={16}>
+                {/* <Text As="p" className={`${styles.text} ${date === elem.date && styles.active}`} size={16}>
                   {elem.date}
-                </Text>
+                </Text> */}
               </button>
             </SwiperSlide>
           )

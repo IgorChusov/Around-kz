@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { EColor, Text } from '../../components/Text'
-
 import styles from './accountpage.css'
 
 export function AccountPage () {

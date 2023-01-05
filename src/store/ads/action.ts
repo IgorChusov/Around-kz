@@ -1,7 +1,7 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../config/api'
-import { ChangeBusinessmenSuccess } from '../businessman/get/action'
+import { ChangeBusinessmenSuccess } from '../businessman/action'
 
 import { RootState } from '../reducer'
 
@@ -80,12 +80,12 @@ export const CreateAdsUserAsync = (
       },
       { 
         headers: {
-        'Authorization': `JWT ${getState().token.tokenText}`,
+        'Authorization': `JWT ${getState().session.tokenText}`,
       }})
 
       dispatch(createAdsSuccess(resp.data))
 
-      const newData = getState().businessmen.data
+      const newData = getState().businessmen.myBusinessmen.data
       newData.service = [...newData.service, resp.data ]
       dispatch(ChangeBusinessmenSuccess(newData))
       return resp.data
@@ -112,7 +112,7 @@ export const CreateAdsUserAsync = (
         },
         { 
           headers: {
-          'Authorization': `JWT ${getState().token.tokenText}`,
+          'Authorization': `JWT ${getState().session.tokenText}`,
         }})
   
         dispatch(createAdsSuccess(resp.data))
@@ -133,7 +133,7 @@ export const CreateAdsUserAsync = (
         const resp = await api.delete(`/ads/services/${id}`,
         { 
           headers: {
-          'Authorization': `JWT ${getState().token.tokenText}`,
+          'Authorization': `JWT ${getState().session.tokenText}`,
         }})
   
         dispatch(deleteAdsSuccess(resp.data))

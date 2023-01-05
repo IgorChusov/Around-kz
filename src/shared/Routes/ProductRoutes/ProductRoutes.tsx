@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
-
-import styles from './pageproduct.css'
-
-
-import { TGetBusinessmenState } from '../../../store/businessman/get/reduser'
 import { RootState } from '../../../store/reducer'
-
 import { PageProductReserveBringing } from '../../page/ProductPage/PageProductReserveBringing'
 import { PageProductReserveStore } from '../../page/ProductPage/PageProductReserveStore'
 import { PageProductListShopping } from '../../page/ProductPage/PageProductListShopping'
 import { PageDetalProductBringing } from '../../page/ProductPage/PageDetalProductBringing'
 import { PageDetalProductStore } from '../../page/ProductPage/PageDetalProductStore'
 import { PageProductChat } from '../../page/ProductPage/PageProductChat'
-
 import { PageAllProduct } from '../../page/ProductPage/PageAllProduct'
 import { PageServiceMenu } from '../../ContainerContent/PageService/PageServiceMenu'
 import { PayPage } from '../../page/PayPage'
 import { CommentsPage } from '../../page/CommentsPage'
+import styles from './pageproduct.css'
+import { TBusinessmenState } from '../../../store/businessman/reducer'
 
 export function ProductRoutes () {
   const { id, type } = useParams<{ id?: string; type?: string }>()
@@ -26,7 +21,7 @@ export function ProductRoutes () {
   const { path, url } = useRouteMatch()
   const location = useLocation().pathname
   const history = useHistory()
-  const businessmen = useSelector<RootState, TGetBusinessmenState>((state) => state.businessmen)
+  const businessmen = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
 
   // const [amountReserveProduct, setAmountReserveProduct] = useState<{id: string, amount: number}[]>([{id:'', amount: 1}]);
   const [amountReserveProduct, setAmountReserveProduct] = useState(1)

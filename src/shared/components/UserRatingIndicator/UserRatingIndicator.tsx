@@ -1,9 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import { IconStar } from '../../Icons'
 import { EColor, Text } from '../Text'
-
 import styles from './userratingindicator.css'
 
 interface IUserRatingIndicator {
