@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import { ButtonBack } from '../../../../../../../components/ButtonBack'
-import { ButtonNextPage } from '../../../../../../../components/ButtonNextPage'
+import { ButtonBack } from '../../../../../../../components/Buttons/ButtonBack'
+import { ButtonNextPage } from '../../../../../../../components/Buttons/ButtonNextPage'
 import { CreatableSelectUniversal } from '../../../../../../../components/CreatableSelectUniversal'
 import { DualCheckbox, TDualCheckboxValue } from '../../../../../../../components/DualCheckbox'
 

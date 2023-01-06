@@ -4,7 +4,7 @@ import { Link, useRouteMatch } from 'react-router-dom'
 import { servicesListShopping, TServicesListShopping } from '../../../store/actionCreator/servicesShoppingList'
 import { RootState } from '../../../store/reducer'
 import { generateRandomString } from '../../../utils/js/generateRandomIndex'
-import { ButtonBack } from '../../components/ButtonBack'
+import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { EColor, Text } from '../../components/Text'
 
 import styles from './choiceofdate.css'

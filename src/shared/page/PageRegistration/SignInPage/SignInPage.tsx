@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { RootState } from '../../../../store/reducer'
-import { ButtonNextPage } from '../../../components/ButtonNextPage'
+import { ButtonNextPage } from '../../../components/Buttons/ButtonNextPage'
 import { ErrorPanel, IErrorPanel } from '../../../components/ErrorPanel'
 import { Input } from '../../../components/Input'
 import { Text } from '../../../components/Text'
@@ -145,7 +145,7 @@ export function SignInPage () {
               />
         
             <ButtonNextPage classNameButton={styles.button} onClick={handleClick} text="Получить смс-код" />
-            <Link className={styles.changeMethods} to={'/menu/sign-up'}>
+            <Link className={styles.changeMethods} to={'/account/sign-up'}>
               Sign up
             </Link>
           </form>

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
-import { ButtonNextPage } from '../../../components/ButtonNextPage'
+import { ButtonNextPage } from '../../../components/Buttons/ButtonNextPage'
 import { ErrorPanel, IErrorPanel } from '../../../components/ErrorPanel'
 import { Text } from '../../../components/Text'
 import styles from './smsactivate.css'

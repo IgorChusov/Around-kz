@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { IconCalendar } from '../../Icons'
+import { IconCalendar } from '../../../Icons'
 import styles from './buttonschedule.css'
 // Вспомагательный компонент для личного кабинета(кнопки перехода к рассписанию)
 

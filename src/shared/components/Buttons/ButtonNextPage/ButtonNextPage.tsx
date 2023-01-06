@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import React, { FormEvent } from 'react'
-import { EColor, Text } from '../Text'
+import { EColor, Text } from '../../Text'
 import styles from './buttonnextpage.css'
 
 interface IButtonNextPage {

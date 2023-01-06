@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import InputMask from 'react-input-mask';
 import { RootState } from '../../../../store/reducer'
 import { RegisterSmsActivateAsync, RegisterUserAsync } from '../../../../store/session/action'
-import { ButtonNextPage } from '../../../components/ButtonNextPage'
+import { ButtonNextPage } from '../../../components/Buttons/ButtonNextPage'
 import { ErrorPanel, IErrorPanel } from '../../../components/ErrorPanel'
 import { Input } from '../../../components/Input'
 import { Text } from '../../../components/Text'
@@ -165,7 +165,7 @@ export function SignUpPage () {
               )} 
             />
             <ButtonNextPage classNameButton={styles.button} onClick={handleClick} text="Получить смс-код" />
-            <Link className={styles.changeMethods} to={'/menu/sign-in'}>
+            <Link className={styles.changeMethods} to={'/account/sign-in'}>
               Sign in
             </Link>
           </form>

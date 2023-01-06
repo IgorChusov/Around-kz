@@ -12,13 +12,13 @@ export function AccountPage () {
       <Text className={styles.text} As={'p'} size={16} color={EColor.greenDark}>
         Впервые у нас? Зарегистрируйтесь и получите все преимущества нашего сервиса
       </Text>
-      <Link to={'/menu/sign-up'} className={styles.buttonRegistration}>
+      <Link to={'/account/sign-up'} className={styles.buttonRegistration}>
         Зарегистрироваться
       </Link>
       <Text className={styles.info} size={16} color={EColor.greenDark} As={'p'}>
         Уже есть аккаунт?
       </Text>
-      <Link to={'/menu/sign-in'} className={styles.buttonEntry}>
+      <Link to={'/account/sign-in'} className={styles.buttonEntry}>
         Войти
       </Link>
     </div>

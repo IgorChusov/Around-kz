@@ -21,7 +21,7 @@ import { SettingsMenuPage } from '../../page/SettingsMenuPage'
 import { MenuQuestionnairePage } from '../../page/MenuQuestionnairePage'
 import { AccountStartPage } from '../../page/AccountStartPage'
 
-export function MenuRoutes () {
+export function AccountRoutes () {
   const [isOuth, setIsOuth] = useState(false)
   const { token } = useToken()
 
@@ -32,19 +32,19 @@ export function MenuRoutes () {
       setIsOuth(true)
     }
   },[token])
-  console.log(token)
+
   return (
     <>
       {/* is not autorization */}
       {!isOuth && (
         <Switch>     
-          <Route path={'/menu/sign-up'}>
+          <Route path={'/account/sign-up'}>
             <SignUpPage />
            </Route>
-          <Route path={'/menu/sign-in'}>
+          <Route path={'/account/sign-in'}>
             <SignInPage />
           </Route>
-          <Route exact path={'/menu/account'}>
+          <Route exact path={'/account'}>
             <AccountPage />
           </Route>
           {/* <Redirect from={'/menu/account/*'} to={'/menu/account/'} /> */}
@@ -59,42 +59,42 @@ export function MenuRoutes () {
           <Route path={'/menu/account/create-order'}>
             <CreateOrderPage />
           </Route>
-          <Route path={'/menu/account/business/myQuestionnaires/pageProducts/store/:id'}>
+          <Route path={'/menu/account/myQuestionnaires/pageProducts/store/:id'}>
             <ProductPage />
           </Route>
-          <Route path={'/menu/account/business/myQuestionnaires/:typeService/:id/changePay'}>
+          <Route path={'/menu/account/myQuestionnaires/:typeService/:id/changePay'}>
             <PageChangeValuePayment />
           </Route>
           {/* изменение анкет */}
-          <Route exact path={'/menu/account/business/myQuestionnaires/service/:id/schedule'}>
+          <Route exact path={'/menu/account/myQuestionnaires/service/:id/schedule'}>
             <ServiceSettingSchedulePage />
           </Route>
-          <Route path={'/menu/account/business/myQuestionnaires/products/:id/changeInfo'}>
+          <Route path={'/menu/account/myQuestionnaires/products/:id/changeInfo'}>
               <ChangeInfoProductPage />
           </Route>
-          <Route path={'/menu/account/business/myQuestionnaires/service/:id/changeInfo'}>
+          <Route path={'/menu/account/myQuestionnaires/service/:id/changeInfo'}>
             <ChangeInfoServicePage />
           </Route>
           {/*  */}
           {/* <Route path={'/menu/account/business/myQuestionnaires/:typeService/:type/:id'}>
             <MenuQuestionnaire />
           </Route> */}
-          <Route path={'/menu/account/business/myQuestionnaires/:typeService/:id'}>
+          <Route path={'/menu/account/myQuestionnaires/:typeService/:id'}>
             <MenuQuestionnairePage />
           </Route>
-          <Route path={'/menu/account/business/myQuestionnaires'}>
+          <Route path={'/menu/account/myQuestionnaires'}>
             <MyQuestionnaires />
           </Route>
           {/* создание анкеты */}
 
-          <Route path={'/menu/account/business/createServices/service/'}>
+          <Route path={'/menu/account/createServices/service/'}>
             <ServiceInfoPage />
           </Route>
-          <Route path={'/menu/account/business/createServices/buy'}>
+          <Route path={'/menu/account/createServices/buy'}>
             {/* <BuyInfo /> */}
             <ProductInfoPage />
           </Route>
-          <Route path={'/menu/account/business/createServices/selection/'}>
+          <Route path={'/menu/account/createServices/selection/'}>
             <SelectionServicesPage />
           </Route>
           {/* НАСТРОЙКИ  */}
@@ -104,10 +104,10 @@ export function MenuRoutes () {
           <Route path="/menu/account/settings/information">
             <InformationAccountPage />
           </Route>
-          <Route path="/menu/account/settings">
+          <Route path="/account/settings">
             <SettingsMenuPage />
           </Route>
-          <Route path={'/menu/account'}>
+          <Route path={'/account'}>
             <AccountStartPage />
           </Route>
           <Redirect exact from='/menu/sign-up' to='/menu/account/personal' />

@@ -6,7 +6,7 @@ import { PageSelectProduct } from '../../ContainerContent/PageMenu/components/Cr
 import { PageSettingScheduleBringing } from '../../ContainerContent/PageMenu/components/CreateServices/BuyInfo/components/PageSettingScheduleBringing'
 import { PageSettingScheduleStore } from '../../ContainerContent/PageMenu/components/CreateServices/BuyInfo/components/PageSettingScheduleStore'
 import { InfoPageBasic } from '../../ContainerContent/PageMenu/components/InfoPageBasic'
-import { ButtonBack } from '../../components/ButtonBack'
+import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { IErrorPanel } from '../../components/ErrorPanel'
 import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'

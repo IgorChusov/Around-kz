@@ -1,6 +1,6 @@
 import React from 'react'
 import { Calendar } from '../../components/Calendar'
-import { ButtonBack } from '../../components/ButtonBack'
+import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { EColor, Text } from '../../components/Text'
 import styles from './myschedulespage.css'
 

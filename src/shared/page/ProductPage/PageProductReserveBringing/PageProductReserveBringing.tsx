@@ -7,8 +7,8 @@ import { TProductListShopping } from '../../../../store/actionCreator/productSho
 import { servicesListShopping } from '../../../../store/actionCreator/servicesShoppingList'
 
 import { RootState } from '../../../../store/reducer'
-import { ButtonBack } from '../../../components/ButtonBack'
-import { ButtonCarousel } from '../../../components/ButtonCarousel'
+import { ButtonBack } from '../../../components/Buttons/ButtonBack'
+import { ButtonCarousel } from '../../../components/Buttons/ButtonCarousel'
 import { EColor, Text } from '../../../components/Text'
 
 import styles from './pageproductreserve.css'

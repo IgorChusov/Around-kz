@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
 
-import { ButtonBack } from '../../components/ButtonBack'
+import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { EColor, Text } from '../../components/Text'
 
 import applePay from '../../../assets/images/applePay.png'

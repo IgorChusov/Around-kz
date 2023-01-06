@@ -12,7 +12,7 @@ import {
   IconShieldTick,
   IconUserSquare,
 } from '../../Icons'
-import { ButtonBack } from '../../components/ButtonBack'
+import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { EColor, Text } from '../../components/Text'
 
 import styles from './settingsmenupage.css'

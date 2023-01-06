@@ -8,13 +8,13 @@ export function BurgerButton () {
   
   return (
     <div className={styles.burger}>
-      {location.pathname.includes('menu') && (
+      {location.pathname.includes('account') && (
         <Link to={'/'}>
           <BurgerCloseIcon />
         </Link>
       )}
-      {!location.pathname.includes('menu') && (
-        <Link to={'/menu/account'}>
+      {!location.pathname.includes('account') && (
+        <Link to={'/account'}>
           <BurgerIcon />
         </Link>
       )}

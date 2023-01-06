@@ -1,28 +1,23 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import classnames from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
 import { Text } from '../../Text'
 import styles from './changeaccount.css'
 
 export function ChangeAccountButtonGroup () {
   const location = useLocation().pathname
-  useEffect(() => {
-    if (location === '/menu/account/personal') {
-      document.getElementById('business-button')?.classList.remove(`${styles.buttonActive}`)
-      document.getElementById('personal-button')?.classList.add(`${styles.buttonActive}`)
-    }
-    if (location === '/menu/account/business') {
-      document.getElementById('personal-button')?.classList.remove(`${styles.buttonActive}`)
-      document.getElementById('business-button')?.classList.add(`${styles.buttonActive}`)
-    }
-  }, [location])
 
   return (
     <div className={styles.container}>
       <div className={styles.buttonGroup}>
-        <Link to={'/menu/account/personal'} id="personal-button" className={`${styles.button} ${styles.buttonActive}`}>
+        <Link to={'/account/personal'} id="personal-button" className={classnames(styles.button, {
+          [styles.buttonActive]: location === '/account/personal'
+        })}>
           Личный
         </Link>
-        <Link to="/menu/account/business" id="business-button" className={styles.button}>
+        <Link to="/account/business" id="business-button" className={classnames(styles.button, {
+          [styles.buttonActive]: location === '/account/business'
+        })}>
           Бизнес
         </Link>
         <div className={styles.presentation}></div>

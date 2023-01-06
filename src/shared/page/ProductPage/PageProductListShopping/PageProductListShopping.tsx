@@ -5,7 +5,7 @@ import { Link, useParams, useRouteMatch } from 'react-router-dom'
 import { TProductListShopping } from '../../../../store/actionCreator/productShopingList'
 import { RootState } from '../../../../store/reducer'
 import { IconCancel } from '../../../Icons/IconCancel'
-import { ButtonBack } from '../../../components/ButtonBack'
+import { ButtonBack } from '../../../components/Buttons/ButtonBack'
 import { Text, EColor } from '../../../components/Text'
 
 import styles from './pageproductlistshopping.css'

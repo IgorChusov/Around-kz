@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { CloseContentIcon } from '../../Icons'
+import { CloseContentIcon } from '../../../Icons'
 import styles from './buttonclosecontent.css'
 
 interface IButtonCloseContent {

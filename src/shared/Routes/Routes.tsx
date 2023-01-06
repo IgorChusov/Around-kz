@@ -5,8 +5,8 @@ import { useToken } from '../../hooks'
 import { RootState } from '../../store/reducer'
 import { Loading } from '../components/Loading'
 // import { RefreshTokenAsync, tokenRequestSuccess } from '../../store/token/action'
-import { ButtonCloseContent } from '../components/ButtonCloseContent'
-import { MenuRoutes } from './MenuRoutes'
+import { ButtonCloseContent } from '../components/Buttons/ButtonCloseContent'
+import { AccountRoutes } from './AccountRoutes'
 import { ProductRoutes } from './ProductRoutes/ProductRoutes'
 import { ServiceRoutes } from './ServiceRoutes'
 import { TAccountState } from '../../store/account/reducer'
@@ -45,7 +45,7 @@ export function Routes () {
 
   return (
     <div className={styles.content}>
-      {(user.loading && location.pathname.includes('menu')) && (
+      {(user.loading && location.pathname.includes('account')) && (
         <div className={styles.loading}>
           <Loading loading={user.loading}/>
         </div>
@@ -59,8 +59,8 @@ export function Routes () {
             <Route path={'/pageService/:id'}>
               <ServiceRoutes />
             </Route>
-            <Route path={'/menu'}>
-              <MenuRoutes />
+            <Route path={'/account'}>
+              <AccountRoutes />
             </Route>
           </Switch>
           <ButtonCloseContent />

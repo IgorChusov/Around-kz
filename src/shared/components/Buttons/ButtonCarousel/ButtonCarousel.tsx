@@ -1,6 +1,6 @@
 import React from 'react'
-import { IconMinus, IconPlus } from '../../Icons'
-import { Text, EColor } from '../Text'
+import { IconMinus, IconPlus } from '../../../Icons'
+import { Text, EColor } from '../../Text'
 import styles from './buttoncarousel.css'
 
 interface IButtonCarousel {

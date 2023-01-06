@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { IconArrowBack } from '../../Icons'
-import { EColor, Text } from '../Text'
+import { IconArrowBack } from '../../../Icons'
+import { EColor, Text } from '../../Text'
 import styles from './buttonback.css'
 
 interface IButtonBack {

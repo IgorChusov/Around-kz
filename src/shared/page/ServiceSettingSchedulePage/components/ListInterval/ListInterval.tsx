@@ -1,7 +1,7 @@
 import React, { ForwardedRef, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CreateIntervalAsync } from '../../../../../store/businessman/action';
-import { ButtonNextPage } from '../../../../components/ButtonNextPage';
+import { ButtonNextPage } from '../../../../components/Buttons/ButtonNextPage';
 import { ChangeItem } from '../../../../components/ChangeItem';
 import { IntervalForm } from '../../../../components/Forms/IntervalForm';
 import { Popup } from '../../../../components/popups/Popup';

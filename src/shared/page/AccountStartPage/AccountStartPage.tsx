@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { TAccountState } from '../../../store/account/reducer'
 import { RootState } from '../../../store/reducer'
-import { ButtonAccount } from '../../components/ButtonAccount'
-import { ButtonSchedule } from '../../components/ButtonSchedule'
+import { ButtonAccount } from '../../components/Buttons/ButtonAccount'
+import { ButtonSchedule } from '../../components/Buttons/ButtonSchedule'
 import { Menu } from '../../components/Menu'
 import { ChangeAccountButtonGroup } from '../../components/Buttons/ChangeAccountButtonGroup'
 import styles from './pagestartaccount.css'
@@ -19,31 +19,30 @@ export function AccountStartPage () {
         <div className={styles.containerChange}>
           <ChangeAccountButtonGroup />
         </div>
-        <Redirect from="/menu/account" to="/menu/account/personal" />
+        <Redirect from="/account" to="/account/personal" />
         <Switch>
-          <Route path="/menu/account/personal">
+          <Route path="/account/personal">
             <div className={styles.buttonGroup}>
               <ButtonAccount
                 classNameContainer={styles.buttonAccount}
-                path="/menu/account/create-order/basic-info"
+                path="/account/create-order/basic-info"
                 text="Создать новый заказ"
               />
-              <ButtonSchedule path="/menu/account/mySchedule" text="Мои записи и заказы" />
+              <ButtonSchedule path="/account/mySchedule" text="Мои записи и заказы" />
             </div>
-            <Menu />
           </Route>
-          <Route path="/menu/account/business">
+          <Route path="/account/business">
             <div className={styles.buttonGroup}>
               <ButtonAccount
                 classNameContainer={styles.buttonAccount}
-                path="/menu/account/business/myQuestionnaires"
+                path="/account/myQuestionnaires"
                 text="Мои анкеты"
               />
-              <ButtonSchedule path="/menu/account/mySchedule" text="Мои записи и заказы" />
+              <ButtonSchedule path="/account/mySchedule" text="Мои записи и заказы" />
             </div>
-            <Menu />
           </Route>
         </Switch>
+        <Menu />
       </div>
     </div>
   )

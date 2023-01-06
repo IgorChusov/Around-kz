@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router'
 
 import { IconStar } from '../../Icons'
-import { ButtonBack } from '../../components/ButtonBack'
+import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { EColor, Text } from '../../components/Text'
 
 import styles from './pagecomments.css'

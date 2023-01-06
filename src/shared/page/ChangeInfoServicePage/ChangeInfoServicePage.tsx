@@ -7,7 +7,7 @@ import { generateIdFront, generateRandomString } from '../../../utils/js/generat
 import { ServicesInfoComponents } from '../../ContainerContent/PageMenu/components/CreateServices/ServiceInfo/ServicesInfoComponents'
 import { InfoPageBasic } from '../../ContainerContent/PageMenu/components/InfoPageBasic'
 import { ModalComponentServices } from '../../ModalComponentServices'
-import { ButtonBack } from '../../components/ButtonBack'
+import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { ErrorPanel, IErrorPanel } from '../../components/ErrorPanel'
 import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'

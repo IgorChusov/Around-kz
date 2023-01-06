@@ -4,8 +4,8 @@ import { Calendar } from '../../components/Calendar';
 import { MenuContainer } from '../../components/MenuContainer';
 import { MiniMap } from '../../components/MiniMap';
 import { Title } from '../../components/Title';
-import { ButtonBack } from '../../components/ButtonBack';
-import { ButtonNextPage } from '../../components/ButtonNextPage';
+import { ButtonBack } from '../../components/Buttons/ButtonBack';
+import { ButtonNextPage } from '../../components/Buttons/ButtonNextPage';
 
 import { EColor, Text } from '../../components/Text';
 import { ListInterval } from './components/ListInterval';

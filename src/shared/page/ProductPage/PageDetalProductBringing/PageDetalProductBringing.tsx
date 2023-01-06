@@ -5,8 +5,8 @@ import { Link, useParams } from 'react-router-dom'
 import { productListShopping, TProductListShopping } from '../../../../store/actionCreator/productShopingList'
 
 import { RootState } from '../../../../store/reducer'
-import { ButtonBack } from '../../../components/ButtonBack'
-import { ButtonCarousel } from '../../../components/ButtonCarousel'
+import { ButtonBack } from '../../../components/Buttons/ButtonBack'
+import { ButtonCarousel } from '../../../components/Buttons/ButtonCarousel'
 import { EColor, Text } from '../../../components/Text'
 
 import styles from './pagedetalproductbringing.css'
