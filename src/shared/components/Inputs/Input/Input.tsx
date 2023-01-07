@@ -4,7 +4,6 @@ import styles from './input.css'
 
 interface IInputProps {
   value: string
-  placeholder: string
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   labelText: string
   classNameContainer?: string
@@ -13,7 +12,8 @@ interface IInputProps {
   error?: string | boolean
   inputRef?: any, 
   id: string,
-  type?: string
+  type?: string,
+  placeholder?: string
 }
 
 export function Input (props: IInputProps) {

@@ -5,7 +5,7 @@ import { ButtonBack } from '../../../../components/Buttons/ButtonBack'
 import { ButtonNextPage } from '../../../../components/Buttons/ButtonNextPage'
 import { CreatableSelectUniversal } from '../../../../components/CreatableSelectUniversal'
 
-import { DualRadio } from '../../../../components/DualRadio'
+import { DualRadio } from '../../../../components/Inputs/DualRadio'
 import { EColor, Text } from '../../../../components/Text'
 
 import styles from './pagecreateordermoreinformation.css'

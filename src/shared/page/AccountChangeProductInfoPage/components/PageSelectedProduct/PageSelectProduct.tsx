@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 import { ButtonBack } from '../../../../components/Buttons/ButtonBack'
-import { DualRadio } from '../../../../components/DualRadio'
-import { LinkNextPage } from '../../../../components/LinkNextPage'
+import { DualRadio } from '../../../../components/Inputs/DualRadio'
+import { LinkNextPage } from '../../../../components/Buttons/LinkNextPage'
 import { EColor, Text } from '../../../../components/Text'
 
 import styles from './pageselectproduct.css'

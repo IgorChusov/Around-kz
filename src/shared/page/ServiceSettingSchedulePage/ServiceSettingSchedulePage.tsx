@@ -10,7 +10,7 @@ import { ButtonNextPage } from '../../components/Buttons/ButtonNextPage';
 import { EColor, Text } from '../../components/Text';
 import { ListInterval } from './components/ListInterval';
 import styles from './servicesettingschedulepage.css';
-import { DualCheckbox } from '../../components/DualCheckbox';
+import { DualCheckbox } from '../../components/Inputs/DualCheckbox';
 
 const listValueLocationDefault = [
   {

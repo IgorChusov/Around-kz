@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { useMounted, useToken } from '../../../hooks'
+import { useToken } from '../../../hooks'
 // import { MyQuestionnaires } from '../../ContainerContent/PageMenu/components/MyQuestionnaires'
 
 import { MySchedulePage } from '../../page/MySchedulePage'
@@ -26,7 +26,6 @@ import { AccountMyQuestionnairesPage } from '../../page/AccountMyQuestionnairesP
 export function AccountRoutes () {
   const [isOuth, setIsOuth] = useState(false)
   const { token } = useToken()
-  const { hasMounted } = useMounted()
 
   useEffect(()=>{
     if(token.length === 0) {
@@ -36,13 +35,6 @@ export function AccountRoutes () {
     }
   },[token])
 
-console.log(isOuth)
-  if (!hasMounted) {
-    return (
-      <React.Fragment />
-    )
-  }
-  console.log(isOuth)
   return (
     <>
       {/* is not autorization */}

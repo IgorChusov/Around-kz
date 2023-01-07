@@ -185,6 +185,7 @@ export function AccountChangeProductInfoPage () {
           </Text>
           <ServiceBasicInfoForm 
             type='Product'
+            onSubmit={handleSubmit}
             handleSubmit={handleSubmit}
             valueActivity={valueActivity}
             setValueActivity={(e) => changeValueActivity(e)}

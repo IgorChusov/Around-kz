@@ -8,11 +8,6 @@ export type TDualCheckboxValue = {
 }
 
 interface IDualCheckbox {
-  // firstValue: string;
-  // firstTextLabel: string;
-  // secondTextLabel:string;
-  // secondValue: string;
-  // selectValue: {firstCheckBox: boolean, secondCheckbox: boolean}
   changeValue: (index: number) => void
   classNameForm?: string
   listCheckbox: { value: string; textLabel: string; checked: boolean }[]
@@ -39,14 +34,6 @@ export function DualCheckbox (props: IDualCheckbox) {
           </div>
         )
       })}
-      {/* <div className={styles.inputContent}>
-      <input value={props.firstValue} onChange={props.changeValue} checked={props.selectValue === props.firstValue ? true : false} type={'radio'} id={`input-location-${props.firstValue}`}></input>
-      <label className={styles.label} htmlFor={`input-location-${props.firstValue}`}>{props.firstTextLabel}</label>
-    </div>
-    <div className={styles.inputContent}>
-      <input value={props.secondValue} onChange={props.changeValue} checked={props.selectValue === props.secondValue ? true : false}  type={'radio'} id={`input-location-${props.secondValue}`}></input>
-      <label className={styles.label} htmlFor={`input-location-${props.secondValue}`}>{props.secondTextLabel}</label>
-    </div> */}
     </form>
   )
 }

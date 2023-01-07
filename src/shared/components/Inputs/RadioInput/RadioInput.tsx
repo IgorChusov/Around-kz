@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from 'react'
-
 import styles from './radioinput.css'
 
 interface IRadioInput {

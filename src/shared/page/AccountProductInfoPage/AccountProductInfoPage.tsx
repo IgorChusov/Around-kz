@@ -1,9 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router'
-import { RootState } from '../../../store/reducer'
 import { PageSelectProduct } from '../AccountChangeProductInfoPage/components/PageSelectedProduct'
-
 import { ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
 import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { IErrorPanel } from '../../components/ErrorPanel'
@@ -13,6 +11,7 @@ import styles from './buyinfopage.css'
 import { CreateBusinessmenUserAsync } from '../../../store/businessman/action'
 import { PageSettingScheduleStore } from '../AccountChangeProductInfoPage/components/PageSettingScheduleStore'
 import { PageSettingScheduleBringing } from '../AccountChangeProductInfoPage/components/PageSettingScheduleBringing'
+import { CountdownHandle } from '../../components/Forms/types'
 
 const listValueLocationDefault = [
   {
@@ -39,8 +38,8 @@ export function AccountProductInfoPage () {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation().pathname
-
   const refPresentation = useRef<HTMLDivElement>(null)
+  const formRef = useRef<null | CountdownHandle>(null)
 
   // const businessmen = useSelector<RootState, CreateBusinessmenState>((state) => state.businessman)
 
@@ -154,7 +153,6 @@ export function AccountProductInfoPage () {
       // @ts-ignore
       history.push(`/account/myQuestionnaires/product/${resp?.id}`)
     }
-
   }
 
   return (
@@ -187,6 +185,10 @@ export function AccountProductInfoPage () {
           <PageSelectProduct />
         </Route>
         <Route path={'/account/createServices/product'}>
+          <ButtonBack
+            addressLink="/account/createServices/selection"
+            className={styles.btn}
+          />
           <Text 
             className={styles.title} 
             As="h2" 
@@ -195,12 +197,10 @@ export function AccountProductInfoPage () {
           >
              Заполните информацию о себе
           </Text>
-          <ButtonBack
-            addressLink="/account/createServices/selection"
-            className={styles.btn}
-          />
           <ServiceBasicInfoForm 
             type='Product'
+            onSubmit={handleSubmit}
+            ref={formRef}
             handleSubmit={handleSubmit}
             valueActivity={valueActivity}
             setValueActivity={(e) => changeValueActivity(e)}

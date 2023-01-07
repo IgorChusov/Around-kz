@@ -6,7 +6,7 @@ import { RootState } from '../../../../../store/reducer'
 import { ButtonBack } from '../../../../components/Buttons/ButtonBack'
 import { ButtonNextPage } from '../../../../components/Buttons/ButtonNextPage'
 import { EColor, Text } from '../../../../components/Text'
-import { RadioInput } from '../../../../components/RadioInput'
+import { RadioInput } from '../../../../components/Inputs/RadioInput'
 import styles from './pagechangevaluepayment.css'
 
 export function AccountChangeValuePaymentPage () {

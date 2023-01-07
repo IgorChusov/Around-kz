@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '../Text'
+import { Text } from '../../Text'
 import styles from './dualradio.css'
 
 interface IDualRadio {
@@ -25,7 +25,7 @@ export function DualRadio (props: IDualRadio) {
             checked={props.selectValue === props.firstValue}
             type={'radio'}
             id={`input-location-${props.firstValue}`}
-          ></input>
+          />
           <label className={styles.label} htmlFor={`input-location-${props.firstValue}`}>
             {props.firstTextLabel}
           </label>
@@ -44,7 +44,7 @@ export function DualRadio (props: IDualRadio) {
             checked={props.selectValue === props.secondValue}
             type={'radio'}
             id={`input-location-${props.secondValue}`}
-          ></input>
+          />
           <label className={styles.label} htmlFor={`input-location-${props.secondValue}`}>
             {props.secondTextLabel}
           </label>

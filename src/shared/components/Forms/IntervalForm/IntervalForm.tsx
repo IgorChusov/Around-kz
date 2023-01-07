@@ -2,9 +2,9 @@ import React, { ChangeEvent, forwardRef, useImperativeHandle, useMemo, useState 
 import { useForm, Controller, ControllerRenderProps } from 'react-hook-form';
 import moment, { Moment } from 'moment';
 import InputMask from 'react-input-mask';
-import { Input } from '../../Input';
+import { Input } from '../../Inputs/Input';
 import { IconCancel } from '../../../Icons/IconCancel';
-import { UniversalSelect } from '../../UniversalSelect';
+import { UniversalSelect } from '../../Inputs/UniversalSelect';
 import styles from './intervalform.css';
 
 const listIntervalsDefault = [

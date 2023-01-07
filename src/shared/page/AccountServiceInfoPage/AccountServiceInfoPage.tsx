@@ -329,6 +329,7 @@ export function AccountServiceInfoPage () {
         <Route path={'/account/createServices/service'}>
           <ServiceBasicInfoForm 
             type='Service'
+            onSubmit={handleSubmit}
             handleSubmit={handleSubmit}
             valueActivity={valueActivity}
             setValueActivity={(e) => changeValueActivity(e)}

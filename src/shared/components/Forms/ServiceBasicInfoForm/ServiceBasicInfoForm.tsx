@@ -1,13 +1,17 @@
-import React, { ChangeEvent, FormEvent, RefObject, useEffect, useRef } from 'react'
+import React, { ChangeEvent, FormEvent, forwardRef, RefObject, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { IconElementPlus } from '../../../Icons'
 import { IErrorPanel } from '../../ErrorPanel'
-import { Input } from '../../Input'
+import { Input } from '../../Inputs/Input'
 import { EColor, Text } from '../../Text'
 import styles from './infopagebasic.css'
 import cn from 'classnames'
+import { Controller, useForm } from 'react-hook-form'
+import { fill } from '../../../../../webpack.config'
+import { CountdownHandle } from '../types'
 
 interface IInfoPageBasic {
   type: 'Service' | 'Product'
+  onSubmit: (data:any) => void 
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
   valueActivity: string
   setValueActivity: (e: ChangeEvent<HTMLInputElement>) => void
@@ -15,7 +19,7 @@ interface IInfoPageBasic {
   setValueAddress: (e: ChangeEvent<HTMLInputElement>) => void
   valueDescription: string
   setValueDescription: (e: ChangeEvent<HTMLTextAreaElement>) => void
-  valueTags: string
+  valueTags?: string
   setValueTags: (e: ChangeEvent<HTMLInputElement>) => void
   arrError: IErrorPanel[]
   refFile1?: RefObject<HTMLInputElement>
@@ -30,35 +34,34 @@ interface IInfoPageBasic {
   defaultPhoto5?: string
 }
 
-export function ServiceBasicInfoForm (
-  { 
-    type,
-    handleSubmit,
-    valueActivity,
-    setValueActivity,
-    valueAddress,
-    setValueAddress,
-    valueTags,
-    setValueTags,
-    valueDescription,
-    setValueDescription,
-    arrError,
-    refFile1,
-    refFile2,
-    refFile3,
-    refFile4,
-    refFile5,
-    defaultPhoto1,
-    defaultPhoto2,
-    defaultPhoto3,
-    defaultPhoto4,
-    defaultPhoto5,
-  }: IInfoPageBasic) {
+export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(({  
+  type,
+  onSubmit,
+  arrError,
+  refFile1,
+  refFile2,
+  refFile3,
+  refFile4,
+  refFile5,
+  defaultPhoto1,
+  defaultPhoto2,
+  defaultPhoto3,
+  defaultPhoto4,
+  defaultPhoto5, 
+}, ref) => {
+
     const refImg1 = useRef<HTMLImageElement>(null)
     const refImg2 = useRef<HTMLImageElement>(null)
     const refImg3 = useRef<HTMLImageElement>(null)
     const refImg4 = useRef<HTMLImageElement>(null)
     const refImg5 = useRef<HTMLImageElement>(null)
+
+    const { control, handleSubmit, formState, register, watch, setValue } = useForm({ defaultValues: {
+      title: '',
+      address: '',
+      tags: '',
+      description: '',
+    }});
 
     const viewImg = (refFile: RefObject<HTMLInputElement>, refImg: RefObject<HTMLImageElement>) => {
     if (refFile?.current?.files && refFile.current.files[0]) {
@@ -96,41 +99,75 @@ export function ServiceBasicInfoForm (
     }
   }, [])
 
+  useImperativeHandle(ref, () => ({
+    handleSubmitForm: () => {
+        handleSubmit(data => {
+            onSubmit(data)
+        })()
+    }
+  }))
+  
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={e => e.preventDefault()} className={styles.form}>
       <div className={styles.inputGroup}>
-        <Input 
-          id="input-name"
-          value={valueActivity}
-          onChange={(e) => setValueActivity(e)}
-          placeholder=''
-          labelText='Вид деятельности'
-          classNameContainer={styles.inputContainer}
-          error={arrError[0].valid ? undefined : arrError[0].text}
+        <Controller
+          name="title"
+          control={control}
+          rules={{
+              required: true,
+          }}
+          render={({field}) => (
+            <Input 
+              id="input-name"
+              value={field.value}
+              onChange={field.onChange}
+              labelText='Вид деятельности'
+              classNameContainer={styles.inputContainer}
+              error={arrError[0].valid ? undefined : arrError[0].text}
+            />
+          )} 
         />
-        <Input
-          id="input-address"
-          value={valueAddress}
-          onChange={(e) => {setValueAddress(e)}}
-          placeholder=''
-          labelText='Адрес'
-          classNameContainer={styles.inputContainer}
-          error={arrError[1].valid ? undefined : arrError[1].text}
+        <Controller
+          name="address"
+          control={control}
+          rules={{
+              required: true,
+              minLength: 12
+          }}
+          render={({field}) => (
+            <Input
+              id="input-address"
+              value={field.value}
+              onChange={field.onChange}
+              labelText='Адрес'
+              classNameContainer={styles.inputContainer}
+              error={arrError[1].valid ? undefined : arrError[1].text}
+            /> 
+          )} 
         />
       </div>
       <Text As="p" className={styles.textInfo} color={EColor.greenDark} size={16}>
         По каким словам вас смогут найти в поиске?
       </Text>
       <div className={styles.inputTagContainer}>
-        <input
-          value={valueTags}
-          onChange={(e) => setValueTags(e)}
-          placeholder="#тег"
-          id={'inputTag'}
-          className={cn(styles.inputTag, {
-            [styles.errorTags]: !arrError[2].valid
-          })}
-          type="text"
+        <Controller
+          name="tags"
+          control={control}
+          rules={{
+              required: true,
+          }}
+          render={({field}) => ( 
+            <input
+              value={field.value}
+              onChange={field.onChange}
+              placeholder="#тег"
+              id={'inputTag'}
+              className={cn(styles.inputTag, {
+                [styles.errorTags]: !arrError[2].valid
+              })}
+              type="text"
+            />
+          )} 
         />
         <label className={styles.labelTag} htmlFor="inputTag">
           Теги разделяйте запятой
@@ -145,12 +182,22 @@ export function ServiceBasicInfoForm (
         Описание вашей анкеты
       </Text>
       <div className={styles.textareaContainer}>
-        <textarea
-          value={valueDescription}
-          onChange={(e) => setValueDescription(e)}
-          id={'textareaInfoService'}
-          className={styles.textarea}
-          placeholder="Опыт, особенности услуг и тд."
+        <Controller
+          name="description"
+          control={control}
+          rules={{
+              required: true,
+              maxLength: 255
+          }}
+          render={({field}) => ( 
+            <textarea
+              value={field.value}
+              onChange={field.onChange}
+              id={'textareaInfoService'}
+              className={styles.textarea}
+              placeholder="Опыт, особенности услуг и тд."
+            />
+          )} 
         />
         <label className={styles.labelTag} htmlFor="textareaInfoService">
           Не более 500 знаков
@@ -246,4 +293,4 @@ export function ServiceBasicInfoForm (
       </button>
     </form>
   )
-}
+})
