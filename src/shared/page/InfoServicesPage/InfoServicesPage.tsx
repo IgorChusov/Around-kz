@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { SwiperContainer } from '../../ContainerContent/PageService/components/SwiperContainer'
+import { SwiperContainer } from '../../components/SwiperContainer'
 import { Text, EColor } from '../../components/Text'
 import { PresentationLine } from '../../components/PresentationLine'
 import { UserRatingIndicator } from '../../components/UserRatingIndicator'

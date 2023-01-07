@@ -37,12 +37,12 @@ export const accountMeRequestSuccess: ActionCreator<AccountMeRequestSuccessActio
 
 // успешно изменено
 export const ACCOUNT_ME_CHANGE_SUCCESS = 'ACCOUNT_ME_CHANGE_SUCCESS'
-export type AccountMeChangeRequestSuccessAction = {
+export type AccountMeChangeSuccessAction = {
   type: typeof ACCOUNT_ME_CHANGE_SUCCESS
   data: IMe
 }
 
-export const AccountMeChangeRequestSuccess: ActionCreator<AccountMeChangeRequestSuccessAction> = (data: IMe) => ({
+export const accountMeChangeSuccess: ActionCreator<AccountMeChangeSuccessAction> = (data: IMe) => ({
   type: ACCOUNT_ME_CHANGE_SUCCESS,
   data,
 })

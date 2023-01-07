@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom'
-import { PageServiceMenu } from '../../ContainerContent/PageService/PageServiceMenu'
+// import { PageServiceMenu } from '../../components/ServiceMenu'
 import { RootState } from '../../../store/reducer'
 import { PageAllProduct } from './PageAllProduct'
 import { PageDetalProductBringing } from './PageDetalProductBringing'
@@ -117,14 +117,14 @@ export function ProductPage () {
           />
         </Route>
       </Switch>
-      {location !== `/pageProducts/${type}/${id}/comments` && (
+      {/* {location !== `/pageProducts/${type}/${id}/comments` && (
         <PageServiceMenu
           activeBtn={activeBtn}
           handleClickOnCalendar={changePageOnReserve}
           handleClickOnChat={changePageOnChat}
           handleClickOnInfo={changePageOnDetailed}
         />
-      )}
+      )} */}
     </div>
   )
 }

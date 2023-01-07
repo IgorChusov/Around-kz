@@ -7,12 +7,13 @@ import { Loading } from '../../components/Loading'
 import { PageShoppingCardServices } from '../../ContainerContent/PageService/PageShoppingCardServices'
 import { ChoiceOfServices } from '../../ContainerContent/PageService/ChoiceOfServices'
 import { ChoiceOfDatePage } from '../../page/ChoiceOfDatePage'
-import { PageServiceMenu } from '../../ContainerContent/PageService/PageServiceMenu'
+
 import { PayPage } from '../../page/PayPage'
 import { CommentsPage } from '../../page/CommentsPage'
 import { GetBusinessmenUserAsync } from '../../../store/businessman/action'
 import styles from './pageservice.css'
 import { InfoServicesPage } from '../../page/InfoServicesPage'
+import { ServiceMenu } from '../../components/ServiceMenu'
 
 interface IPageService {
   nameSpecialist?: string
@@ -80,7 +81,7 @@ export function ServiceRoutes ({ nameSpecialist = 'Мастер маникюра
               }}
             />
           )}
-          <PageServiceMenu
+          <ServiceMenu
             activeBtn={pageServices}
             handleClickOnInfo={() => {
               setPageServices('info')

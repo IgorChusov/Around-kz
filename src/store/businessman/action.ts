@@ -1,7 +1,7 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../config/api'
-import { accountMeRequestSuccess } from '../account/action'
+import { accountMeChangeSuccess, accountMeRequestSuccess } from '../account/action'
 import { RootState } from '../reducer'
 import { IDataMyBusinessmen } from './reducer'
 
@@ -175,12 +175,6 @@ export const CreateBusinessmenUserAsync = (
   
       try {
         const resp = await api.patch(`/users/businessmen/${id || getState().businessmen.myBusinessmen.data?.id}`,
-          // title,
-          // address,
-          // tags,
-          // description,
-          // images_service: images,
-          // questionnaire_type: questionnaireType,
           formData
        , { 
           headers: {
@@ -188,7 +182,7 @@ export const CreateBusinessmenUserAsync = (
         }})
   
         dispatch(createBusinessmenSuccess(resp.data))
-  
+        // dispatch(accountMeChangeSuccess())
         return resp.data
       } catch (error: any) {
         dispatch(createBusinessmenError(error.message))

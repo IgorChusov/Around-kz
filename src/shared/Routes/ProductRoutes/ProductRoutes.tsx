@@ -9,7 +9,7 @@ import { PageDetalProductBringing } from '../../page/ProductPage/PageDetalProduc
 import { PageDetalProductStore } from '../../page/ProductPage/PageDetalProductStore'
 import { PageProductChat } from '../../page/ProductPage/PageProductChat'
 import { PageAllProduct } from '../../page/ProductPage/PageAllProduct'
-import { PageServiceMenu } from '../../ContainerContent/PageService/PageServiceMenu'
+// import { PageServiceMenu } from '../../components/ServiceMenu'
 import { PayPage } from '../../page/PayPage'
 import { CommentsPage } from '../../page/CommentsPage'
 import styles from './pageproduct.css'
@@ -117,14 +117,14 @@ export function ProductRoutes () {
           />
         </Route>
       </Switch>
-      {location !== `/pageProducts/${type}/${id}/comments` && (
-        <PageServiceMenu
-          activeBtn={activeBtn}
-          handleClickOnCalendar={changePageOnReserve}
-          handleClickOnChat={changePageOnChat}
-          handleClickOnInfo={changePageOnDetailed}
-        />
-      )}
+      {/* {location !== `/pageProducts/${type}/${id}/comments` && (
+        // <PageServiceMenu
+        //   activeBtn={activeBtn}
+        //   handleClickOnCalendar={changePageOnReserve}
+        //   handleClickOnChat={changePageOnChat}
+        //   handleClickOnInfo={changePageOnDetailed}
+        // />
+      )} */}
     </div>
   )
 }

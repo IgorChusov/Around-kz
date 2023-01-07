@@ -6,7 +6,7 @@ import { generateRandomString } from '../../../../utils/js/generateRandomIndex'
 import { PresentationLine } from '../../../components/PresentationLine'
 import { EColor, Text } from '../../../components/Text'
 import { TListServices } from '../../../routes/ServiceRoutes'
-import { CustomCheckbox } from '../CustomCheckbox'
+import { CustomCheckbox } from '../../../components/CustomCheckbox'
 
 import styles from './choiceofservices.css'
 

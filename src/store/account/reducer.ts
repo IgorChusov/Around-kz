@@ -1,9 +1,10 @@
 import { Reducer } from 'react'
-import {  AccountMeRequestAction, AccountMeRequestErrorAction, AccountMeRequestSuccessAction, ACCOUNT_ME_REQUEST, ACCOUNT_ME_REQUEST_ERROR, ACCOUNT_ME_REQUEST_SUCCESS } from './action'
+import {  AccountMeChangeSuccessAction, AccountMeRequestAction, AccountMeRequestErrorAction, AccountMeRequestSuccessAction, ACCOUNT_ME_CHANGE_SUCCESS, ACCOUNT_ME_REQUEST, ACCOUNT_ME_REQUEST_ERROR, ACCOUNT_ME_REQUEST_SUCCESS } from './action'
 
 type AccountActions = AccountMeRequestAction | 
   AccountMeRequestErrorAction | 
-  AccountMeRequestSuccessAction;
+  AccountMeRequestSuccessAction | 
+  AccountMeChangeSuccessAction;
 
 export type IMe = {
   id: number
@@ -78,6 +79,14 @@ export const accountReducer: Reducer<TAccountState, AccountActions> = (state = i
           error: ''
         }
       }
+      case ACCOUNT_ME_CHANGE_SUCCESS:
+        return {
+          ...state,
+          user: {
+            ...state.user, 
+            data: action.data,
+          }
+        }
     default:
       return state
   }

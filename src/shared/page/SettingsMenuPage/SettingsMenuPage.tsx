@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-
 import { tokenRequestSuccess } from '../../../store/session/action'
 import {
   IconArrowRight,
@@ -14,9 +13,8 @@ import {
 } from '../../Icons'
 import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { EColor, Text } from '../../components/Text'
-
-import styles from './settingsmenupage.css'
 import { PaddingContainer } from '../../components/PaddingContainer'
+import styles from './settingsmenupage.css'
 
 export function SettingsMenuPage () {
   const dispatch = useDispatch()
@@ -31,12 +29,12 @@ export function SettingsMenuPage () {
   const handleClickChange = () => {
     localStorage.removeItem('token')
     dispatch(tokenRequestSuccess(''))
-    history.push('/sign-in')
+    history.push('/account/sign-in')
   }
 
   return (
     <PaddingContainer>
-      <ButtonBack addressLink="/menu/account" />
+      <ButtonBack addressLink="/account" />
       <Text className={styles.title} color={EColor.greenDark} As="h2" size={24}>
         Настройки
       </Text>
@@ -69,7 +67,7 @@ export function SettingsMenuPage () {
           </Link>
         </li> */}
         <li className={styles.item}>
-          <Link className={styles.link} to={'/menu/account/settings/information'}>
+          <Link className={styles.link} to={'/account/settings/information'}>
             <IconInfo />
             <Text color={EColor.greenDark} size={16}>
               Информация
@@ -78,7 +76,7 @@ export function SettingsMenuPage () {
           </Link>
         </li>
         <li className={styles.item}>
-          <Link className={styles.link} to={'/menu/account/settings/feedback'}>
+          <Link className={styles.link} to={'/account/settings/feedback'}>
             <IconMessageText />
             <Text color={EColor.greenDark} size={16}>
               Ваша обратная связь

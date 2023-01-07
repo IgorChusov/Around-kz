@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { useToken } from '../../../hooks'
-import { MyQuestionnaires } from '../../ContainerContent/PageMenu/components/MyQuestionnaires'
-import { PageChangeValuePayment } from '../../ContainerContent/PageMenu/components/MyQuestionnaires/components/MenuQuestionnaire/components/PageChangeValuePayment'
+import { useMounted, useToken } from '../../../hooks'
+// import { MyQuestionnaires } from '../../ContainerContent/PageMenu/components/MyQuestionnaires'
+
 import { MySchedulePage } from '../../page/MySchedulePage'
 import { CreateOrderPage } from '../../page/CreateOrderPage'
 import { SignInPage } from '../../page/PageRegistration/SignInPage'
 import { SignUpPage } from '../../page/PageRegistration/SignUpPage'
 import { AccountPage } from '../../page/AccountPage'
 import { ProductPage } from '../../page/ProductPage'
-import { ChangeInfoProductPage } from '../../page/ChangeInfoProductPage'
-import { ChangeInfoServicePage } from '../../page/ChangeInfoServicePage'
-import { ProductInfoPage } from '../../page/ProductInfoPage'
-import { SelectionServicesPage } from '../../page/SelectionServicesPage'
-import { ServiceInfoPage } from '../../page/ServiceInfoPage'
+import { AccountChangeProductInfoPage } from '../../page/AccountChangeProductInfoPage'
+import { AccountChangeServiceInfoPage } from '../../page/AccountChangeServiceInfoPage'
+import { AccountProductInfoPage } from '../../page/AccountProductInfoPage'
+import { AccountSelectionServicesPage } from '../../page/AccountSelectionServicesPage'
+import { AccountServiceInfoPage } from '../../page/AccountServiceInfoPage'
 import { ServiceSettingSchedulePage } from '../../page/ServiceSettingSchedulePage'
-import { FeedbackPage } from '../../page/FeedbackPage'
-import { InformationAccountPage } from '../../page/InformationAccountPage'
+import { AccountFeedbackPage } from '../../page/AccountFeedbackPage'
+import { AccountInformationPage } from '../../page/AccountInformationPage'
 import { SettingsMenuPage } from '../../page/SettingsMenuPage'
-import { MenuQuestionnairePage } from '../../page/MenuQuestionnairePage'
+import { AccountMenuQuestionnairePage } from '../../page/AccountMenuQuestionnairePage'
 import { AccountStartPage } from '../../page/AccountStartPage'
+import { AccountChangeValuePaymentPage } from '../../page/AccountChangeValuePaymentPage/components/PageChangeValuePayment'
+import { AccountMyQuestionnairesPage } from '../../page/AccountMyQuestionnairesPage'
 
 export function AccountRoutes () {
   const [isOuth, setIsOuth] = useState(false)
   const { token } = useToken()
+  const { hasMounted } = useMounted()
 
   useEffect(()=>{
     if(token.length === 0) {
@@ -33,6 +36,13 @@ export function AccountRoutes () {
     }
   },[token])
 
+console.log(isOuth)
+  if (!hasMounted) {
+    return (
+      <React.Fragment />
+    )
+  }
+  console.log(isOuth)
   return (
     <>
       {/* is not autorization */}
@@ -53,56 +63,54 @@ export function AccountRoutes () {
       {/* is autorization */}
       {isOuth && (
         <Switch>
-          <Route path={'/menu/account/mySchedule'}>
+          <Route path={'/account/mySchedule'}>
             <MySchedulePage />
           </Route>
-          <Route path={'/menu/account/create-order'}>
+          <Route path={'/account/create-order'}>
             <CreateOrderPage />
           </Route>
-          <Route path={'/menu/account/myQuestionnaires/pageProducts/store/:id'}>
+          <Route path={'/account/myQuestionnaires/pageProducts/store/:id'}>
             <ProductPage />
           </Route>
-          <Route path={'/menu/account/myQuestionnaires/:typeService/:id/changePay'}>
-            <PageChangeValuePayment />
+          <Route path={'/account/myQuestionnaires/:typeService/:id/changePay'}>
+            <AccountChangeValuePaymentPage />
           </Route>
           {/* изменение анкет */}
-          <Route exact path={'/menu/account/myQuestionnaires/service/:id/schedule'}>
+          <Route exact path={'/account/myQuestionnaires/service/:id/schedule'}>
             <ServiceSettingSchedulePage />
           </Route>
-          <Route path={'/menu/account/myQuestionnaires/products/:id/changeInfo'}>
-              <ChangeInfoProductPage />
+          <Route path={'/account/myQuestionnaires/products/:id/changeInfo'}>
+              <AccountChangeProductInfoPage />
           </Route>
-          <Route path={'/menu/account/myQuestionnaires/service/:id/changeInfo'}>
-            <ChangeInfoServicePage />
+          <Route path={'/account/myQuestionnaires/service/:id/changeInfo'}>
+            <AccountChangeServiceInfoPage />
           </Route>
           {/*  */}
           {/* <Route path={'/menu/account/business/myQuestionnaires/:typeService/:type/:id'}>
             <MenuQuestionnaire />
           </Route> */}
-          <Route path={'/menu/account/myQuestionnaires/:typeService/:id'}>
-            <MenuQuestionnairePage />
+          <Route path={'/account/myQuestionnaires/:typeService/:id'}>
+            <AccountMenuQuestionnairePage />
           </Route>
-          <Route path={'/menu/account/myQuestionnaires'}>
-            <MyQuestionnaires />
+          <Route path={'/account/myQuestionnaires'}>
+            <AccountMyQuestionnairesPage />
           </Route>
           {/* создание анкеты */}
-
-          <Route path={'/menu/account/createServices/service/'}>
-            <ServiceInfoPage />
+          <Route path={'/account/createServices/service/'}>
+            <AccountServiceInfoPage />
           </Route>
-          <Route path={'/menu/account/createServices/buy'}>
-            {/* <BuyInfo /> */}
-            <ProductInfoPage />
+          <Route path={'/account/createServices/product'}>
+            <AccountProductInfoPage />
           </Route>
-          <Route path={'/menu/account/createServices/selection/'}>
-            <SelectionServicesPage />
+          <Route path={'/account/createServices/selection/'}>
+            <AccountSelectionServicesPage />
           </Route>
           {/* НАСТРОЙКИ  */}
-          <Route path="/menu/account/settings/feedback">
-            <FeedbackPage />
+          <Route path="/account/settings/feedback">
+            <AccountFeedbackPage />
           </Route>
-          <Route path="/menu/account/settings/information">
-            <InformationAccountPage />
+          <Route path="/account/settings/information">
+            <AccountInformationPage />
           </Route>
           <Route path="/account/settings">
             <SettingsMenuPage />
@@ -110,8 +118,6 @@ export function AccountRoutes () {
           <Route path={'/account'}>
             <AccountStartPage />
           </Route>
-          <Redirect exact from='/menu/sign-up' to='/menu/account/personal' />
-          <Redirect exact from='/menu/sign-in' to='/menu/account/personal' />
         </Switch>
       )}
     </>
