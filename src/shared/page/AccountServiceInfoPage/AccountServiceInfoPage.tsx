@@ -8,12 +8,14 @@ import { generateRandomString } from '../../../utils/js/generateRandomIndex'
 import { EColor, Text } from '../../components/Text'
 import { ButtonBack } from '../../components/Buttons/ButtonBack'
 
-import { ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
+import { IReturnServiceBasicInfoForm, ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
 import { ModalComponentServices } from '../../ModalComponentServices'
 import { Loading } from '../../components/Loading'
 import { TBusinessmenState } from '../../../store/businessman/reducer'
 import { CreateBusinessmenUserAsync } from '../../../store/businessman/action'
 import { ServicesInfoComponents } from '../AccountChangeServiceInfoPage/components/ServicesInfoComponents'
+import { CountdownHandle } from '../../components/Forms/types'
+import { ButtonNextPage } from '../../components/Buttons/ButtonNextPage'
 
 export interface IListComponentsService {
   idFront: string
@@ -38,7 +40,7 @@ export function AccountServiceInfoPage () {
   const history = useHistory()
   const location = useLocation().pathname
   const dispatch = useDispatch()
-
+  const formRef = useRef<null | CountdownHandle>(null)
   const [title, setTitle] = useState('Заполните информацию о себе')
   const [isOpenModal, setOpenModal] = useState(false)
   const [idChangeElement, setIdChangeElement] = useState('')
@@ -56,18 +58,7 @@ export function AccountServiceInfoPage () {
   const [isValidationName, setValidationName] = useState(false)
   const [isValidationPrice, setValidationPrice] = useState(false)
 
-  // импуты базовой страницы
-  const [valueActivity, setValueActivity] = useState('')
-  const [valueAddress, setValueAddress] = useState('')
-  const [valueDescription, setValueDescription] = useState('')
-  const [valueTags, setValueTags] = useState('')
-
-  const refFile1 = useRef<HTMLInputElement>(null)
-  const refFile2 = useRef<HTMLInputElement>(null)
-  const refFile3 = useRef<HTMLInputElement>(null)
-  const refFile4 = useRef<HTMLInputElement>(null)
-  const refFile5 = useRef<HTMLInputElement>(null)
-  const[arrImg, setArrImg] = useState<File[]>([])
+  const[arrFormData, setArrFormData] = useState<IReturnServiceBasicInfoForm | null>(null)
 
   // функции изменения состояний интутов
   function handleChangeInputName (e: ChangeEvent<HTMLInputElement>) {
@@ -146,104 +137,20 @@ export function AccountServiceInfoPage () {
     setValueComment('')
   }
 
-
-
-  async function handleSubmit (e: FormEvent) {
-    e.preventDefault()
-
-    const newArr = arrError.concat().map((elem) => {
-      elem.valid = true
-      return elem
-    })
-    setArrError(newArr)
-
-    if(valueActivity.length === 0) {
-      arrError[0].text='Заполните поле'
-      arrError[0].valid= false
-    }
-
-    if(valueAddress.length < 12) {
-      arrError[1].text='Минимум 12 символов'
-      arrError[1].valid= false
-    }
-
-    if(valueTags.length === 0) {
-      arrError[2].text='Заполните поле'
-      arrError[2].valid= false
-    }
-
-    if(valueDescription.length === 0) {
-      arrError[3].text='Заполните поле'
-      arrError[3].valid= false
-    }
-
-    if(
-      refFile1?.current?.files?.length === 0 &&
-      refFile2?.current?.files?.length === 0 &&
-      refFile3?.current?.files?.length === 0 &&
-      refFile4?.current?.files?.length === 0 &&
-      refFile5?.current?.files?.length === 0
-      ) {
-      arrError[4].text='Пожалуйста, добавьте минимум одно фото'
-      arrError[4].valid= false
-    }
-
-    const newArrError = arrError.concat()
-    setArrError(newArrError)
-
-    if (arrError.find((elem) => !elem.valid)) return
-
-    const arrImgFunc: File [] = []
-
-    if(refFile1?.current?.files?.[0]) {
-      arrImgFunc.push(refFile1.current?.files[0])
-    }
-    if(refFile2?.current?.files?.[0]) {
-      arrImgFunc.push(refFile2.current?.files[0])
-    }
-    if(refFile3?.current?.files?.[0]) {
-      arrImgFunc.push(refFile3.current?.files[0])
-    }
-    if(refFile4?.current?.files?.[0]) {
-      arrImgFunc.push(refFile4.current?.files[0])
-    }
-    if(refFile5?.current?.files?.[0]) {
-      arrImgFunc.push(refFile5.current?.files[0])
-    }
-
-    setArrImg(arrImgFunc)
-
+  async function handleSubmit (data: IReturnServiceBasicInfoForm) {
+    setArrFormData(data)
     history.push('/account/createServices/service/components')
   }
 
-  const changeValueActivity = (e: ChangeEvent<HTMLInputElement>) => {
-    arrError[0].text=''
-    arrError[0].valid=true
-    setValueActivity(e.target.value)
-  }
-
-  const changeValueAddress = (e: ChangeEvent<HTMLInputElement>) => {
-    arrError[1].text=''
-    arrError[1].valid=true
-    setValueAddress(e.target.value)
-  }
-
-  const changeValueTags = (e: ChangeEvent<HTMLInputElement>) => {
-    arrError[2].text=''
-    arrError[2].valid=true
-    setValueTags(e.target.value)
-  }
-
-  const changeValueDescription = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    arrError[3].text=''
-    arrError[3].valid=true
-    setValueDescription(e.target.value)
-  }
-
   const handleSave = async () => {
+    if(!arrFormData) {
+      history.push('/account/createServices/service')
+      return
+    }
+
     const formData = new FormData();
 
-    const arrTags = valueTags.split(',').map((elem) => {
+    const arrTags = arrFormData.tags.split(',').map((elem) => {
       return elem.trim()
     })
   
@@ -251,21 +158,20 @@ export function AccountServiceInfoPage () {
       formData.append('tags', arrTags[i]);
     }
 
-    formData.append('title', valueActivity.trim())
-    formData.append('address', valueAddress)
-    formData.append('description', valueDescription)
+    formData.append('title', arrFormData.title.trim())
+    formData.append('address', arrFormData.address.trim())
+    formData.append('description', arrFormData.description.trim())
+    formData.append('questionnaire_type', 'Service')
+    formData.append('rule_payment', 'Prepayment 10%')
 
     for (let i = 0; i <= 4; i++) {
-      if(arrImg[i]) {
-        formData.append('images_service', arrImg[i]);
+      if(arrFormData.images_service[i]) {
+        formData.append('images_service', arrFormData.images_service[i]);
       }
     }
     
-    formData.append('questionnaire_type', 'Service')
-    formData.append('rule_payment', 'Prepayment 10%')
     for (let i = 0; i < services.length; i++) {
-        formData.append('service', JSON.stringify(services[i]));
-    
+      formData.append('service', JSON.stringify(services[i]));
     }
 
     const resp = await dispatch(CreateBusinessmenUserAsync(formData))
@@ -275,8 +181,14 @@ export function AccountServiceInfoPage () {
       return
     }
   
-      history.push('/account/myQuestionnaires')
+    history.push('/account/myQuestionnaires')
   } 
+
+  const handleClickSubmit = () => {
+    if(formRef.current) {
+      formRef.current.handleSubmitForm()
+    }
+  }
 
   useEffect(() => {
     const errs = []
@@ -329,23 +241,11 @@ export function AccountServiceInfoPage () {
         <Route path={'/account/createServices/service'}>
           <ServiceBasicInfoForm 
             type='Service'
+            ref={formRef}
             onSubmit={handleSubmit}
-            handleSubmit={handleSubmit}
-            valueActivity={valueActivity}
-            setValueActivity={(e) => changeValueActivity(e)}
-            valueAddress={valueAddress}
-            setValueAddress={(e) => changeValueAddress(e)}
-            valueTags={valueTags}
-            setValueTags={(e) => changeValueTags(e)}
-            valueDescription={valueDescription}
-            setValueDescription={(e) => changeValueDescription(e)}
-            arrError={arrError}
-            refFile1={refFile1}
-            refFile2={refFile2}
-            refFile3={refFile3}
-            refFile4={refFile4}
-            refFile5={refFile5}
+            saveState={arrFormData || undefined}
           />
+          <ButtonNextPage classNameButton={styles.button} text='Далее' onClick={handleClickSubmit}/>
         </Route>
       </Switch>
       {isOpenModal && (

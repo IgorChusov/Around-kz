@@ -7,7 +7,7 @@ interface IButtonNextPage {
   text: string
   onClick?: (e: FormEvent) => void
   classNameButton: string
-  isTransparentBackground?: boolean
+  isTransparentBackground?: boolean,
 }
 
 export function ButtonNextPage ({ text, onClick, classNameButton, isTransparentBackground }: IButtonNextPage) {

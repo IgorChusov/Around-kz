@@ -72,6 +72,10 @@
   color: var(--greenMiddle);
 }
 
+.textareaError {
+  border-color: var(--redVar);
+}
+
 .textareaContainer {
   margin-bottom: 6px;
   padding: 0 9px;
@@ -205,6 +209,6 @@
   opacity: 0;
 }
 
-.view {
+.imgShow {
   opacity: 1;
 }

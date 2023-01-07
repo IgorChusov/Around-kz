@@ -1,103 +1,78 @@
-import React, { ChangeEvent, FormEvent, forwardRef, RefObject, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
+import React, { ChangeEvent, FormEvent, ForwardedRef, forwardRef, RefObject, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { IconElementPlus } from '../../../Icons'
 import { IErrorPanel } from '../../ErrorPanel'
 import { Input } from '../../Inputs/Input'
 import { EColor, Text } from '../../Text'
 import styles from './infopagebasic.css'
 import cn from 'classnames'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { fill } from '../../../../../webpack.config'
 import { CountdownHandle } from '../types'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../../store/reducer'
+import { TBusinessmenState } from '../../../../store/businessman/reducer'
+import { useParams } from 'react-router'
 
 interface IInfoPageBasic {
   type: 'Service' | 'Product'
-  onSubmit: (data:any) => void 
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => void
-  valueActivity: string
-  setValueActivity: (e: ChangeEvent<HTMLInputElement>) => void
-  valueAddress: string
-  setValueAddress: (e: ChangeEvent<HTMLInputElement>) => void
-  valueDescription: string
-  setValueDescription: (e: ChangeEvent<HTMLTextAreaElement>) => void
-  valueTags?: string
-  setValueTags: (e: ChangeEvent<HTMLInputElement>) => void
-  arrError: IErrorPanel[]
-  refFile1?: RefObject<HTMLInputElement>
-  refFile2?: RefObject<HTMLInputElement>
-  refFile3?: RefObject<HTMLInputElement>
-  refFile4?: RefObject<HTMLInputElement>
-  refFile5?: RefObject<HTMLInputElement>
-  defaultPhoto1?: string
-  defaultPhoto2?: string
-  defaultPhoto3?: string
-  defaultPhoto4?: string
-  defaultPhoto5?: string
+  onSubmit: (data: IReturnServiceBasicInfoForm) => void 
+  saveState?: IReturnServiceBasicInfoForm
+}
+
+export interface IReturnServiceBasicInfoForm {
+  title: string
+  address: string,
+  tags: string,
+  description: string
+  images_service: (File | string)[]
 }
 
 export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(({  
   type,
   onSubmit,
-  arrError,
-  refFile1,
-  refFile2,
-  refFile3,
-  refFile4,
-  refFile5,
-  defaultPhoto1,
-  defaultPhoto2,
-  defaultPhoto3,
-  defaultPhoto4,
-  defaultPhoto5, 
+  saveState
 }, ref) => {
-
+    const { id } = useParams<{ id?: string;}>()
     const refImg1 = useRef<HTMLImageElement>(null)
     const refImg2 = useRef<HTMLImageElement>(null)
     const refImg3 = useRef<HTMLImageElement>(null)
     const refImg4 = useRef<HTMLImageElement>(null)
     const refImg5 = useRef<HTMLImageElement>(null)
 
-    const { control, handleSubmit, formState, register, watch, setValue } = useForm({ defaultValues: {
-      title: '',
-      address: '',
-      tags: '',
-      description: '',
+    const { myBusinessmen } = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
+    
+    const { control, handleSubmit, formState, register, watch, setValue } = useForm<IReturnServiceBasicInfoForm>({ defaultValues: {
+      title         : id ? myBusinessmen.data.title : saveState?.title || '',
+      address       : id ? myBusinessmen.data.address : saveState?.address || '',
+      tags          : id ? myBusinessmen.data.tags.join(',') : saveState?.tags || '',
+      description   : id ? myBusinessmen.data.description : saveState?.description || '',
+      images_service: []
     }});
 
-    const viewImg = (refFile: RefObject<HTMLInputElement>, refImg: RefObject<HTMLImageElement>) => {
-    if (refFile?.current?.files && refFile.current.files[0]) {
+    const imagesServiceWatch = watch('images_service')
+
+    const viewImg = (refImg: RefObject<HTMLImageElement>, index: number) => (e:ChangeEvent<HTMLInputElement>) => {
+
+    if (e.target.files && e.target.files[0]) {
+      const newArr = [...imagesServiceWatch]
+      newArr[index] = e.target.files[0]
+      setValue('images_service', newArr)
+
       var reader = new FileReader();
-  
+
       reader.onload = function(e) {
         if(!e.target?.result) return
         // @ts-ignore:next-line
         refImg?.current?.setAttribute('src', e.target.result)
       };
 
-      if(refFile.current.files[0] && refImg.current) {
-        reader.readAsDataURL(refFile.current.files[0]);
+      if(e.target.files && refImg.current) {
+        reader.readAsDataURL(e.target.files[0]);
 
         refImg.current.style.opacity = '1'
       }
     }
   }
-
-  useEffect(()=> {
-    if(defaultPhoto1 && refImg1.current) {
-      refImg1.current.style.opacity = '1'
-    }
-    if(defaultPhoto2 && refImg2.current) {
-      refImg2.current.style.opacity = '1'
-    }
-    if(defaultPhoto3 && refImg3.current) {
-      refImg3.current.style.opacity = '1'
-    }
-    if(defaultPhoto4 && refImg4.current) {
-      refImg4.current.style.opacity = '1'
-    }
-    if(defaultPhoto5 && refImg5.current) {
-      refImg5.current.style.opacity = '1'
-    }
-  }, [])
 
   useImperativeHandle(ref, () => ({
     handleSubmitForm: () => {
@@ -106,7 +81,7 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
         })()
     }
   }))
-  
+
   return (
     <form onSubmit={e => e.preventDefault()} className={styles.form}>
       <div className={styles.inputGroup}>
@@ -123,7 +98,7 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
               onChange={field.onChange}
               labelText='Вид деятельности'
               classNameContainer={styles.inputContainer}
-              error={arrError[0].valid ? undefined : arrError[0].text}
+              error={!!formState.errors.title && 'Заполните поле'}
             />
           )} 
         />
@@ -141,7 +116,7 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
               onChange={field.onChange}
               labelText='Адрес'
               classNameContainer={styles.inputContainer}
-              error={arrError[1].valid ? undefined : arrError[1].text}
+              error={!!formState.errors.address && 'Минимум 12 символов'}
             /> 
           )} 
         />
@@ -163,7 +138,7 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
               placeholder="#тег"
               id={'inputTag'}
               className={cn(styles.inputTag, {
-                [styles.errorTags]: !arrError[2].valid
+                [styles.errorTags]: !!formState.errors.tags
               })}
               type="text"
             />
@@ -172,9 +147,9 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
         <label className={styles.labelTag} htmlFor="inputTag">
           Теги разделяйте запятой
         </label>
-        {!arrError[2].valid && (
+        {!!formState.errors.tags && (
           <span className={styles.error}>
-            { arrError[2].text}
+            Заполните поле
           </span>
         )}
       </div>
@@ -194,7 +169,9 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
               value={field.value}
               onChange={field.onChange}
               id={'textareaInfoService'}
-              className={styles.textarea}
+              className={cn(styles.textarea, {
+                [styles.textareaError]: !!formState.errors.description
+              })}
               placeholder="Опыт, особенности услуг и тд."
             />
           )} 
@@ -202,84 +179,113 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
         <label className={styles.labelTag} htmlFor="textareaInfoService">
           Не более 500 знаков
         </label>
+        {!!formState.errors.description && (
+          <span className={styles.error}>
+            Заполните поле
+          </span>
+        )}
       </div>
-     
-      {(type === 'Service' && refFile1 && refFile2 && refFile3 && refFile4 && refFile5) && (
+      {(type === 'Service') && (
         <>
           <Text color={EColor.greenDark} className={styles.textPhoto} size={16} As='p'>Загрузить фото</Text>
           <div className={styles.inputFileContainer}>
             <input 
-              ref={refFile1} 
               className={styles.inputFile} 
               name="file" id={'inputFile'} 
               accept="image/*" 
               type="file" 
-              onChange={() => viewImg(refFile1, refImg1)}
+              onChange={viewImg(refImg1, 0)}
             />
             <label className={styles.inputFileBtn} htmlFor="inputFile">
-              <img className={styles.img} src={defaultPhoto1} ref={refImg1} />
+              <img
+                src={id ? myBusinessmen.data.images_service[0] : undefined}
+                ref={refImg1}
+                className={cn(styles.img, {
+                  [styles.imgShow]: myBusinessmen.data.images_service[0] && id
+                })}
+              />
               <IconElementPlus classNameSvg={styles.minus} />
               <IconElementPlus classNameSvg={styles.plus} />
             </label>
             <div className={styles.inputFileGroup}>
               <div className={styles.inputSmallContent}>
-                <input 
-                  ref={refFile2} 
+                <input  
                   className={styles.inputFile} 
                   name="file" id={'inputFile2'} 
                   accept="image/*" 
                   type="file" 
-                  onChange={() => viewImg(refFile2, refImg2)}
+                  onChange={viewImg(refImg2, 1)}
                 />
                 <label className={styles.inputFileBtnSmall} htmlFor="inputFile2">
-                  <img className={styles.img} src={ defaultPhoto2}  ref={refImg2} />
+                  <img
+                    src={id ? myBusinessmen.data.images_service[1] : undefined}
+                    ref={refImg2}
+                    className={cn(styles.img, {
+                      [styles.imgShow]: myBusinessmen.data.images_service[1] && id
+                    })}
+                  />
                   <IconElementPlus classNameSvg={styles.minusSmall} />
                   <IconElementPlus classNameSvg={styles.plusSmall} />
                 </label>
               </div>
               <div className={styles.inputSmallContent}>
                 <input 
-                  ref={refFile3}
                   className={styles.inputFile} 
                   name="file" id={'inputFile3'} 
                   accept="image/*"
                   type="file" 
-                  onChange={() => viewImg(refFile3, refImg3)}
+                  onChange={viewImg(refImg3, 2)}
                 />
                 <label className={styles.inputFileBtnSmall} htmlFor="inputFile3">
-                  <img className={styles.img} src={defaultPhoto3}  ref={refImg3} />
+                  <img 
+                    src={id ? myBusinessmen.data.images_service[2] : undefined}
+                    ref={refImg3}
+                    className={cn(styles.img, {
+                      [styles.imgShow]: myBusinessmen.data.images_service[2] && id
+                    })}
+                  />
                   <IconElementPlus classNameSvg={styles.minusSmall} />
                   <IconElementPlus classNameSvg={styles.plusSmall} />
                 </label>
               </div>
               <div className={styles.inputSmallContent}>
                 <input 
-                  ref={refFile4}
                   className={styles.inputFile} 
                   name="file" 
                   id={'inputFile4'} 
                   accept="image/*" 
                   type="file" 
-                  onChange={() => viewImg(refFile4, refImg4)}
+                  onChange={viewImg(refImg4, 3)}
                 />
                 <label className={styles.inputFileBtnSmall} htmlFor="inputFile4">
-                  <img className={styles.img} src={defaultPhoto4}  ref={refImg4} />
+                  <img
+                    src={id ? myBusinessmen.data.images_service[3] : undefined}
+                    ref={refImg4}
+                    className={cn(styles.img, {
+                      [styles.imgShow]: myBusinessmen.data.images_service[3] && id
+                    })} 
+                  />
                   <IconElementPlus classNameSvg={styles.minusSmall} />
                   <IconElementPlus classNameSvg={styles.plusSmall} />
                 </label>
               </div>
               <div className={styles.inputSmallContent}>
                 <input 
-                  ref={refFile5} 
                   className={styles.inputFile} 
                   name="file" 
                   id={'inputFile5'} 
                   accept="image/*" 
                   type="file" 
-                  onChange={() => viewImg(refFile5, refImg5)}
+                  onChange={viewImg(refImg5, 4)}
                 />
                 <label className={styles.inputFileBtnSmall} htmlFor="inputFile5">
-                  <img className={styles.img} src={defaultPhoto5} ref={refImg5} />
+                  <img 
+                    src={id ? myBusinessmen.data.images_service[4] : undefined} 
+                    ref={refImg5} 
+                    className={cn(styles.img, {
+                      [styles.imgShow]: myBusinessmen.data.images_service[4] && id
+                    })} 
+                  />
                   <IconElementPlus classNameSvg={styles.minusSmall} />
                   <IconElementPlus classNameSvg={styles.plusSmall} />
                 </label>
@@ -288,9 +294,6 @@ export const ServiceBasicInfoForm = forwardRef<CountdownHandle, IInfoPageBasic>(
           </div>
         </>
       )}
-      <button className={styles.btnNextPage}>
-        Далее
-      </button>
     </form>
   )
 })

@@ -1,17 +1,19 @@
-import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, FormEvent, ForwardedRef, RefObject, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useHistory, useLocation, useParams } from 'react-router'
 import { RootState } from '../../../store/reducer'
 import { InformationBuyPage } from './components/InformationBuyPage'
 import { ListProducts } from './components/ListProducts'
-import { ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
+import { IReturnServiceBasicInfoForm, ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
 import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { IErrorPanel } from '../../components/ErrorPanel'
 import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'
 import { ChangeBusinessmenUserAsync } from '../../../store/businessman/action'
-import styles from './changeinfoproductpage.css'
 import { TBusinessmenState } from '../../../store/businessman/reducer'
+import { CountdownHandle } from '../../components/Forms/types'
+import { ButtonNextPage } from '../../components/Buttons/ButtonNextPage'
+import styles from './changeinfoproductpage.css'
 
 const dateErrorBasic = [
   { name: 'activity', text: '', valid: true },
@@ -27,7 +29,8 @@ export function AccountChangeProductInfoPage () {
   const refPresentation = useRef<HTMLDivElement>(null)
   const location = useLocation().pathname
   const history = useHistory()
-
+  const formRef = useRef<CountdownHandle | null>(null)
+  
   const { myBusinessmen } = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
   // const businessman = useSelector<RootState, any>((state) => state.businessmen)
   
@@ -70,9 +73,8 @@ export function AccountChangeProductInfoPage () {
     console.log('отправлено')
   }
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-  
+  const handleSubmit = async (data: IReturnServiceBasicInfoForm) => {
+
     const newArr = arrError.concat().map((elem) => {
       elem.valid = true
       return elem
@@ -124,6 +126,13 @@ export function AccountChangeProductInfoPage () {
 
     if(!!resp) {
       history.push(`/account/myQuestionnaires/product/${id}`)
+    }
+  }
+
+
+  const handleClickSubmit = () => {
+    if(formRef.current) {
+      formRef.current.handleSubmitForm();
     }
   }
 
@@ -185,18 +194,17 @@ export function AccountChangeProductInfoPage () {
           </Text>
           <ServiceBasicInfoForm 
             type='Product'
+            ref={formRef}
             onSubmit={handleSubmit}
-            handleSubmit={handleSubmit}
-            valueActivity={valueActivity}
-            setValueActivity={(e) => changeValueActivity(e)}
-            valueAddress={valueAddress}
-            setValueAddress={(e) => changeValueAddress(e)}
-            valueTags={valueTags}
-            setValueTags={(e) => changeValueTags(e)}
-            valueDescription={valueDescription}
-            setValueDescription={(e) => changeValueDescription(e)}
-            arrError={arrError}
           />
+          <ButtonNextPage 
+            text='Далее'
+            classNameButton=''
+            onClick={handleClickSubmit}
+          />
+           {/* <button onClick={handleClickSubmit} className={styles.btnNextPage}>
+            Далее
+      </button> */}
         </Route>
       </Switch>
       <Loading loading={myBusinessmen.loading} />

@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'reac
 import { useDispatch } from 'react-redux'
 import { Route, Switch, useHistory, useLocation } from 'react-router'
 import { PageSelectProduct } from '../AccountChangeProductInfoPage/components/PageSelectedProduct'
-import { ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
+import { IReturnServiceBasicInfoForm, ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
 import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { IErrorPanel } from '../../components/ErrorPanel'
 import { Loading } from '../../components/Loading'
@@ -12,6 +12,7 @@ import { CreateBusinessmenUserAsync } from '../../../store/businessman/action'
 import { PageSettingScheduleStore } from '../AccountChangeProductInfoPage/components/PageSettingScheduleStore'
 import { PageSettingScheduleBringing } from '../AccountChangeProductInfoPage/components/PageSettingScheduleBringing'
 import { CountdownHandle } from '../../components/Forms/types'
+import { ButtonNextPage } from '../../components/Buttons/ButtonNextPage'
 
 const listValueLocationDefault = [
   {
@@ -96,43 +97,10 @@ export function AccountProductInfoPage () {
     }
   }, [location])
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-  
-    const newArr = arrError.concat().map((elem) => {
-      elem.valid = true
-      return elem
-    })
-    setArrError(newArr)
-
-    if(valueActivity.length === 0) {
-      arrError[0].text='Заполните поле'
-      arrError[0].valid= false
-    }
-
-    if(valueAddress.length < 12) {
-      arrError[1].text='Минимум 12 символов'
-      arrError[1].valid= false
-    }
-
-    if(valueTags.length === 0) {
-      arrError[2].text='Заполните поле'
-      arrError[2].valid= false
-    }
-
-    if(valueDescription.length === 0) {
-      arrError[3].text='Заполните поле'
-      arrError[3].valid= false
-    }
-
-    const newArrError = arrError.concat()
-    setArrError(newArrError)
-
-    if (arrError.find((elem) => !elem.valid)) return
-
+  const handleSubmit = async (data: IReturnServiceBasicInfoForm) => {
     const formData = new FormData()
 
-    const arrTags = valueTags.split(',').map((elem) => {
+    const arrTags = data.tags.split(',').map((elem) => {
       return elem.trim()
     })
   
@@ -140,9 +108,9 @@ export function AccountProductInfoPage () {
       formData.append('tags', arrTags[i]);
     }
 
-    formData.append('title', valueActivity.trim())
-    formData.append('address', valueAddress)
-    formData.append('description', valueDescription)
+    formData.append('title', data.title.trim())
+    formData.append('address', data.address.trim())
+    formData.append('description', data.description.trim())
     formData.append('questionnaire_type', 'Product')
     formData.append('rule_payment', 'Prepayment 10%')
     
@@ -152,6 +120,12 @@ export function AccountProductInfoPage () {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       history.push(`/account/myQuestionnaires/product/${resp?.id}`)
+    }
+  }
+
+  const handleClickSubmit = () => {
+    if(formRef.current) {
+      formRef.current.handleSubmitForm()
     }
   }
 
@@ -201,17 +175,8 @@ export function AccountProductInfoPage () {
             type='Product'
             onSubmit={handleSubmit}
             ref={formRef}
-            handleSubmit={handleSubmit}
-            valueActivity={valueActivity}
-            setValueActivity={(e) => changeValueActivity(e)}
-            valueAddress={valueAddress}
-            setValueAddress={(e) => changeValueAddress(e)}
-            valueTags={valueTags}
-            setValueTags={(e) => changeValueTags(e)}
-            valueDescription={valueDescription}
-            setValueDescription={(e) => changeValueDescription(e)}
-            arrError={arrError}
           />
+          <ButtonNextPage classNameButton={styles.button} text='Далее' onClick={handleClickSubmit}/>
         </Route>
       </Switch>
       {/* <Loading loading={businessmen.loading}/> */}
