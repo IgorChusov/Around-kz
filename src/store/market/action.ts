@@ -1,8 +1,17 @@
 import { Action, ActionCreator } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 import api from '../../config/api'
-import { ChangeBusinessmenSuccess } from '../businessman/action'
+import { ChangeBusinessmenSuccess, getBusinessmenSuccess } from '../businessman/action'
 import { RootState } from '../reducer'
+
+// запрос на получение отправлен
+export const GET_MARKET_REQUEST = 'GET_MARKET_REQUEST'
+export type GetMarketRequestAction = {
+  type: typeof GET_MARKET_REQUEST
+}
+export const getMarketRequest: ActionCreator<GetMarketRequestAction> = () => ({
+  type: GET_MARKET_REQUEST,
+})
 
 // запрос отправлен
 export const CREATE_MARKET_REQUEST = 'CREATE_MARKET_REQUEST'
@@ -22,7 +31,19 @@ export const deleteMarketRequest: ActionCreator<DeleteMarketRequestAction> = () 
   type: DELETE_MARKET_REQUEST,
 })
 
-// запрос успешен
+// запрос на получение успешен
+export const GET_MARKET_SUCCESS = 'GET_MARKET_SUCCESS'
+export type GetMarketRequestSuccessAction = {
+  type: typeof GET_MARKET_SUCCESS
+  data: any
+}
+
+export const getMarketSuccess: ActionCreator<GetMarketRequestSuccessAction> = (data: any) => ({
+  type: GET_MARKET_SUCCESS,
+  data
+})
+
+// запрос на создание успешен
 export const CREATE_MARKET_SUCCESS = 'CREATE_MARKET_SUCCESS'
 export type CreateMarketRequestSuccessAction = {
   type: typeof CREATE_MARKET_SUCCESS
@@ -46,7 +67,7 @@ export const deleteMarketSuccess: ActionCreator<DeleteMarketRequestSuccessAction
   data
 })
 
-// запрос с ошибкой
+// запрос создания с ошибкой
 export const CREATE_MARKET_ERROR = 'CREATE_MARKET_ERROR'
 export type CreateMarketRequestErrorAction = {
   type: typeof CREATE_MARKET_ERROR
@@ -57,6 +78,32 @@ export const createMarketError: ActionCreator<CreateMarketRequestErrorAction> = 
   type: CREATE_MARKET_ERROR,
   error,
 })
+// запрос получения с ошибкой
+export const GET_MARKET_ERROR = 'GET_MARKET_ERROR'
+export type GetMarketRequestErrorAction = {
+  type: typeof GET_MARKET_ERROR
+  error: string
+}
+
+export const getMarketError: ActionCreator<GetMarketRequestErrorAction> = (error: string) => ({
+  type: GET_MARKET_ERROR,
+  error,
+})
+
+export const LoadMarketAsync = (id: string): ThunkAction<void, RootState, unknown, Action<string>> =>
+  async (dispatch) => {
+    dispatch(getMarketRequest())
+
+    try {
+      const resp = await api.get(`/market/products/${id}`)
+
+      dispatch(getMarketSuccess(resp.data))
+
+      return resp.data
+    } catch (error: any) {
+      dispatch(getMarketError(error.message))
+    }
+  }
 
 export const CreateMarketAsync = (
   formData: FormData

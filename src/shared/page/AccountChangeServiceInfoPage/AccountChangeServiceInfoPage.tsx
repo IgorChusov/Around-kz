@@ -4,7 +4,6 @@ import { Route, Switch, useHistory, useLocation, useParams } from 'react-router'
 import { ChangeAdsUserAsync, CreateAdsUserAsync, DeleteAdsUserAsync } from '../../../store/ads/action'
 import { RootState } from '../../../store/reducer'
 import { generateIdFront, generateRandomString } from '../../../utils/js/generateRandomIndex'
-
 import { IReturnServiceBasicInfoForm, ServiceBasicInfoForm } from '../../components/Forms/ServiceBasicInfoForm'
 import { ModalComponentServices } from '../../ModalComponentServices'
 import { ButtonBack } from '../../components/Buttons/ButtonBack'
@@ -277,10 +276,10 @@ export function AccountChangeServiceInfoPage () {
           onDelete={handleDeleteComponent}
         />
       )}
-      {/* <Loading loading={businessman.loading} />
-      {businessman.error && 
-        <ErrorPanel list={[{name: '', text: businessman.error, valid: false}]} />
-      } */}
+      <Loading loading={myBusinessmen.loading} />
+      {myBusinessmen.error && 
+        <ErrorPanel list={[{name: '', text: myBusinessmen.error, valid: false}]} />
+      }
     </div>
   )
 }

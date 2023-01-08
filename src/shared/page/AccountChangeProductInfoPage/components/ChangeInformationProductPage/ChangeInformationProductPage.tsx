@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CreateMarketAsync } from '../../../../../store/market/action'
+import { ChangeMarketUserAsync, DeleteMarketUserAsync, LoadMarketAsync } from '../../../../../store/market/action'
 import { ErrorPanel, IErrorPanel } from '../../../../components/ErrorPanel'
 import { Loading } from '../../../../components/Loading'
 import { Text } from '../../../../components/Text'
@@ -13,10 +13,10 @@ import { ButtonNextPage } from '../../../../components/Buttons/ButtonNextPage'
 import { CountdownHandle } from '../../../../components/Forms/types'
 import styles from './informationbuypage.css'
 
-export function InformationBuyPage () {
+export function ChangeInformationProductPage () {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { id } = useParams<{ id?: string;}>()
+  const { id, idProduct } = useParams<{ id?: string; idProduct?: string}>()
   const formRef = useRef<CountdownHandle | null>(null);
   const [serverErrors, setServerErrors] = useState<IErrorPanel []>([])
  
@@ -37,8 +37,19 @@ export function InformationBuyPage () {
       formData.append('image', data.image);
     }
 
-    const resp = await dispatch(CreateMarketAsync(formData))
-    if(!!resp) {
+    if(idProduct) {
+      const resp = await dispatch(ChangeMarketUserAsync(formData, idProduct))
+      if(!!resp) {
+        history.push(`/account/myQuestionnaires/products/${id}/changeInfo/listProduct`)
+      }
+    }
+  }
+
+  const onDelete = async () => {
+    if(!idProduct) return
+    const resp = await dispatch(DeleteMarketUserAsync(idProduct))
+    // @ts-ignore
+    if(resp?.status === 204) {
       history.push(`/account/myQuestionnaires/products/${id}/changeInfo/listProduct`)
     }
   }
@@ -57,6 +68,12 @@ export function InformationBuyPage () {
     }
   }, [market.error])
 
+  useEffect(() => {
+    if(idProduct) {
+      dispatch(LoadMarketAsync(idProduct))
+    }
+  },[idProduct])
+
   return (
     <div className={styles.container}>
       <Text className={styles.title} As="h2" size={24}>
@@ -64,6 +81,13 @@ export function InformationBuyPage () {
       </Text>
       <DetailedProductForm ref={formRef} onSubmit={handleSubmitForm}/>
       <ButtonNextPage onClick={handleClickSubmit} text='Сохранить'/>
+      {idProduct && (
+        <button 
+          className={styles.deleteBtn}
+          onClick={() => onDelete()}>
+          Удалить товар
+        </button>
+      )}
       <Loading loading={market.loading} />
       {serverErrors.length > 0 && 
         <ErrorPanel list={serverErrors} />

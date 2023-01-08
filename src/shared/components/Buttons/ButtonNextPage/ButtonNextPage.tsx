@@ -6,7 +6,7 @@ import styles from './buttonnextpage.css'
 interface IButtonNextPage {
   text: string
   onClick?: (e: FormEvent) => void
-  classNameButton: string
+  classNameButton?: string
   isTransparentBackground?: boolean,
 }
 

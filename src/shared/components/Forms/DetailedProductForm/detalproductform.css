@@ -1,0 +1,169 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer {
+  position: relative;
+  padding: 0 29px;
+  margin-bottom: 26px;
+}
+
+.inputChangeContainer {
+  position: relative;
+  padding: 0 29px;
+  margin-bottom: 26px;
+  display: flex;
+}
+
+.inputChangeContainer input {
+  margin-right: 20px;
+}
+
+.input {
+  padding: 12px;
+  background-color: transparent;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 22px;
+  width: 100%;
+  color: var(--gray99);
+}
+
+.inputPriceContainer {
+  margin-right: 20px;
+}
+
+.label {
+  position: absolute;
+  padding: 3px;
+  top: -10px;
+  left: 56px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 600;
+  background-color: var(--white);
+  z-index: 10;
+}
+
+.textarea {
+  width: 100%;
+  padding: 16px 28px;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+  resize: none;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 400;
+  height: 115px;
+}
+
+.textareaContainer {
+  position: relative;
+  margin-bottom: 24px;
+  padding: 0 9px;
+}
+
+.textInfo {
+  margin-bottom: 5px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.labelTag {
+  padding-left: 8px;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+.inputFileContainer {
+  position: relative;
+  padding: 0 9px;
+  margin-bottom: 32px;
+}
+
+.inputFile {
+  width: 100%;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputFileBtn {
+  padding: 16px;
+  width: 100%;
+  display: block;
+  background-color: transparent;
+  box-shadow: 0 4px 10px 0 #00000026;
+  border-radius: 20px;
+}
+
+.inputFileBtn span {
+  color: var(--greenDark);
+  font-weight: 500;
+}
+
+.inputGroup {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.inputCenterGroup {
+  margin-bottom: 24px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.inputGroupInput {
+  padding: 12px;
+  margin-right: 8px;
+  background-color: transparent;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 18px;
+  width: 87px;
+}
+
+.inputGroupSelect {
+  padding: 12px;
+  background-color: transparent;
+  border: 2px solid var(--greenLight);
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--greenLight);
+  min-width: 110px;
+  text-align: center;
+}
+
+.btnNextPage {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 12px 32px;
+  background-color: var(--greenLight);
+  color: var(--white);
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.error {
+  position: absolute;
+  right: 9px;
+  color: var(--redVar);
+  font-size: 12px;
+  line-height: 12px;
+}
+
+.errorBorder {
+  border: 2px solid var(--redVar);
+}

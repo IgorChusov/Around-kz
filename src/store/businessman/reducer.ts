@@ -51,7 +51,7 @@ export interface IDataMyBusinessmen {
     image: string
     min_quantity: number
     price: string
-    quantity: number
+    available_quantity: number
     title: string
     unit: string
   }[],
@@ -82,8 +82,17 @@ export type TBusinessmenState = {
     loading: boolean
     error: string
     data: any
+  },
+  productLoad: {
+    id: number
+    description: string
+    image: string
+    min_quantity: number
+    price: string
+    available_quantity: number
+    title: string
+    unit: string
   }
-  
 }
 
 const initialState = {
@@ -117,7 +126,17 @@ const initialState = {
     loading: false,
     error: '',
     data: null
-  }
+  },
+  productLoad: {
+    id: -1,
+    description: '',
+    image: '',
+    min_quantity: -1,
+    price: '',
+    available_quantity: -1,
+    title: '',
+    unit: ''
+  },
 };
 
 export const businessmenReducer: Reducer<TBusinessmenState, TGetBusinessmenActions> = (state = initialState, action) => {

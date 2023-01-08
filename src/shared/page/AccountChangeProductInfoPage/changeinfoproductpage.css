@@ -29,3 +29,9 @@
   text-align: center;
   max-width: 238px;
 }
+
+@media all and (min-width: 1024px) {
+  .container {
+    min-height: calc(100vh - 60px);
+  }
+}
