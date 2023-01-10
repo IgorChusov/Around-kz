@@ -57,7 +57,7 @@ export const IntervalForm = forwardRef<CountdownHandle, IProps>(({ onSubmit }, r
   useImperativeHandle(ref, () => ({
     handleSubmitForm: () => {
         handleSubmit(data => {
-            onSubmit({...data, listTime: listTime.map((elem) => elem.toString())})
+            onSubmit({...data, listTime: listTime.map((elem) =>{ return { time: elem.format('HH:mm') }})})
         })()
     }
   }))

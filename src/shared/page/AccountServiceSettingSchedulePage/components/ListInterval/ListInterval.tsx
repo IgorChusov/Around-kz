@@ -1,30 +1,29 @@
 import React, { ForwardedRef, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CreateIntervalAsync } from '../../../../../store/businessman/action';
+import { TBusinessmenState } from '../../../../../store/businessman/reducer';
+import { RootState } from '../../../../../store/reducer';
+import { getScheduleIntervalsAsync } from '../../../../../store/schedule/actions';
 import { ButtonNextPage } from '../../../../components/Buttons/ButtonNextPage';
 import { ChangeItem } from '../../../../components/ChangeItem';
 import { IntervalForm } from '../../../../components/Forms/IntervalForm';
+import { CountdownHandle } from '../../../../components/Forms/types';
 import { Popup } from '../../../../components/popups/Popup';
 import { Text } from '../../../../components/Text';
 import styles from './listinterval.css';
-type CountdownHandle = {
-  handleSubmitForm: () => void,
-}
+
 export function ListInterval() {
   const dispatch = useDispatch()
   const formRef = useRef<null | CountdownHandle>(null)
   const [type, setType] = useState('list')
-
+  const { myBusinessmen } = useSelector<RootState, TBusinessmenState>((state) => state.businessmen)
+  
   const handleCreate = () => {
     setType('component')
   }
 
-  // useEffect(() => {
-  //   dispatch(ScheduleGetIntervalsAsync())
-  // }, [])
-
   const handleSubmitInterval = (data: any)  => {
-    dispatch(CreateIntervalAsync(data.title, data.listTime, null))
+    dispatch(CreateIntervalAsync(myBusinessmen.data.id, data.title, data.listTime, null))
     console.log('data', data)
   }
 
@@ -37,6 +36,10 @@ export function ListInterval() {
       formRef.current?.handleSubmitForm();
     }
   }
+
+  useEffect(() => {
+    dispatch(getScheduleIntervalsAsync())
+  }, [])
 
   return (
     <Popup className={styles.container}>

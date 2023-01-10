@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
-
 import { ButtonBack } from '../../../../components/Buttons/ButtonBack'
 import { DualRadio } from '../../../../components/Inputs/DualRadio'
 import { LinkNextPage } from '../../../../components/Buttons/LinkNextPage'
 import { EColor, Text } from '../../../../components/Text'
-
 import styles from './pageselectproduct.css'
 
 interface IPageSelectProduct {}
 export function PageSelectProduct (props: IPageSelectProduct) {
   const [value, setValue] = useState('bringing')
+
   function changeValue (event: any) {
     setValue(event?.target.value)
   }
 
   return (
     <div className={styles.container}>
-      <ButtonBack addressLink="/menu/account/business/createServices/selection/buy/listProduct" />
+      <ButtonBack addressLink="/account/createServices/selection/buy/listProduct" />
       <Text className={styles.title} As="h2" color={EColor.greenDark} size={24}>
         {'Я продаю товар'}
       </Text>
@@ -35,7 +34,7 @@ export function PageSelectProduct (props: IPageSelectProduct) {
           'Данный тип бронирования подходит для вас, в случае если склад товаров находится у вас дома (сетевой маркетинг, продажа мебели, и т.д.)'
         }
       />
-      <LinkNextPage addressPage={`/menu/account/business/createServices/selection/buy/${value}`} text="Далее" />
+      <LinkNextPage addressPage={`/account/createServices/selection/buy/${value}`} text="Далее" />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route, Switch, useHistory, useLocation, useParams } from 'react-router'
+import { Redirect, Route, Switch, useHistory, useLocation, useParams } from 'react-router'
 import { ChangeAdsUserAsync, CreateAdsUserAsync, DeleteAdsUserAsync } from '../../../store/ads/action'
 import { RootState } from '../../../store/reducer'
 import { generateIdFront, generateRandomString } from '../../../utils/js/generateRandomIndex'
@@ -10,14 +10,12 @@ import { ButtonBack } from '../../components/Buttons/ButtonBack'
 import { ErrorPanel, IErrorPanel } from '../../components/ErrorPanel'
 import { Loading } from '../../components/Loading'
 import { EColor, Text } from '../../components/Text'
-import { ServiceSettingSchedulePage } from '../ServiceSettingSchedulePage'
-import styles from './changeinfoservicepage.css'
 import { TBusinessmenState } from '../../../store/businessman/reducer'
 import { ChangeBusinessmenUserAsync } from '../../../store/businessman/action'
 import { ServicesInfoComponents } from './components/ServicesInfoComponents'
 import { CountdownHandle } from '../../components/Forms/types'
 import { ButtonNextPage } from '../../components/Buttons/ButtonNextPage'
-
+import styles from './changeinfoservicepage.css'
 export interface IListComponentsServices {
   id?: number
   title: string
@@ -219,11 +217,11 @@ export function AccountChangeServiceInfoPage () {
     }
   }
   
-  useEffect(()=> {
-    if(myBusinessmen.data.id === -1) {
-      history.push('/account/myQuestionnaires/')
-    }
-  }, [])
+  if (String(myBusinessmen.data.id) !== id) {
+    return (
+      <Redirect to="/account/myQuestionnaires/"/>
+    )
+  }
 
   return (
     <div className={styles.container}>

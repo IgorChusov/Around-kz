@@ -5,6 +5,7 @@ import { sessionReducer, TSessionState } from './session/reducer';
 import { businessmenReducer, TBusinessmenState } from './businessman/reducer'
 import { marketReducer, TMarketState } from './market/reduser';
 import { adsReducer, TAdsState } from './ads/reduser';
+import { scheduleReducer, TScheduleState } from './schedule/reducer';
 
 export type RootState = {
   session: TSessionState,
@@ -13,6 +14,7 @@ export type RootState = {
   businessmen: TBusinessmenState,
   market: TMarketState,
   ads: TAdsState
+  schedule: TScheduleState
 }
 // Combine different shrinking functions
 // into a single function for the store object.
@@ -22,7 +24,8 @@ const combineReducer = combineReducers({
   search: searchReducer,
   businessmen: businessmenReducer,
   market: marketReducer,
-  ads: adsReducer
+  ads: adsReducer,
+  schedule: scheduleReducer
 });
 
 // Return the initial state in response to a request.

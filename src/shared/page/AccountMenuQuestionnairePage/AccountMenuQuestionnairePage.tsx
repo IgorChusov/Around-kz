@@ -206,12 +206,12 @@ export function AccountMenuQuestionnairePage () {
             </li>
           </ul>
           <div className={styles.buttonGroup}>
-            <button className={styles.button}>
+            {/* <button disabled className={styles.button}>
               <Text color={EColor.greenLight} size={16}>
                 Заморозить анкету
               </Text>
               <IconLink />
-            </button>
+            </button> */}
             <button onClick={handleDelete} className={styles.button}>
               <Text color={EColor.greenLight} size={16}>
                 Удалить анкету

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Route, Switch, useHistory, useLocation, useParams } from 'react-router'
+import { Redirect, Route, Switch, useHistory, useLocation, useParams } from 'react-router'
 import { RootState } from '../../../store/reducer'
 import { InformationBuyPage } from './components/InformationBuyPage'
 import { ListProducts } from './components/ListProducts'
@@ -69,11 +69,11 @@ export function AccountChangeProductInfoPage () {
     }
   }, [location])
 
-  useEffect(()=> {
-    if(String(myBusinessmen.data.id) !== id) {
-      history.push('/account/myQuestionnaires/')
-    }
-  }, [])
+  if (String(myBusinessmen.data.id) !== id) {
+    return (
+      <Redirect to="/account/myQuestionnaires/"/>
+    )
+  }
 
   return (
     <div className={styles.container}>

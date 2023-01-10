@@ -55,12 +55,10 @@ export const getBusinessmenError: ActionCreator<GetBusinessmenRequestErrorAction
 export const DELETE_BUSINESSMEN_SUCCESS = 'DELETE_BUSINESSMEN_SUCCESS'
 export type DeleteBusinessmenRequestSuccessAction = {
   type: typeof DELETE_BUSINESSMEN_SUCCESS
-  data: IDataMyBusinessmen
 }
 
-export const deleteBusinessmenSuccess: ActionCreator<DeleteBusinessmenRequestSuccessAction> = (data: IDataMyBusinessmen) => ({
+export const deleteBusinessmenSuccess: ActionCreator<DeleteBusinessmenRequestSuccessAction> = () => ({
   type: DELETE_BUSINESSMEN_SUCCESS,
-  data
 })
 
 export const GetBusinessmenUserAsync = (id: string): ThunkAction<void, RootState, unknown, Action<string>> =>
@@ -90,7 +88,7 @@ async (dispatch, getState) => {
       }
     })
 
-    dispatch(getBusinessmenSuccess(null))
+    dispatch(deleteBusinessmenSuccess())
     const deletedElement = getState().account.user.data
     const data = deletedElement.businessman.filter((elem) => String(elem.id) !== id)
     deletedElement.businessman = data
@@ -275,7 +273,7 @@ export type CreateIntervalsErrorAction = {
   error: string
 }
 
-export const CreateIntervalAsync = (title: any, intervalTimeService: any, intervalTimeMarket: any): ThunkAction<void, RootState, unknown, Action<string>> =>
+export const CreateIntervalAsync = (businessman: number, title: any, intervalTimeService: any, intervalTimeMarket: any): ThunkAction<void, RootState, unknown, Action<string>> =>
    async (dispatch, getState) => {
       dispatch(createIntervalsRequest())
     
@@ -283,7 +281,7 @@ export const CreateIntervalAsync = (title: any, intervalTimeService: any, interv
         const resp = await api.post(`/users/businessmen/${getState().businessmen.myBusinessmen.data.id}/schedule/intervals/create`, 
           { 
             title: title,
-            businessman: 319, 
+            businessman: businessman, 
             interval_time_service: intervalTimeService ? intervalTimeService : undefined, 
             interval_time_market: intervalTimeMarket ? intervalTimeMarket : undefined,
           }, 

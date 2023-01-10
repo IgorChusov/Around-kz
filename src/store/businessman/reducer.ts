@@ -20,7 +20,9 @@ import {
   GET_ALL_BUSINESSMEN_ERROR,
   GET_ALL_BUSINESSMEN_SUCCESS,
   GetAllBusinessmenRequestErrorAction,
-  GetAllBusinessmenRequestSuccessAction
+  GetAllBusinessmenRequestSuccessAction,
+  DELETE_BUSINESSMEN_SUCCESS,
+  DeleteBusinessmenRequestSuccessAction
 } from './action'
 
 type TGetBusinessmenActions = GetBusinessmenRequestAction | 
@@ -32,7 +34,8 @@ type TGetBusinessmenActions = GetBusinessmenRequestAction |
   CreateBusinessmenRequestSuccessAction |
   GetAllBusinessmenRequestAction | 
   GetAllBusinessmenRequestErrorAction | 
-  GetAllBusinessmenRequestSuccessAction 
+  GetAllBusinessmenRequestSuccessAction |
+  DeleteBusinessmenRequestSuccessAction
 
 
 export interface IDataMyBusinessmen {
@@ -166,6 +169,17 @@ export const businessmenReducer: Reducer<TBusinessmenState, TGetBusinessmenActio
         myBusinessmen: {
           ...state.myBusinessmen,
           data: action.data,
+          loading: false,
+          hasLoading: true,
+          error: ''
+        }
+      }
+    case DELETE_BUSINESSMEN_SUCCESS:
+      return {
+        ...state,
+        myBusinessmen: {
+          ...state.myBusinessmen,
+          data: initialState.myBusinessmen.data,
           loading: false,
           hasLoading: true,
           error: ''

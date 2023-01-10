@@ -14,7 +14,7 @@ import { AccountChangeServiceInfoPage } from '../../page/AccountChangeServiceInf
 import { AccountProductInfoPage } from '../../page/AccountProductInfoPage'
 import { AccountSelectionServicesPage } from '../../page/AccountSelectionServicesPage'
 import { AccountServiceInfoPage } from '../../page/AccountServiceInfoPage'
-import { ServiceSettingSchedulePage } from '../../page/ServiceSettingSchedulePage'
+import { AccountServiceSettingSchedulePage } from '../../page/AccountServiceSettingSchedulePage'
 import { AccountFeedbackPage } from '../../page/AccountFeedbackPage'
 import { AccountInformationPage } from '../../page/AccountInformationPage'
 import { SettingsMenuPage } from '../../page/SettingsMenuPage'
@@ -69,7 +69,7 @@ export function AccountRoutes () {
           </Route>
           {/* изменение анкет */}
           <Route exact path={'/account/myQuestionnaires/service/:id/schedule'}>
-            <ServiceSettingSchedulePage />
+            <AccountServiceSettingSchedulePage />
           </Route>
           <Route path={'/account/myQuestionnaires/products/:id/changeInfo'}>
               <AccountChangeProductInfoPage />
