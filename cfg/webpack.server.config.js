@@ -1,8 +1,10 @@
 const path = require('path')
 const  Dotenv  =  require ( 'dotenv-webpack' ) ;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const NODE_ENV = process.env.NODE_ENV
 const nodeExternals = require('webpack-node-externals')
 const GLOBAL_CSS_REGEXP = /\.global\.css$/
+const {InjectManifest} = require('workbox-webpack-plugin');
 
 module.exports = {
   target: 'node',
@@ -25,7 +27,7 @@ module.exports = {
         test: /\.(docx)$/i,
         loader: 'file-loader',
         options: {
-          name: 'assets/docx/[name].[ext]',
+          name: 'assets/[name].[ext]',
         },
       },
       {
@@ -73,5 +75,14 @@ module.exports = {
   optimization: {
     minimize: false,
   },
-  plugins: [new Dotenv()],
+  plugins: [
+    new Dotenv(),   
+    // new CopyWebpackPlugin({ patterns: [
+    //   { from: path.resolve(__dirname, '../public'), to: path.resolve(__dirname, '../dist/server/assets')}
+    // ]}),
+    // new InjectManifest({
+    //   swSrc: path.resolve(__dirname, '../public/serviceWorker.js'),
+    //   swDest: './assets/serviceWorker.js'
+    // }),
+  ],
 }

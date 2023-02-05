@@ -44,7 +44,9 @@
     "redux-thunk": "^2.4.1",
     "serve-favicon": "^2.5.0",
     "swiper": "^6.8.4",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "workbox-webpack-plugin": "^6.5.4",
+    "workbox-window": "^6.5.4"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^17.0.1",
@@ -58,7 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "10.0.0",
+    "copy-webpack-plugin": "6.4.1",
     "cross-env": "^7.0.3",
     "css-loader": "^3.4.2",
     "dotenv-webpack": "^8.0.0",

@@ -26,6 +26,7 @@ if(IS_PROD) {
 
 app.use(favicon('./public/64x64.ico'))
 app.use('/static', express.static('./dist/client'))
+app.use('/assets/serviceWorker.js', express.static('./dist/client'));
 
 app.get('*', (req, res) => {
   const context = {};
