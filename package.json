@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "ChusovIgor <chusovigorek@gmail.com>",
   "license": "ISC",
+  "homepage": "https://igorchusov.github.io/Around-kz/",
   "engines": {
     "node": "14.x"
   },
@@ -21,7 +22,9 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "dev": "cross-env NODE_ENV=development node ./bin/dev.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/server/server.js"
+    "start": "node ./dist/server/server.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "axios": "^0.25.0",
@@ -71,6 +74,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.27.1",
     "file-loader": "^6.2.0",
+    "gh-pages": "^6.1.1",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
