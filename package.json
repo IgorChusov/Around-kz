@@ -49,6 +49,7 @@
     "serve-favicon": "^2.5.0",
     "swiper": "^6.8.4",
     "uuid": "^9.0.0",
+    "vite": "^5.2.11",
     "workbox-webpack-plugin": "^6.5.4",
     "workbox-window": "^6.5.4"
   },
